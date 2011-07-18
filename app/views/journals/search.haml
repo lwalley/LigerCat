@@ -1,0 +1,31 @@
+#results
+  - cache({:action => 'search', :query => params[:q].downcase, :page => params[:page] || 1 }) do
+    - unless @journals.blank?
+      %h1
+        ==Results #{pagination_results @journals} for
+        %span.query= awesome_truncate h(params[:q]), 200
+      
+      #selection_options==Select: #{link_to_function 'All', 'journal_selections.addBatch($$(".search_results li input.checkbox"))'}, #{link_to_function 'None', 'journal_selections.removeBatch($$(".search_results li input.checkbox"))'}
+      
+      %ol.search_results= render :partial => @journals # the "start" attribute was deprecated. Boo.
+      = will_paginate @journals, :separator=>''
+    - else
+      %h1
+        No Results for
+        %span.query= h(params[:q])
+      = render :partial => 'no_results'
+
+-content_for :help do
+  = render :partial => 'help/journal_search_results'
+  
+-content_for :sidebar_tabs do
+  %li.tab.selected_journals= link_to 'Selected Journals', '#selected_journals'
+
+-content_for :sidebar_panels do
+  #selected_journals_panel.sidebar_panel.selections_panel
+    = javascript_tag "journal_selections = new Ligercat.JournalSelectionPanel('selected_journals', '.search_results li input.checkbox');"
+
+-content_for :domready do
+  ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel', {#{"start_index: 1" unless @selections.blank?}});
+  ==journal_selections.preloadSelectionsFromSession(#{journal_preselections_json});
+  ==journal_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(1);});

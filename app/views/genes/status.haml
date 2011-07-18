@@ -1,0 +1,22 @@
+%h1
+  Blasting
+  = image_tag 'loading_dark.gif', :alt => 'Loading...', :class => 'loading_spinner'
+
+%div[@query]
+  %p.status 
+    Status:
+    %span#status= @status.titleize
+  %p <span class="ligercat">LigerCat</span> is using <a href="http://www.ncbi.nlm.nih.gov/BLAST/" class="external_link" target="_blank">BLAST</a> to find sequences that are very similar to yours.
+  %p After finding similar sequences, <span class="ligercat">LigerCat</span> will map them to <a href="http://www.ncbi.nlm.nih.gov/pubmed/" class="external_link" target="_blank">PubMed</a> articles that mention those sequences. It will then extract the <abbr title="Medical Subject Headings">MeSH</abbr> descriptors for every article, and weight them by frequency and relevance. Depending on the number of results returned by your query, this can take several minutes, and in some cases upwards of an hour. 
+  %p You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
+  %p Alternatively, you can can <span class="highlight">save this URL</span> and come back to it later:
+  .current_url
+    %span.url= gene_status_url @query
+    %span.help Copy this url to come back later
+  
+:javascript
+  status_request = new Request({url:"#{gene_status_url(@query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
+  status_request.send.periodical(5000, status_request);
+
+-content_for :help do
+  = render :partial => 'help/gene_status'

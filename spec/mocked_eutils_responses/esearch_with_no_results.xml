@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD eSearchResult, 11 May 2002//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/eSearch_020511.dtd">
+<eSearchResult>
+	<Count>0</Count>
+	<RetMax>0</RetMax>
+	<RetStart>0</RetStart>
+	<IdList>
+	</IdList>
+	<TranslationSet>
+
+		<Translation>
+			<From>rose</From>
+			<To>(&quot;rosa&quot;[MeSH Terms] OR &quot;rosa&quot;[All Fields] OR &quot;rose&quot;[All Fields])</To>
+		</Translation>
+	</TranslationSet>
+
+	<TranslationStack>
+		<TermSet>
+			<Term>axl[All Fields]</Term>
+			<Field>All Fields</Field>
+			<Count>282</Count>
+			<Explode>Y</Explode>
+		</TermSet>
+
+		<TermSet>
+			<Term>&quot;rosa&quot;[MeSH Terms]</Term>
+			<Field>MeSH Terms</Field>
+			<Count>210</Count>
+			<Explode>Y</Explode>
+		</TermSet>
+
+		<TermSet>
+			<Term>&quot;rosa&quot;[All Fields]</Term>
+			<Field>All Fields</Field>
+			<Count>8821</Count>
+			<Explode>Y</Explode>
+		</TermSet>
+
+		<OP>OR</OP>
+		<TermSet>
+			<Term>&quot;rose&quot;[All Fields]</Term>
+			<Field>All Fields</Field>
+			<Count>62746</Count>
+			<Explode>Y</Explode>
+
+		</TermSet>
+		<OP>OR</OP>
+		<OP>GROUP</OP>
+		<OP>AND</OP>
+		<OP>GROUP</OP>
+	</TranslationStack>
+	<QueryTranslation>axl[All Fields] AND (&quot;rosa&quot;[MeSH Terms] OR &quot;rosa&quot;[All Fields] OR &quot;rose&quot;[All Fields])</QueryTranslation>
+
+</eSearchResult>

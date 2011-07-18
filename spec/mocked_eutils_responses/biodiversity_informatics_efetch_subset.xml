@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2008//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_080101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="Publisher">
+        <PMID>18784790</PMID>
+        <DateCreated>
+            <Year>2008</Year>
+            <Month>9</Month>
+            <Day>11</Day>
+        </DateCreated>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">1471-8278</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>7</Volume>
+                    <Issue>3</Issue>
+                    <PubDate>
+                        <Year>2007</Year>
+                        <Month>May</Month>
+                        <Day>1</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Molecular ecology notes</Title>
+                <ISOAbbreviation>Mol. Ecol. Notes</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>bold: The Barcode of Life Data System (http://www.barcodinglife.org).</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>355-364</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The Barcode of Life Data System (bold) is an informatics workbench aiding the acquisition, storage, analysis and publication of DNA barcode records. By assembling molecular, morphological and distributional data, it bridges a traditional bioinformatics chasm. bold is freely available to any researcher with interests in DNA barcoding. By providing specialized services, it aids the assembly of records that meet the standards needed to gain BARCODE designation in the global sequence databases. Because of its web-based delivery and flexible data security model, it is also well positioned to support projects that involve broad research alliances. This paper provides a brief introduction to the key elements of bold, discusses their functional capabilities, and concludes by examining computational resources and future prospects.</AbstractText>
+            </Abstract>
+            <Affiliation>Canadian Centre for DNA Barcoding, Biodiversity Institute of Ontario, University of Guelph Guelph, ON, Canada N1G 2W1.</Affiliation>
+            <AuthorList>
+                <Author>
+                    <LastName>Ratnasingham</LastName>
+                    <FirstName>Sujeevan</FirstName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author>
+                    <LastName>Hebert</LastName>
+                    <FirstName>Paul D N</FirstName>
+                    <Initials>PD</Initials>
+                </Author>
+            </AuthorList>
+            <Language>ENG</Language>
+            <PublicationTypeList>
+                <PublicationType>JOURNAL ARTICLE</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <MedlineTA>Mol Ecol Notes</MedlineTA>
+            <NlmUniqueID>101087335</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2006</Year>
+                <Month>7</Month>
+                <Day>30</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2006</Year>
+                <Month>11</Month>
+                <Day>17</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2008</Year>
+                <Month>9</Month>
+                <Day>12</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2008</Year>
+                <Month>9</Month>
+                <Day>12</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pmc">PMC1890991</ArticleId>
+            <ArticleId IdType="doi">10.1111/j.1471-8286.2007.01678.x</ArticleId>
+            <ArticleId IdType="pubmed">18784790</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID>15253354</PMID>
+        <DateCreated>
+            <Year>2004</Year>
+            <Month>07</Month>
+            <Day>15</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2004</Year>
+            <Month>08</Month>
+            <Day>13</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2005</Year>
+            <Month>11</Month>
+            <Day>16</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">0962-8436</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>359</Volume>
+                    <Issue>1444</Issue>
+                    <PubDate>
+                        <Year>2004</Year>
+                        <Month>Apr</Month>
+                        <Day>29</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Philosophical transactions of the Royal Society of London. Series B, Biological sciences</Title>
+                <ISOAbbreviation>Philos. Trans. R. Soc. Lond., B, Biol. Sci.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Biodiversity informatics: managing and applying primary biodiversity data.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>689-98</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>Recently, advances in information technology and an increased willingness to share primary biodiversity data are enabling unprecedented access to it. By combining presences of species data with electronic cartography via a number of algorithms, estimating niches of species and their areas of distribution becomes feasible at resolutions one to three orders of magnitude higher than it was possible a few years ago. Some examples of the power of that technique are presented. For the method to work, limitations such as lack of high-quality taxonomic determination, precise georeferencing of the data and availability of high-quality and updated taxonomic treatments of the groups must be overcome. These are discussed, together with comments on the potential of these biodiversity informatics techniques not only for fundamental studies but also as a way for developing countries to apply state of the art bioinformatic methods and large quantities of data, in practical ways, to tackle issues of biodiversity management.</AbstractText>
+            </Abstract>
+            <Affiliation>Instituto de Ecología, National University of Mexico and Comisión Nacional de Biodiversidad, México, Periférico-Insurgentes 4903, Tlalpan, 14010 DF, Mexico. jsoberon@xolo.conabio.gob.mx</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Soberón</LastName>
+                    <ForeName>Jorge</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Peterson</LastName>
+                    <ForeName>A Townsend</ForeName>
+                    <Initials>AT</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+                <PublicationType>Review</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Philos Trans R Soc Lond B Biol Sci</MedlineTA>
+            <NlmUniqueID>7503623</NlmUniqueID>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Biodiversity</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Classification</DescriptorName>
+                <QualifierName MajorTopicYN="N">methods</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Computational Biology</DescriptorName>
+                <QualifierName MajorTopicYN="Y">methods</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Demography</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Environment</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Geography</DescriptorName>
+                <QualifierName MajorTopicYN="Y">methods</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+        <NumberOfReferences>85</NumberOfReferences>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2004</Year>
+                <Month>7</Month>
+                <Day>16</Day>
+                <Hour>5</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2004</Year>
+                <Month>8</Month>
+                <Day>17</Day>
+                <Hour>10</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pmc">PMC1693343</ArticleId>
+            <ArticleId IdType="pubmed">15253354</ArticleId>
+            <ArticleId IdType="doi">10.1098/rstb.2003.1439</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+</PubmedArticleSet>

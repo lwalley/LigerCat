@@ -1,0 +1,10 @@
+!!! 1.1
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en" }
+  %head
+    %meta{ 'http-equiv' => 'Content-Type', :content => "application/xhtml+xml; charset=utf-8" }
+    %title= title
+    = stylesheet_link_tag %w(reset typography iframe), :cache => 'iframe_all'
+    
+  %body{ :id => body_id }
+    = yield :layout
+    =google_analytics

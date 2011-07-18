@@ -1,0 +1,51 @@
+/*
+ * CSS Tabs is licensed under Creative Commons Attribution 2.5. * * Joshua Kaufman, unraveled * 28 January, 2007
+ *
+ */
+
+
+/* begin css tabs */
+
+ul.tabnav { /* general settings */
+text-align: left; /* set to left, right or center */
+margin: 1em 0 0; /* set margins as desired */
+border-bottom: 1px solid #ef6114; /* set border COLOR as desired */
+list-style-type: none;
+padding: 3px 0 0; /* THIRD number must change with respect to padding-top (X) below */
+}
+
+ul.tabnav li { /* do not change */
+display: inline;
+}
+
+body ul.tabnav li.tab.active { /* settings for active tab */
+border-bottom: 1px solid #fff; /* set border color to page background color */
+background-color: #fff; /* set background color to match above border color */
+}
+
+body ul.tabnav li.tab.active a { /* settings for active tab link */
+	background-color: #fff; /* set active tab background color as desired */
+	color: #1592ce; /* set active tab link color as desired */
+	position: relative;
+	top: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+ul.tabnav li a { /* settings for all tab links */
+	padding: 3px 4px; /* set padding (tab size) as desired; FIRST number must change with respect to padding-top (X) above */
+	border: 1px solid #ef6114; /* set border COLOR as desired; usually matches border color specified in .tabnav */
+	background-color: #ef6114; /* set unactive tab background color as desired */
+	color: #fff; /* set unactiveactive tab link color as desired */
+	margin-right: 3px; /* set additional spacing between tabs as desired */
+	font-weight: bold;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+ul.tabnav a:hover { /* settings for hover effect */
+	background-color: #fff;
+	color: #1592ce;
+	text-decoration: underline;
+}
+

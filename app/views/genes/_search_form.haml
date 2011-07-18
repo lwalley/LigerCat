@@ -1,0 +1,5 @@
+- form_tag(new_gene_path, {:method => 'get', :class => 'search_form container', :onsubmit => 'return FastaValidator.validate(this);'}) do
+  %fieldset
+    - query_string = @query.sequence.fasta_data rescue nil
+    = genes_text_area_tag(query_string, :style => "height:#{height||'1.5'}em" )
+    = submit_tag 'Search', :name => nil

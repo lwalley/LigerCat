@@ -1,0 +1,33 @@
+set :application, "ligercat"
+set :repository,  "svn://meow01.ubio.org/ligercat/rails/trunk/"
+
+ssh_options[:username] = 'meow'
+set :use_sudo, false
+
+set :scm_username, "meow"
+set :scm_password, "meow"
+
+set :deploy_via, :export
+set :deploy_to, "/meow/meow/#{application}"
+
+set :queue_server, "meow.meow.meow.99"
+set :queue_port,   "5672"
+
+role :app, "meow.meow.meow.42"
+role :web, "meow.meow.meow.42"
+
+role :worker_bee, "meow.meow.meow.199"
+role :worker_bee, "meow.meow.meow.180"
+role :worker_bee, "meow.meow.meow.31"
+role :worker_bee, "meow.meow.meow.149"
+role :worker_bee, "meow.meow.meow.38"
+role :worker_bee, "meow.meow.meow.242"
+role :worker_bee, "meow.meow.meow.243"
+role :worker_bee, "meow.meow.meow.81"
+role :worker_bee, "meow.meow.meow.223"
+role :worker_bee, "meow.meow.meow.225"
+role :worker_bee, "meow.meow.meow.210"
+role :worker_bee, "meow.meow.meow.211"
+role :worker_bee, "meow.meow.meow.212"
+role :worker_bee, "meow.meow.meow.213"
+role :worker_bee, "meow.meow.meow.214"

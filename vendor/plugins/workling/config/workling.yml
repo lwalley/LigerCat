@@ -1,0 +1,57 @@
+# By default, NotRemoteRunner is used when RAILS_ENV == 'test'.
+#
+# You can pass options to memcached client by nesting the key value pairs
+# under 'memcache_options'.
+#
+# You can also use a cluster of Starlings. Simply give a comma separated
+# list of server:port, server:port, server:port values to listens_on. 
+#
+production:
+  listens_on: localhost:15151
+
+development:
+  #listens_on: localhost:22122 # starling
+  listens_on: localhost:5672 # rabbitmq
+  # 5673 can be used if using tracer tool : http://www.rabbitmq.com/examples.html#tracer
+  # The tracer utility works as a proxy between RabbitMQ and the workling client.
+  sleep_time: 0.05
+
+  # amqp_options are shared among all amqp adapters, including the tmm1-amqp aync adapter
+  amqp_options:
+    #host: localhost
+    #port: 5672
+    user: guest
+    pass: '123456'
+    vhost: '/'
+    logging: false
+
+  sync_amqp_options:
+    client:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+    returnstore:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+
+  ### Amazon AWS
+  # This can be used when not using AWS, but will be the
+  # equivalent of TRUE if the aws: key is present.
+  # Replaces : with - in the uid as the : is not a valid
+  # queue name character on AWS
+  aws_compatible_uid: true
+  
+  aws:
+    # These are mandatory
+    access_key_id: 0123456789ABCDEF0123
+    secret_access_key: qwertyuiopasdfghjklzxcvbnm124567890qwert
+    # These can be ommitted - will default to settings as per RightAws
+    #server: queue.amazonaws.com
+    #port: 443
+    #signature_version: '0'
+
+test:
+  listens_on: localhost:12345

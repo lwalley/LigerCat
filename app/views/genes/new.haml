@@ -1,0 +1,40 @@
+.text_wrapper
+  .blast_a_gene_sequence.col-4
+    %h2 BLAST a Gene Sequence
+    %p 
+      Paste in FASTA-formatted nucleotides or protein sequences.
+      = link_to 'Example sequence', 'http://www.ncbi.nlm.nih.gov/nuccore/228008405?report=fasta', :class=>'external_link', :target => '_blank'
+    
+  .explore_tag_clouds.col-4
+    %h2 Explore Tag Clouds
+    %p The given sequence is run through BLAST, then searched in PubMed
+
+  .craft_queries_to_pubmed.col-4
+    %h2 Craft Queries to PubMed 
+    %p By clicking on MeSH Descriptors
+    
+  .view_publication_history.col-4.last
+    %h2 View Publication History 
+    %p Articles by year, relevant to given sequence
+
+
+.image_wrapper
+  .blast_a_gene_sequence.col-4
+    .screenshot
+      = image_tag 'genes_blast_a_gene.gif'
+      <span class="label">Screenshot</span>
+  
+  .explore_tag_clouds.col-4
+    .screenshot
+      = image_tag 'genes_tag_cloud.gif'
+      <span class="label">Screenshot</span>
+
+  .craft_queries_to_pubmed.col-4
+    .screenshot
+      = image_tag 'genes_live_search.gif'
+      <span class="label">Screenshot</span>
+
+  .view_publication_history.col-4.last
+    .screenshot
+      = image_tag 'genes_histogram.gif'
+      <span class="label">Screenshot</span>

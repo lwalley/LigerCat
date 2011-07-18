@@ -1,0 +1,2 @@
+module PubmedCountHelper
+end

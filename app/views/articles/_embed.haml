@@ -1,0 +1,11 @@
+#share_item
+	%p To embed this tag cloud in your own blog or website, simply copy the code below.
+	
+	%p
+		- query_url = formatted_article_url(@query, 'cloud')
+		- embed_code = h %(<iframe src="#{query_url}" title="LigerCat Cloud" frameborder=0 width=600 height=400></iframe>)
+		- url_code = h %(#{query_url})
+	%label{ :for => 'site'} Embed
+	#small
+		= auto_select_text_field_tag 'site', embed_code, :size => '30'
+		=clippy(embed_code,'EDEDFF')

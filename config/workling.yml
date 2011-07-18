@@ -1,0 +1,59 @@
+# By default, NotRemoteRunner is used when RAILS_ENV == 'test'.
+#
+# You can pass options to memcached client by nesting the key value pairs
+# under 'memcache_options'.
+#
+
+production:
+  listens_on: 128.128.164.99:5672
+
+  # amqp_options are shared among all amqp adapters, including the tmm1-amqp aync adapter
+  amqp_options:
+    user: guest
+    pass: 'guest'
+    vhost: '/'
+    logging: false
+
+  sync_amqp_options:
+    client:
+      queue_options:
+        durable: true
+      message_options:
+        persistent: true
+    returnstore:
+      queue_options:
+        durable: true
+      message_options:
+        persistent: true
+
+
+development:
+  #listens_on: localhost:22122 # starling
+  listens_on: localhost:5672 # rabbitmq
+  # 5673 can be used if using tracer tool : http://www.rabbitmq.com/examples.html#tracer
+  # The tracer utility works as a proxy between RabbitMQ and the workling client.
+  sleep_time: 0.05
+
+  # amqp_options are shared among all amqp adapters, including the tmm1-amqp aync adapter
+  amqp_options:
+    #host: localhost
+    #port: 5672
+    user: guest
+    pass: 'guest'
+    vhost: '/'
+    logging: false
+
+  sync_amqp_options:
+    client:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+    returnstore:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+
+test:
+  listens_on: 192.168.16.131:5672

@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD eSearchResult, 11 May 2002//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/eSearch_020511.dtd">
+<eSearchResult><Count>27</Count><RetMax>27</RetMax><RetStart>0</RetStart><IdList>
+		<Id>19737026</Id>
+		<Id>19139923</Id>
+		<Id>18652524</Id>
+		<Id>18576893</Id>
+		<Id>17626345</Id>
+		<Id>17539428</Id>
+		<Id>17256203</Id>
+		<Id>16539018</Id>
+		<Id>16108574</Id>
+		<Id>15218369</Id>
+		<Id>14535344</Id>
+		<Id>12735727</Id>
+		<Id>12537107</Id>
+		<Id>12194485</Id>
+		<Id>11757418</Id>
+		<Id>11318570</Id>
+		<Id>11091317</Id>
+		<Id>10845652</Id>
+		<Id>10701591</Id>
+		<Id>10464412</Id>
+		<Id>10464401</Id>
+		<Id>10082606</Id>
+		<Id>9919697</Id>
+		<Id>9640687</Id>
+		<Id>1306987</Id>
+		<Id>2152359</Id>
+		<Id>2152358</Id>
+	</IdList><TranslationSet/><TranslationStack>   <TermSet>    <Term>"Galaxias maculatus"[tiab]</Term>    <Field>tiab</Field>    <Count>27</Count>    <Explode>Y</Explode>   </TermSet>   <TermSet>    <Term>"G. maculatus"[tiab]</Term>    <Field>tiab</Field>    <Count>13</Count>    <Explode>Y</Explode>   </TermSet>   <TermSet>    <Term>Galaxias[tiab]</Term>    <Field>tiab</Field>    <Count>49</Count>    <Explode>Y</Explode>   </TermSet>   <OP>AND</OP>   <OP>GROUP</OP>   <OP>OR</OP>  </TranslationStack><QueryTranslation>"Galaxias maculatus"[tiab] OR ("G. maculatus"[tiab] AND Galaxias[tiab])</QueryTranslation><WarningList><QuotedPhraseNotFound>"Galaxias maculatus"[MeSH Terms]</QuotedPhraseNotFound></WarningList></eSearchResult>

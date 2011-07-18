@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD eSearchResult, 11 May 2002//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/eSearch_020511.dtd">
+<eSearchResult><Count>36</Count><RetMax>20</RetMax><RetStart>0</RetStart><IdList>
+		<Id>19015539</Id>
+		<Id>18977620</Id>
+		<Id>18587604</Id>
+		<Id>16892633</Id>
+		<Id>16712647</Id>
+		<Id>16635452</Id>
+		<Id>16596402</Id>
+		<Id>16582441</Id>
+		<Id>15114648</Id>
+		<Id>14707078</Id>
+		<Id>12169109</Id>
+		<Id>11517447</Id>
+		<Id>11042592</Id>
+		<Id>10624514</Id>
+		<Id>10022196</Id>
+		<Id>10022194</Id>
+		<Id>10022193</Id>
+		<Id>9787802</Id>
+		<Id>9491276</Id>
+		<Id>9183700</Id>
+	</IdList><TranslationSet/><TranslationStack>   <TermSet>    <Term>algirus[All Fields]</Term>    <Field>All Fields</Field>    <Count>36</Count>    <Explode>Y</Explode>   </TermSet>   <OP>GROUP</OP>  </TranslationStack><QueryTranslation>algirus[All Fields]</QueryTranslation><ErrorList><PhraseNotFound>Zonites</PhraseNotFound></ErrorList></eSearchResult>

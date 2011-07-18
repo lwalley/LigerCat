@@ -1,0 +1,31 @@
+%h1#titles= journal_title_join_and_truncate @journals.map{|j| content_tag(:span, h(j.title))}, 200, ' <span class="amp">&amp;</span> ', '<a href="#selected_journals_panel" onclick="sidebar_tabs.showTab(1);">others</a>'
+  
+#keyword_lists
+  %h2.keyword_heading MeSH Keywords
+  %ol#mesh_cloud.keyword_cloud
+    = mesh_keyword_cloud @mesh_frequencies
+  %h2.keyword_heading Text Keywords
+  %ol#text_cloud.keyword_cloud
+    = text_keyword_cloud @text_frequencies
+
+-content_for :help do
+  = render :partial => 'help/journal_keyword_cloud'
+  
+-content_for :sidebar_tabs do
+  %li.tab.selected_journals= link_to 'Selected Journals', '#selected_journals'
+  %li.tab.selected_terms= link_to 'Selected Terms', '#selected_terms'
+
+-content_for :sidebar_panels do
+  #selected_journals_panel.sidebar_panel.selections_panel
+    = javascript_tag "journal_selections = new Ligercat.JournalSelectionPanel('selected_journals')"
+  #selected_terms_panel.sidebar_panel.selections_panel
+    = javascript_tag "keyword_selections = new Ligercat.MeshAndTextSelectionPanel('selected_terms', '#mesh_cloud li a', '#text_cloud li a')"
+
+-content_for :domready do
+  ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel');
+  ==var journals = #{journal_preselections_json}
+  ==journal_selections.preloadSelectionsFromSession(journals);
+  ==keyword_selections.pubmed_search_within_journals.journals = journals.map(function(j){return j.title;});
+  ==keyword_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(2);});
+
+-insert_big_footer

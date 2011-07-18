@@ -1,0 +1,19 @@
+%h1
+  Searching for 
+  %span.query= awesome_truncate h(@query.query), 200
+  = image_tag 'loading_dark.gif', :alt => 'Loading...', :class => 'loading_spinner'
+  
+%div[@query]
+  %p.status 
+    Status:
+    %span#status= @status.titleize
+  %p <span class="ligercat">LigerCat</span> is searching the <a href="http://www.ncbi.nlm.nih.gov/sites/entrez?db=journals" class="external_link">NLM Journals</a> database for your query. 
+  %p It uses an iterative process that dynamically expands your search terms for increased results, which can take some time. This page will automatically display your search results when they're ready. However, if your query is taking too long, you can can <span class="highlight">save this URL</span> and come back to it later.
+  .current_url= journal_query_url @query
+  
+:javascript
+  status_request = new Request({url:"#{url_for(:controller => 'journal_queries', :action => 'show', :id => @query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
+  status_request.send.periodical(2000, status_request);
+
+-content_for :help do
+  = render :partial => 'help/journal_status'

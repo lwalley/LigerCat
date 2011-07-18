@@ -1,0 +1,24 @@
+%h1
+  Searching for 
+  %span.query= awesome_truncate h(@query.query), 200
+  = image_tag 'loading_dark.gif', :alt => 'Loading...', :class => 'loading_spinner'
+  
+
+%div[@query]
+  %p.status 
+    Status:
+    %span#status= @status.titleize
+  %p <span class="ligercat">LigerCat</span> is currently searching <a href="http://www.ncbi.nlm.nih.gov/pubmed/" class="external_link" target="_blank">PubMed</a> for your query.
+  %p After finding all the PubMed articles returned by your search query, <span class="ligercat">LigerCat</span> will extract the <abbr title="Medical Subject Headings">MeSH</abbr> descriptors for every article, and weight them by frequency and relevance. Depending on the number of results returned by your query, this can take several minutes, and in some cases upwards of an hour. 
+  %p This search usually takes less than one minute, however it could take up to one hour. You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
+  %p Alternatively, you can can save this URL and come back to it later:
+  .current_url
+    %span.url= article_status_url @query
+    %span.help Copy this url to come back later
+
+:javascript
+  status_request = new Request({url:"#{article_status_url(@query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
+  status_request.send.periodical(5000, status_request);
+
+-content_for :help do
+  = render :partial => 'help/article_status'

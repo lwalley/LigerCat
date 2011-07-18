@@ -1,0 +1,17 @@
+login: &login
+  adapter: mysql
+  username: user
+  password: password
+  host: mysql.example.com
+
+development:
+  <<: *login
+  database: ligercat_development
+
+test:
+  <<: *login
+  database: ligercat_test
+
+production:
+  <<: *login
+  database: ligercat_prod

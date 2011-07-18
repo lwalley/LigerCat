@@ -1,0 +1,325 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+# Randomly selected MeSH terms
+vanilla:
+  name: Vanilla
+  score: 0.5
+ganoderma:
+  name: Ganoderma
+  score: 0.05
+chalcone:
+  name: Chalcone
+  score: 0.0034
+sagittaria:
+  name: Sagittaria
+  score: 0.239395
+renilla:
+  name: Renilla
+  score: 0.005
+humans:
+  id: 6801
+  name: Humans
+  score: 1
+  genbank_score: 0.655704
+molecular_sequence_data:
+  id: 8969
+  name: Molecular Sequence Data
+  score: 0.0129663655534387
+  genbank_score: 1
+
+
+####################################################################
+##                                                                ##
+## MeSH terms from a PubMed search for "Biodiversity Informatics" ##
+##                                                                ##
+####################################################################
+
+databases_genetic: 
+  name: 'Databases, Genetic'
+  id: 30541
+  score: 3.96318901039194e-05
+informatics: 
+  name: 'Informatics'
+  id: 48088
+  score: 0.0
+electrophoresis: 
+  name: 'Electrophoresis'
+  id: 4586
+  score: 5.74614750803448e-05
+nucleic_acid_denaturation: 
+  name: 'Nucleic Acid Denaturation'
+  id: 9691
+  score: 1.55730765527551e-06
+international_cooperation: 
+  name: 'International Cooperation'
+  id: 7391
+  score: 0.000111840112367645
+insects: 
+  name: 'Insects'
+  id: 7313
+  score: 5.91776915825903e-05
+electrophoresis_polyacrylamide_gel: 
+  name: 'Electrophoresis, Polyacrylamide Gel'
+  id: 4591
+  score: 0.00121253880206496
+conservation_of_natural_resources: 
+  name: 'Conservation of Natural Resources'
+  id: 3247
+  score: 0.000181855401024222
+databases_as_topic: 
+  name: 'Databases as Topic'
+  id: 19992
+  score: 6.7695209509111e-06
+ecosystem: 
+  name: 'Ecosystem'
+  id: 17753
+  score: 0.000285082642221823
+animals: 
+  name: 'Animals'
+  id: 818
+  score: 0.128370136022568
+fungi: 
+  name: 'Fungi'
+  id: 5658
+  score: 0.000134564092149958
+financial_support: 
+  name: 'Financial Support'
+  id: 5378
+  score: 2.3327833332587e-05
+database_management_systems: 
+  name: 'Database Management Systems'
+  id: 3628
+  score: 3.86466563213617e-05
+internet: 
+  name: 'Internet'
+  id: 20407
+  score: 0.000180234521394596
+porosity: 
+  name: 'Porosity'
+  id: 16062
+  score: 2.17069609789178e-05
+natural_language_processing: 
+  name: 'Natural Language Processing'
+  id: 9323
+  score: 8.39039239508566e-06
+mycology: 
+  name: 'Mycology'
+  id: 9172
+  score: 7.62762908834702e-07
+models_biological: 
+  name: 'Models, Biological'
+  id: 8954
+  score: 0.00219075055792928
+lolium: 
+  name: 'Lolium'
+  id: 8129
+  score: 0.0
+costs_and_cost_analysis: 
+  name: 'Costs and Cost Analysis'
+  id: 3365
+  score: 0.000108979751530569
+fractals: 
+  name: 'Fractals'
+  id: 17709
+  score: 7.94544746440806e-07
+databases_factual: 
+  name: 'Databases, Factual'
+  id: 16208
+  score: 8.7177446403075e-05
+phylogeny: 
+  name: 'Phylogeny'
+  id: 10802
+  score: 0.00104244262911379
+terminology_as_topic: 
+  name: 'Terminology as Topic'
+  id: 9626
+  score: 4.88486075482797e-05
+cluster_analysis: 
+  name: 'Cluster Analysis'
+  id: 16000
+  score: 6.35000105830841e-05
+bacteria: 
+  name: 'Bacteria'
+  id: 1419
+  score: 0.000765909324400127
+soil_microbiology: 
+  name: 'Soil Microbiology'
+  id: 12988
+  score: 0.00021598904277198
+image_processing_computer_assisted: 
+  name: 'Image Processing, Computer-Assisted'
+  id: 7091
+  score: 0.000563459354452789
+geography: 
+  name: 'Geography'
+  id: 5843
+  score: 0.000246372423134744
+biodiversity: 
+  name: 'Biodiversity'
+  id: 44822
+  score: 2.27557611651719e-05
+documentation: 
+  name: 'Documentation'
+  id: 4282
+  score: 2.57750307355309e-05
+dna_bacterial: 
+  name: 'DNA, Bacterial'
+  id: 4269
+  score: 0.00110130256507546
+developing_countries: 
+  name: 'Developing Countries'
+  id: 3906
+  score: 0.000748842488974333
+bacteriological_techniques: 
+  name: 'Bacteriological Techniques'
+  id: 1431
+  score: 0.000178327623871155
+research_design: 
+  name: 'Research Design'
+  id: 12107
+  score: 0.00026877858908847
+information_dissemination: 
+  name: 'Information Dissemination'
+  id: 33181
+  score: 6.96021152180037e-06
+demography: 
+  name: 'Demography'
+  id: 3710
+  score: 0.000818444648757577
+hydrophobicity: 
+  name: 'Hydrophobicity'
+  id: 27141
+  score: 3.81381454417351e-07
+crops_agricultural: 
+  name: 'Crops, Agricultural'
+  id: 18556
+  score: 1.4206460036803e-05
+population_dynamics: 
+  name: 'Population Dynamics'
+  id: 11157
+  score: 0.000681401579640806
+environment: 
+  name: 'Environment'
+  id: 4777
+  score: 0.000146927210153081
+ecology: 
+  name: 'Ecology'
+  id: 4463
+  score: 9.69344546319917e-05
+interdisciplinary_communication: 
+  name: 'Interdisciplinary Communication'
+  id: 33183
+  score: 8.10435631137807e-06
+classification: 
+  name: 'Classification'
+  id: 2965
+  score: 8.42217377794441e-06
+biological_specimen_banks: 
+  name: 'Biological Specimen Banks'
+  id: 18070
+  score: 4.44945044364431e-07
+dna_fingerprinting: 
+  name: 'DNA Fingerprinting'
+  id: 16172
+  score: 5.14229359396268e-05
+plants: 
+  name: 'Plants'
+  id: 10944
+  score: 0.000309808878228068
+evolution: 
+  name: 'Evolution'
+  id: 5075
+  score: 0.000406234816182405
+computer_communication_networks: 
+  name: 'Computer Communication Networks'
+  id: 3195
+  score: 9.97948154690675e-05
+chemistry_physical: 
+  name: 'Chemistry, Physical'
+  id: 2627
+  score: 0.000145814847201109
+computational_biology: 
+  name: 'Computational Biology'
+  id: 19295
+  score: 0.000147531056427397
+plant_roots: 
+  name: 'Plant Roots'
+  id: 18517
+  score: 0.000230068370001391
+biophysics: 
+  name: 'Biophysics'
+  id: 1703
+  score: 0.000212238781386986
+didanosine: 
+  name: 'Didanosine'
+  id: 16049
+  score: 1.65265305440698e-06
+soil: 
+  name: 'Soil'
+  id: 12987
+  score: 0.000183794079930522
+software: 
+  name: 'Software'
+  id: 12984
+  score: 0.000481843686429784
+bacterial_physiology: 
+  name: 'Bacterial Physiology'
+  id: 18407
+  score: 4.41766860603821e-06
+information_storage_and_retrieval: 
+  name: 'Information Storage and Retrieval'
+  id: 16247
+  score: 0.000152838620124385
+statistics_as_topic: 
+  name: 'Statistics as Topic'
+  id: 13223
+  score: 0.000321441009873524
+aged: 
+  name: Aged
+  id: 368
+  score: '0.0488657'
+aged_80_and_over: 
+  name: Aged, 80 and over
+  id: 369
+  score: '0.00671759'
+female: 
+  name: Female
+  id: 5260
+  score: '0.378928'
+fingers: 
+  name: Fingers
+  id: 5385
+  score: '6.82037e-05'
+glomus_tumor: 
+  name: Glomus Tumor
+  id: 5918
+  score: '0'
+humans: 
+  name: Humans
+  id: 6801
+  score: '1'
+nails: 
+  name: Nails
+  id: 9262
+  score: '3.81381e-07'
+soft_tissue_neoplasms: 
+  name: Soft Tissue Neoplasms
+  id: 12983
+  score: '1.11236e-05'
+imidazoles: 
+  name: Imidazoles
+  id: 7093
+  score: "9.31206e-06"
+male: 
+  name: Male
+  id: 8297
+  score: "0.382447"
+middle_aged: 
+  name: Middle Aged
+  id: 8875
+  score: "0.0728065"

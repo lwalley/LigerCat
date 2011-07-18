@@ -1,0 +1,857 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2008//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_080101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="Publisher">
+        <PMID>18784790</PMID>
+        <DateCreated>
+            <Year>2008</Year>
+            <Month>9</Month>
+            <Day>11</Day>
+        </DateCreated>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">1471-8278</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>7</Volume>
+                    <Issue>3</Issue>
+                    <PubDate>
+                        <Year>2007</Year>
+                        <Month>May</Month>
+                        <Day>1</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Molecular ecology notes</Title>
+                <ISOAbbreviation>Mol. Ecol. Notes</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>bold: The Barcode of Life Data System (http://www.barcodinglife.org).</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>355-364</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The Barcode of Life Data System (bold) is an informatics workbench aiding the acquisition, storage, analysis and publication of DNA barcode records. By assembling molecular, morphological and distributional data, it bridges a traditional bioinformatics chasm. bold is freely available to any researcher with interests in DNA barcoding. By providing specialized services, it aids the assembly of records that meet the standards needed to gain BARCODE designation in the global sequence databases. Because of its web-based delivery and flexible data security model, it is also well positioned to support projects that involve broad research alliances. This paper provides a brief introduction to the key elements of bold, discusses their functional capabilities, and concludes by examining computational resources and future prospects.</AbstractText>
+            </Abstract>
+            <Affiliation>Canadian Centre for DNA Barcoding, Biodiversity Institute of Ontario, University of Guelph Guelph, ON, Canada N1G 2W1.</Affiliation>
+            <AuthorList>
+                <Author>
+                    <LastName>Ratnasingham</LastName>
+                    <FirstName>Sujeevan</FirstName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author>
+                    <LastName>Hebert</LastName>
+                    <FirstName>Paul D N</FirstName>
+                    <Initials>PD</Initials>
+                </Author>
+            </AuthorList>
+            <Language>ENG</Language>
+            <PublicationTypeList>
+                <PublicationType>JOURNAL ARTICLE</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <MedlineTA>Mol Ecol Notes</MedlineTA>
+            <NlmUniqueID>101087335</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2006</Year>
+                <Month>7</Month>
+                <Day>30</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2006</Year>
+                <Month>11</Month>
+                <Day>17</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2008</Year>
+                <Month>9</Month>
+                <Day>12</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2008</Year>
+                <Month>9</Month>
+                <Day>12</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pmc">PMC1890991</ArticleId>
+            <ArticleId IdType="doi">10.1111/j.1471-8286.2007.01678.x</ArticleId>
+            <ArticleId IdType="pubmed">18784790</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="In-Data-Review">
+        <PMID>18483570</PMID>
+        <DateCreated>
+            <Year>2008</Year>
+            <Month>05</Month>
+            <Day>16</Day>
+        </DateCreated>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">1687-5370</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>2008</Volume>
+                    <PubDate>
+                        <Year>2008</Year>
+                    </PubDate>
+                </JournalIssue>
+                <Title>International journal of plant genomics</Title>
+            </Journal>
+            <ArticleTitle>The generation challenge programme platform: semantic standards and workbench for crop science.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>369601</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The Generation Challenge programme (GCP) is a global crop research consortium directed toward crop improvement through the application of comparative biology and genetic resources characterization to plant breeding. A key consortium research activity is the development of a GCP crop bioinformatics platform to support GCP research. This platform includes the following: (i) shared, public platform-independent domain models, ontology, and data formats to enable interoperability of data and analysis flows within the platform; (ii) web service and registry technologies to identify, share, and integrate information across diverse, globally dispersed data sources, as well as to access high-performance computational (HPC) facilities for computationally intensive, high-throughput analyses of project data; (iii) platform-specific middleware reference implementations of the domain model integrating a suite of public (largely open-access/-source) databases and software tools into a workbench to facilitate biodiversity analysis, comparative analysis of crop genomic data, and plant breeding decision making.</AbstractText>
+            </Abstract>
+            <Affiliation>Crop Research Informatics Laboratory, International Rice Research Institute (IRRI), DAPO Box 7777, Metro Manila, Philippines.</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Bruskiewich</LastName>
+                    <ForeName>Richard</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Senger</LastName>
+                    <ForeName>Martin</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Davenport</LastName>
+                    <ForeName>Guy</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ruiz</LastName>
+                    <ForeName>Manuel</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rouard</LastName>
+                    <ForeName>Mathieu</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Hazekamp</LastName>
+                    <ForeName>Tom</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Takeya</LastName>
+                    <ForeName>Masaru</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Doi</LastName>
+                    <ForeName>Koji</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Satoh</LastName>
+                    <ForeName>Kouji</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Costa</LastName>
+                    <ForeName>Marcos</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Simon</LastName>
+                    <ForeName>Reinhard</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Balaji</LastName>
+                    <ForeName>Jayashree</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Akintunde</LastName>
+                    <ForeName>Akinnola</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Mauleon</LastName>
+                    <ForeName>Ramil</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wanchana</LastName>
+                    <ForeName>Samart</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Shah</LastName>
+                    <ForeName>Trushar</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Anacleto</LastName>
+                    <ForeName>Mylah</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Portugal</LastName>
+                    <ForeName>Arllet</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ulat</LastName>
+                    <ForeName>Victor Jun</ForeName>
+                    <Initials>VJ</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Thongjuea</LastName>
+                    <ForeName>Supat</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Braak</LastName>
+                    <ForeName>Kyle</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ritter</LastName>
+                    <ForeName>Sebastian</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Dereeper</LastName>
+                    <ForeName>Alexis</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Skofic</LastName>
+                    <ForeName>Milko</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Rojas</LastName>
+                    <ForeName>Edwin</ForeName>
+                    <Initials>E</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Martins</LastName>
+                    <ForeName>Natalia</ForeName>
+                    <Initials>N</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pappas</LastName>
+                    <ForeName>Georgios</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Alamban</LastName>
+                    <ForeName>Ryan</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Almodiel</LastName>
+                    <ForeName>Roque</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Barboza</LastName>
+                    <ForeName>Lord Hendrix</ForeName>
+                    <Initials>LH</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Detras</LastName>
+                    <ForeName>Jeffrey</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Manansala</LastName>
+                    <ForeName>Kevin</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Mendoza</LastName>
+                    <ForeName>Michael Jonathan</ForeName>
+                    <Initials>MJ</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Morales</LastName>
+                    <ForeName>Jeffrey</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Peralta</LastName>
+                    <ForeName>Barry</ForeName>
+                    <Initials>B</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Valerio</LastName>
+                    <ForeName>Rowena</ForeName>
+                    <Initials>R</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Zhang</LastName>
+                    <ForeName>Yi</ForeName>
+                    <Initials>Y</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Gregorio</LastName>
+                    <ForeName>Sergio</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Hermocilla</LastName>
+                    <ForeName>Joseph</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Echavez</LastName>
+                    <ForeName>Michael</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Yap</LastName>
+                    <ForeName>Jan Michael</ForeName>
+                    <Initials>JM</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Farmer</LastName>
+                    <ForeName>Andrew</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Schiltz</LastName>
+                    <ForeName>Gary</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Lee</LastName>
+                    <ForeName>Jennifer</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Casstevens</LastName>
+                    <ForeName>Terry</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Jaiswal</LastName>
+                    <ForeName>Pankaj</ForeName>
+                    <Initials>P</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Meintjes</LastName>
+                    <ForeName>Ayton</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wilkinson</LastName>
+                    <ForeName>Mark</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Good</LastName>
+                    <ForeName>Benjamin</ForeName>
+                    <Initials>B</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Wagner</LastName>
+                    <ForeName>James</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Morris</LastName>
+                    <ForeName>Jane</ForeName>
+                    <Initials>J</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Marshall</LastName>
+                    <ForeName>David</ForeName>
+                    <Initials>D</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Collins</LastName>
+                    <ForeName>Anthony</ForeName>
+                    <Initials>A</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Kikuchi</LastName>
+                    <ForeName>Shoshi</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Metz</LastName>
+                    <ForeName>Thomas</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>McLaren</LastName>
+                    <ForeName>Graham</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>van Hintum</LastName>
+                    <ForeName>Theo</ForeName>
+                    <Initials>T</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>Egypt</Country>
+            <MedlineTA>Int J Plant Genomics</MedlineTA>
+            <NlmUniqueID>101307648</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2007</Year>
+                <Month>9</Month>
+                <Day>22</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2007</Year>
+                <Month>12</Month>
+                <Day>14</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2008</Year>
+                <Month>5</Month>
+                <Day>17</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2008</Year>
+                <Month>5</Month>
+                <Day>17</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pmc">PMC2375972</ArticleId>
+            <ArticleId IdType="doi">10.1155/2008/369601</ArticleId>
+            <ArticleId IdType="pubmed">18483570</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="Publisher">
+        <PMID>18335319</PMID>
+        <DateCreated>
+            <Year>2008</Year>
+            <Month>3</Month>
+            <Day>12</Day>
+        </DateCreated>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Print">0742-2091</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <PubDate>
+                        <Year>2008</Year>
+                        <Month>Mar</Month>
+                        <Day>12</Day>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Cell biology and toxicology</Title>
+                <ISOAbbreviation>Cell Biol. Toxicol.</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Advances in concepts and methods for the marine environment: implications for policy.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn/>
+            </Pagination>
+            <Abstract>
+                <AbstractText>Science-based indicators aimed at measuring the sustainability of human activities on the environment have become of prime importance in the policy arena. At the international level, the Commission on Sustainable Development and the Convention on Biological Diversity and other Multilateral Environmental Agreements have recognised the need to develop a set of scientific indicators related to changes in biodiversity and other environmental issues able to direct policy decisions. In the marine realm, the study of the effects of both 'top-down' extractive activities such as fishing is more and more dealt with, in conjunction with 'bottom-up' activities such as nutrient loading and the effects on biogeochemical cycles, marine geochemistry and ecosystem structure and functioning of other pollutants and contaminants. 'Conventional' approaches such as the identification of taxa, model organisms and related methodologies will continue playing a key role for the monitoring of human-induced changes in the marine environment. On the other hand, newly developed disciplines such as genomics, proteomics and biodiversity informatics are increasingly looked at as a source of information and applications that can respond to questions and concerns by the policy community such as the need to adapt to global and climate change in the marine environment so as to mitigate its societal implications.</AbstractText>
+            </Abstract>
+            <Affiliation>Division of Ecological Sciences, United Nations Educational, Scientific and Cultural Organization (UNESCO), 1 rue Miollis, 75732, Paris cedex, France, s.arico@unesco.org.</Affiliation>
+            <AuthorList>
+                <Author>
+                    <LastName>Aricò</LastName>
+                    <FirstName>Salvatore</FirstName>
+                    <Initials>S</Initials>
+                </Author>
+            </AuthorList>
+            <Language>ENG</Language>
+            <PublicationTypeList>
+                <PublicationType>JOURNAL ARTICLE</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2008</Year>
+                <Month>3</Month>
+                <Day>12</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <MedlineTA>Cell Biol Toxicol</MedlineTA>
+            <NlmUniqueID>8506639</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2008</Year>
+                <Month>2</Month>
+                <Day>14</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2008</Year>
+                <Month>2</Month>
+                <Day>15</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="aheadofprint">
+                <Year>2008</Year>
+                <Month>3</Month>
+                <Day>12</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2008</Year>
+                <Month>3</Month>
+                <Day>13</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2008</Year>
+                <Month>3</Month>
+                <Day>13</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>aheadofprint</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="doi">10.1007/s10565-008-9068-8</ArticleId>
+            <ArticleId IdType="pubmed">18335319</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID>17704120</PMID>
+        <DateCreated>
+            <Year>2007</Year>
+            <Month>11</Month>
+            <Day>13</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2008</Year>
+            <Month>01</Month>
+            <Day>16</Day>
+        </DateCompleted>
+        <Article PubModel="Print-Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">1477-4054</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>8</Volume>
+                    <Issue>5</Issue>
+                    <PubDate>
+                        <Year>2007</Year>
+                        <Month>Sep</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Briefings in bioinformatics</Title>
+                <ISOAbbreviation>Brief. Bioinformatics</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>Biodiversity informatics: organizing and linking information across the spectrum of life.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>347-57</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>Biological knowledge can be inferred from three major levels of information: molecules, organisms and ecologies. Bioinformatics is an established field that has made significant advances in the development of systems and techniques to organize contemporary molecular data; biodiversity informatics is an emerging discipline that strives to develop methods to organize knowledge at the organismal level extending back to the earliest dates of recorded natural history. Furthermore, while bioinformatics studies generally focus on detailed examinations of key 'model' organisms, biodiversity informatics aims to develop over-arching hypotheses that span the entire tree of life. Biodiversity informatics is presented here as a discipline that unifies biological information from a range of contemporary and historical sources across the spectrum of life using organisms as the linking thread. The present review primarily focuses on the use of organism names as a universal metadata element to link and integrate biodiversity data across a range of data sources.</AbstractText>
+            </Abstract>
+            <Affiliation>MBLWHOI Library, Marine Biological Laboratory, Woods Hole, MA 02543, USA. sarkar@mbl.edu</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Sarkar</LastName>
+                    <ForeName>Indra Neil</ForeName>
+                    <Initials>IN</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+                <PublicationType>Review</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2007</Year>
+                <Month>08</Month>
+                <Day>17</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Brief Bioinform</MedlineTA>
+            <NlmUniqueID>100912837</NlmUniqueID>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Biodiversity</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Computational Biology</DescriptorName>
+                <QualifierName MajorTopicYN="Y">trends</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Databases, Genetic</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Information Dissemination</DescriptorName>
+                <QualifierName MajorTopicYN="Y">methods</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Population Dynamics</DescriptorName>
+            </MeshHeading>
+        </MeshHeadingList>
+        <NumberOfReferences>53</NumberOfReferences>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="aheadofprint">
+                <Year>2007</Year>
+                <Month>8</Month>
+                <Day>17</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2007</Year>
+                <Month>8</Month>
+                <Day>21</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2008</Year>
+                <Month>1</Month>
+                <Day>17</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pii">bbm037</ArticleId>
+            <ArticleId IdType="doi">10.1093/bib/bbm037</ArticleId>
+            <ArticleId IdType="pubmed">17704120</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="PubMed-not-MEDLINE">
+        <PMID>17597923</PMID>
+        <DateCreated>
+            <Year>2007</Year>
+            <Month>06</Month>
+            <Day>28</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2007</Year>
+            <Month>08</Month>
+            <Day>07</Day>
+        </DateCompleted>
+        <Article PubModel="Electronic">
+            <Journal>
+                <ISSN IssnType="Electronic">0973-2063</ISSN>
+                <JournalIssue CitedMedium="Internet">
+                    <Volume>1</Volume>
+                    <Issue>9</Issue>
+                    <PubDate>
+                        <Year>2007</Year>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Bioinformation</Title>
+            </Journal>
+            <ArticleTitle>An overview on biodiversity information in databases.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>367-9</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The massive development of biodiversity related information systems over the WWW (World Wide Web) has created much excitement in recent years. These arrays of new data sources are counterbalanced by the difficulty in knowing their location and nature. However, biologists and computer scientists have started to pull together in a rising tide of coherence and organization to address this issue. The fledging field of biodiversity informatics is expected to deliver major advances that could turn the WWW into a giant global biodiversity information system. The present paper briefly reviews the databases in preserving the biodiversity data.</AbstractText>
+            </Abstract>
+            <Affiliation>DBT Bioinformatics Facility, Department of Bioinformatics, Bharathiar University, Coimbatore - 641046. shanvel_99@yahoo.com</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Shanmughavel</LastName>
+                    <ForeName>Piramanayagam</ForeName>
+                    <Initials>P</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+            <ArticleDate DateType="Electronic">
+                <Year>2007</Year>
+                <Month>03</Month>
+                <Day>27</Day>
+            </ArticleDate>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>Singapore</Country>
+            <MedlineTA>Bioinformation</MedlineTA>
+            <NlmUniqueID>101258255</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="received">
+                <Year>2007</Year>
+                <Month>1</Month>
+                <Day>5</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="revised">
+                <Year>2007</Year>
+                <Month>3</Month>
+                <Day>9</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="accepted">
+                <Year>2007</Year>
+                <Month>3</Month>
+                <Day>20</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2007</Year>
+                <Month>6</Month>
+                <Day>29</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2007</Year>
+                <Month>6</Month>
+                <Day>29</Day>
+                <Hour>9</Hour>
+                <Minute>1</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>epublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pmc">PMC1891718</ArticleId>
+            <ArticleId IdType="pubmed">17597923</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="PubMed-not-MEDLINE">
+        <PMID>16701313</PMID>
+        <DateCreated>
+            <Year>2006</Year>
+            <Month>05</Month>
+            <Day>16</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>2007</Year>
+            <Month>06</Month>
+            <Day>14</Day>
+        </DateCompleted>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">0169-5347</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>19</Volume>
+                    <Issue>9</Issue>
+                    <PubDate>
+                        <Year>2004</Year>
+                        <Month>Sep</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Trends in ecology &amp; evolution (Personal edition)</Title>
+                <ISOAbbreviation>Trends Ecol. Evol. (Amst.)</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>New developments in museum-based informatics and applications in biodiversity analysis.</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>497-503</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>Information from natural history collections (NHCs) about the diversity, taxonomy and historical distributions of species worldwide is becoming increasingly available over the Internet. In light of this relatively new and rapidly increasing resource, we critically review its utility and limitations for addressing a diverse array of applications. When integrated with spatial environmental data, NHC data can be used to study a broad range of topics, from aspects of ecological and evolutionary theory, to applications in conservation, agriculture and human health. There are challenges inherent to using NHC data, such as taxonomic inaccuracies and biases in the spatial coverage of data, which require consideration. Promising research frontiers include the integration of NHC data with information from comparative genomics and phylogenetics, and stronger connections between the environmental analysis of NHC data and experimental and field-based tests of hypotheses.</AbstractText>
+            </Abstract>
+            <Affiliation>Department of Ecology and Evolution, 650 Life Sciences Building, Stony Brook University, NY 11794, USA. cgraham@life.bio.sunysb.edu</Affiliation>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Graham</LastName>
+                    <ForeName>Catherine H</ForeName>
+                    <Initials>CH</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ferrier</LastName>
+                    <ForeName>Simon</ForeName>
+                    <Initials>S</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Huettman</LastName>
+                    <ForeName>Falk</ForeName>
+                    <Initials>F</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Moritz</LastName>
+                    <ForeName>Craig</ForeName>
+                    <Initials>C</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Peterson</LastName>
+                    <ForeName>A Townsend</ForeName>
+                    <Initials>AT</Initials>
+                </Author>
+            </AuthorList>
+            <Language>eng</Language>
+            <PublicationTypeList>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>England</Country>
+            <MedlineTA>Trends Ecol Evol</MedlineTA>
+            <NlmUniqueID>8805125</NlmUniqueID>
+        </MedlineJournalInfo>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>2006</Year>
+                <Month>5</Month>
+                <Day>17</Day>
+                <Hour>9</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>2006</Year>
+                <Month>5</Month>
+                <Day>17</Day>
+                <Hour>9</Hour>
+                <Minute>1</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pii">S0169-5347(04)00203-4</ArticleId>
+            <ArticleId IdType="doi">10.1016/j.tree.2004.07.006</ArticleId>
+            <ArticleId IdType="pubmed">16701313</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+</PubmedArticleSet>

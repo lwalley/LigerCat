@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2009//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_090101.dtd">
+<PubmedArticleSet>
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID>3029822</PMID>
+        <DateCreated>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>14</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>14</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2006</Year>
+            <Month>11</Month>
+            <Day>15</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">0035-1040</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>72</Volume>
+                    <Issue>7</Issue>
+                    <PubDate>
+                        <Year>1986</Year>
+                    </PubDate>
+                </JournalIssue>
+                <Title>Revue de chirurgie orthopÃ©dique et rÃ©paratrice de l'appareil moteur</Title>
+                <ISOAbbreviation>Rev Chir Orthop Reparatrice Appar Mot</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>[Subungual glomus tumor. A case of unusual form]</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>509-10</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The authors report a case of glomus tumour developing beneath the nail of the ring finger in a 95 year old woman. In contrast with other similar cases, the pain was moderate and had been present for 20 years. The bony phalanx was deformed. Microscopic examination confirmed the diagnosis of a glomus tumour developing in the soft tissues. The phalanx was amputated.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Watelet</LastName>
+                    <ForeName>F</ForeName>
+                    <Initials>F</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Menez</LastName>
+                    <ForeName>D</ForeName>
+                    <Initials>D</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Pageaut</LastName>
+                    <ForeName>G</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Tropet</LastName>
+                    <ForeName>Y</ForeName>
+                    <Initials>Y</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Vichard</LastName>
+                    <ForeName>P</ForeName>
+                    <Initials>P</Initials>
+                </Author>
+            </AuthorList>
+            <Language>fre</Language>
+            <PublicationTypeList>
+                <PublicationType>Case Reports</PublicationType>
+                <PublicationType>English Abstract</PublicationType>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+            <VernacularTitle>Tumeur glomique sous unguÃ©ale. Un cas de forme inhabituelle.</VernacularTitle>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>FRANCE</Country>
+            <MedlineTA>Rev Chir Orthop Reparatrice Appar Mot</MedlineTA>
+            <NlmUniqueID>1272427</NlmUniqueID>
+            <ISSNLinking>0035-1040</ISSNLinking>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Aged</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Aged, 80 and over</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Fingers</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Glomus Tumor</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Nails</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Soft Tissue Neoplasms</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>1986</Year>
+                <Month>1</Month>
+                <Day>1</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>1986</Year>
+                <Month>1</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>1</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>1986</Year>
+                <Month>1</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">3029822</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID>3029823</PMID>
+        <DateCreated>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>10</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>10</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2007</Year>
+            <Month>11</Month>
+            <Day>15</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">1438-9029</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>146</Volume>
+                    <Issue>2</Issue>
+                    <PubDate>
+                        <Year>1987</Year>
+                        <Month>Feb</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>RÃ¶Fo : Fortschritte auf dem Gebiete der RÃ¶ntgenstrahlen und der Nuklearmedizin</Title>
+                <ISOAbbreviation>Rofo</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>[Imaging of neoplastic changes in the spine using MR tomography]</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>123-30</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The value of MR tomography for examining vertebral infiltration by malignant disease and the use of various techniques was examined retrospectively in a material of 68 examinations in 62 patients suffering from metastases, plasmacytomas, primary vertebral tumours and vertebral infiltration from extra-osseous tumours. It was shown that the method is superior to all other imaging methods for demonstrating changes in the bone marrow. The extent of the disease and involvement of neighbouring structures is shown more completely in cases where the disease extends beyond the vertebrae. Improved soft tissue contrast and the availability of various planes are definite advantages, as compared with CT. Tissue diagnosis, however, is not improved by MRT.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Weigert</LastName>
+                    <ForeName>F</ForeName>
+                    <Initials>F</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Reiser</LastName>
+                    <ForeName>M</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>PfÃ¤ndner</LastName>
+                    <ForeName>K</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+            </AuthorList>
+            <Language>ger</Language>
+            <PublicationTypeList>
+                <PublicationType>English Abstract</PublicationType>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+            <VernacularTitle>Die Darstellung neoplastischer WirbelverÃ¤nderungen durch die MR-Tomographie.</VernacularTitle>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>GERMANY, WEST</Country>
+            <MedlineTA>Rofo</MedlineTA>
+            <NlmUniqueID>7507497</NlmUniqueID>
+            <ISSNLinking>1438-9010</ISSNLinking>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Carcinoma, Bronchogenic</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+                <QualifierName MajorTopicYN="N">secondary</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Hemangioma</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Hodgkin Disease</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+                <QualifierName MajorTopicYN="N">secondary</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Lung Neoplasms</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+                <QualifierName MajorTopicYN="N">secondary</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Lymphoma, Large B-Cell, Diffuse</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnostic use</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Plasmacytoma</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Spinal Neoplasms</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+                <QualifierName MajorTopicYN="N">secondary</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>1</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">3029823</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+<PubmedArticle>
+    <MedlineCitation Owner="NLM" Status="MEDLINE">
+        <PMID>3029824</PMID>
+        <DateCreated>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>10</Day>
+        </DateCreated>
+        <DateCompleted>
+            <Year>1987</Year>
+            <Month>04</Month>
+            <Day>10</Day>
+        </DateCompleted>
+        <DateRevised>
+            <Year>2006</Year>
+            <Month>11</Month>
+            <Day>15</Day>
+        </DateRevised>
+        <Article PubModel="Print">
+            <Journal>
+                <ISSN IssnType="Print">1438-9029</ISSN>
+                <JournalIssue CitedMedium="Print">
+                    <Volume>146</Volume>
+                    <Issue>2</Issue>
+                    <PubDate>
+                        <Year>1987</Year>
+                        <Month>Feb</Month>
+                    </PubDate>
+                </JournalIssue>
+                <Title>RÃ¶Fo : Fortschritte auf dem Gebiete der RÃ¶ntgenstrahlen und der Nuklearmedizin</Title>
+                <ISOAbbreviation>Rofo</ISOAbbreviation>
+            </Journal>
+            <ArticleTitle>[Value of magnetic resonance tomography prior to surgery and irradiation of peripheral soft tissue tumors]</ArticleTitle>
+            <Pagination>
+                <MedlinePgn>130-6</MedlinePgn>
+            </Pagination>
+            <Abstract>
+                <AbstractText>The experience with magnetic resonance imaging (MRI) of 37 patients with peripheral soft tissue tumours and tumour-like lesions is reported. MRI proved to be a highly sensitive method in detecting soft tissue tumours. The main advantages of MRI compared to CT were the high contrast resolution of MRI and the multiplanar display. The anatomic setting of the soft parts tumour could be defined in most cases as either intracompartmental or extracompartmental. The relationship to the major neurovascular bundles and bone could be assessed accurately. Tumour-induced subtle periosteal reactions and cortical erosions are better defined with CT and plain film, especially. An imaging technique using small excitation angles, echoes produced by gradient inversion and extremely fast repetition times ("Fast Field Echo Imaging") is capable of producing MR images in only a few seconds acquisition time. Preliminary experience shows that soft tissue tumours can be evaluated with this rapid pulse sequence.</AbstractText>
+            </Abstract>
+            <AuthorList CompleteYN="Y">
+                <Author ValidYN="Y">
+                    <LastName>Bohndorf</LastName>
+                    <ForeName>K</ForeName>
+                    <Initials>K</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Reiser</LastName>
+                    <ForeName>M</ForeName>
+                    <Initials>M</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Friedmann</LastName>
+                    <ForeName>G</ForeName>
+                    <Initials>G</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Ghussen</LastName>
+                    <ForeName>F</ForeName>
+                    <Initials>F</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>HolzmÃ¼ller</LastName>
+                    <ForeName>W</ForeName>
+                    <Initials>W</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Steinbrich</LastName>
+                    <ForeName>W</ForeName>
+                    <Initials>W</Initials>
+                </Author>
+                <Author ValidYN="Y">
+                    <LastName>Beyer</LastName>
+                    <ForeName>D</ForeName>
+                    <Initials>D</Initials>
+                </Author>
+            </AuthorList>
+            <Language>ger</Language>
+            <PublicationTypeList>
+                <PublicationType>English Abstract</PublicationType>
+                <PublicationType>Journal Article</PublicationType>
+            </PublicationTypeList>
+            <VernacularTitle>Wert der Kernspintomographie vor chirurgischer Therapie und Radiatio peripherer Weichteiltumoren.</VernacularTitle>
+        </Article>
+        <MedlineJournalInfo>
+            <Country>GERMANY, WEST</Country>
+            <MedlineTA>Rofo</MedlineTA>
+            <NlmUniqueID>7507497</NlmUniqueID>
+            <ISSNLinking>1438-9010</ISSNLinking>
+        </MedlineJournalInfo>
+        <CitationSubset>IM</CitationSubset>
+        <MeshHeadingList>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Chondroma</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="Y">Extremities</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Magnetic Resonance Spectroscopy</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnostic use</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Neoplasm Recurrence, Local</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Neurilemmoma</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Sarcoma, Synovial</DescriptorName>
+                <QualifierName MajorTopicYN="N">diagnosis</QualifierName>
+            </MeshHeading>
+            <MeshHeading>
+                <DescriptorName MajorTopicYN="N">Soft Tissue Neoplasms</DescriptorName>
+                <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+                <QualifierName MajorTopicYN="N">therapy</QualifierName>
+            </MeshHeading>
+        </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+        <History>
+            <PubMedPubDate PubStatus="pubmed">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="medline">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>1</Minute>
+            </PubMedPubDate>
+            <PubMedPubDate PubStatus="entrez">
+                <Year>1987</Year>
+                <Month>2</Month>
+                <Day>1</Day>
+                <Hour>0</Hour>
+                <Minute>0</Minute>
+            </PubMedPubDate>
+        </History>
+        <PublicationStatus>ppublish</PublicationStatus>
+        <ArticleIdList>
+            <ArticleId IdType="pubmed">3029824</ArticleId>
+        </ArticleIdList>
+    </PubmedData>
+</PubmedArticle>
+
+
+</PubmedArticleSet>

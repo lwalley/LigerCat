@@ -1,0 +1,14 @@
+app_query:
+  id: 1
+  query_key: "0633e67733a678a922ece7c96b9b2388"
+  done: 1
+
+amino_acid_query:
+  id: 2
+  query_key: "5e185a4e159afb7791151bea45481395"
+  done: 1
+  
+still_blasting:
+  id: 3
+  query_key: "d5e33b4d3a40a2d43895267c8a67512a"
+  done: 0

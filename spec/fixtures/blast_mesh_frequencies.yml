@@ -1,0 +1,10 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+humans:
+  blast_query_id: 2   # this is bogus, but will serve our purposes
+  mesh_keyword_id: 6801
+  frequency: 100
+  
+molecular_sequence_data:
+  blast_query_id: 2
+  mesh_keyword_id: 8969
+  frequency: 100

@@ -1,0 +1,13 @@
+#selections{ :class => 'span-8 last'}
+  %h2 Selected Journals
+  %p#instructions.instructions{ :style => @selections.blank? ? nil : 'display:none' } 
+    You can compare the MeSH and Text Word profiles for multiple journals by selecting the checkboxes next to their names.
+  #selection_tools{ :style => @selections.blank? ? 'display:none' : nil }
+    #selection_scrollpane
+      %ol#selection_list
+        = render :partial => 'selections/selection', :collection => @selections unless @selections.blank?
+      #selection_spinner.little_spinner{ :style => 'display:none' } Loading...
+    = javascript_tag 'Selections.check_size();'
+    %ul#selection_toolbar.toolbar
+      %li= link_to_function 'Remove All', 'Selections.remove_all()'
+      %li= compare_selected_link(@selections)

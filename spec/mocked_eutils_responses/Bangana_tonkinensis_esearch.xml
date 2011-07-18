@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD eSearchResult, 11 May 2002//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/eSearch_020511.dtd">
+<eSearchResult><Count>44</Count><RetMax>20</RetMax><RetStart>0</RetStart><IdList>
+		<Id>19260293</Id>
+		<Id>19209761</Id>
+		<Id>19196409</Id>
+		<Id>19170963</Id>
+		<Id>18615626</Id>
+		<Id>18161942</Id>
+		<Id>17450758</Id>
+		<Id>17427256</Id>
+		<Id>17365189</Id>
+		<Id>16904915</Id>
+		<Id>16810764</Id>
+		<Id>16783704</Id>
+		<Id>16753795</Id>
+		<Id>16724846</Id>
+		<Id>16355802</Id>
+		<Id>16308206</Id>
+		<Id>16289147</Id>
+		<Id>16273300</Id>
+		<Id>16042151</Id>
+		<Id>16012772</Id>
+	</IdList><TranslationSet/><TranslationStack>   <TermSet>    <Term>tonkinensis[All Fields]</Term>    <Field>All Fields</Field>    <Count>45</Count>    <Explode>Y</Explode>   </TermSet>   <OP>GROUP</OP>  </TranslationStack><QueryTranslation>tonkinensis[All Fields]</QueryTranslation><ErrorList><PhraseNotFound>Bangana</PhraseNotFound></ErrorList></eSearchResult>

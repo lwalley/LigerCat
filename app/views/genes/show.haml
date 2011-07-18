@@ -1,0 +1,26 @@
+%h1 MeSH Cloud for Blast Results
+
+%ol.keyword_cloud= mesh_keyword_cloud @mesh_frequencies
+
+- unless @publication_histogram.blank?
+  %h2.publication_history Publication History
+  - publication_histogram @publication_histogram
+
+-content_for :help do
+  = render :partial => 'help/keyword_cloud'
+
+-content_for :sidebar_tabs do
+  %li.tab.blast= link_to 'Blast', '#blast_panel'
+  %li.tab.selected_terms= link_to 'Selected Terms', '#selected_terms_panel'
+
+-content_for :sidebar_panels do
+  #blast_panel.sidebar_panel
+    = blast_form(@query.sequence)
+  #selected_terms_panel.sidebar_panel.selections_panel
+    = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a')"
+    
+-content_for :domready do
+  ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel');
+  ==keyword_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(2);});
+  
+-insert_big_footer

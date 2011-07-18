@@ -1,0 +1,46 @@
+!!! 1.1
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en" }
+  %head
+    %meta{ 'http-equiv' => 'Content-Type', :content => "application/xhtml+xml; charset=utf-8" }
+    %title=h title
+    = javascript_include_tag %w(mootools mootools-1.2-more tabs application toolbar medline_search selection_panel journal_selection_panel mesh_selection_panel mesh_and_text_selection_panel text_box_hint), :cache => true
+    = stylesheet_link_tag    %w(reset typography tabs application), :cache => true
+    /[if IE 7]
+      = stylesheet_link_tag 'ie7'
+    /[if IE 6]
+      = stylesheet_link_tag 'ie6'
+    
+    
+    :javascript
+      window.addEvent('domready', init);
+      function init() {
+        #{searchbox_hint_javascript}
+        #{yield :domready}
+      }
+    
+  %body{ :id => body_id}
+    #header_and_tabs
+      #header.container
+        #logo_and_tagline
+          %a.home{ :href => context_home_url, :title => 'Return to Home Page' }
+            %span.logo LigerCat
+            %span.tagline Literature and Genomics Resource Catalogue
+        %ul.navigation
+          = nav_tab 'journals', journals_url
+          = nav_tab 'articles', new_article_url
+          = nav_tab 'genes',    new_gene_url
+
+    .search_panel{ :class => @context }= render :partial => "#{@context}/search_form", :locals => {:height => '12' }
+
+    #content.container
+      #sidebar
+        %ul.sidebar_tabs.tabnav
+          %li.tab.help= link_to 'Help', '#help'
+          =yield :sidebar_tabs
+        #sidebar_panels
+          #help.sidebar_panel=yield :help
+          =yield :sidebar_panels
+
+      #main_content= yield :layout
+    =yield :footer
+    =google_analytics
