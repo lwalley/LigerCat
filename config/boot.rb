@@ -1,6 +1,10 @@
 # Don't change this file!
 # Configure your app in config/environment.rb and config/environments/*.rb
 
+#rails 2.3.8 ActiveSupport patch
+require 'thread'
+require File.join(File.dirname(__FILE__), 'boot')
+
 RAILS_ROOT = "#{File.dirname(__FILE__)}/.." unless defined?(RAILS_ROOT)
 
 module Rails
