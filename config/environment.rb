@@ -11,21 +11,24 @@ RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.gem 'haml'
-  config.gem 'rspec-rails', :lib => false
-  config.gem 'mislav-will_paginate', :version => '>= 2.3.1', :lib => 'will_paginate', :source => 'http://gems.github.com'
-  config.gem 'chronic', :version => '0.2.3'
-  config.gem 'packet', :version => '0.1.5'
-  config.gem 'progressbar'
-  config.gem 'pubmed_search'
-  config.gem 'daemons'
-  config.gem 'nokogiri'
-  config.gem 'bunny', :version => '0.6.0'
-  config.gem 'memcache-client', :lib => false
-  config.gem 'eventmachine'
-  config.gem 'redis', :version => '0.1.2'
-  config.gem 'treetop'
-  config.gem 'bio'
+
+##
+#Gems moved to Gemfile  
+#  config.gem 'haml'
+#  config.gem 'rspec-rails', :lib => false
+#  config.gem 'mislav-will_paginate', :version => '>= 2.3.1', :lib => 'will_paginate', :source => 'http://gems.github.com'
+#  config.gem 'chronic', :version => '0.2.3'
+#  config.gem 'packet', :version => '0.1.5'
+#  config.gem 'progressbar'
+#  config.gem 'pubmed_search'
+#  config.gem 'daemons'
+#  config.gem 'nokogiri'
+#  config.gem 'bunny', :version => '0.6.0'
+#  config.gem 'memcache-client', :lib => false
+#  config.gem 'eventmachine'
+#  config.gem 'redis', :version => '0.1.2'
+#  config.gem 'treetop'
+#  config.gem 'bio'
   
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
