@@ -5,12 +5,12 @@
 #
 
 production:
-  listens_on: 128.128.164.99:5672
+  listens_on: localhost:5672
 
   # amqp_options are shared among all amqp adapters, including the tmm1-amqp aync adapter
   amqp_options:
-    user: guest
-    pass: 'guest'
+    user: user
+    pass: 'password'
     vhost: '/'
     logging: false
 
@@ -38,8 +38,8 @@ development:
   amqp_options:
     #host: localhost
     #port: 5672
-    user: guest
-    pass: 'guest'
+    user: user
+    pass: 'password'
     vhost: '/'
     logging: false
 
@@ -56,4 +56,4 @@ development:
         persistent: false
 
 test:
-  listens_on: 192.168.16.131:5672
+  listens_on: localhost:5672

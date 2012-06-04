@@ -1,8 +1,8 @@
 # This Redis DB contains pmid -> mesh_id mappings
 mesh_development:
   hosts:
-    - '128.128.164.226:6379'
-    - '128.128.164.245:6379'
+    - 'localhost:6379'
+    - 'localhost:6379'
   database: 0
 
 mesh_test:
@@ -12,16 +12,16 @@ mesh_test:
 
 mesh_production:
   hosts: 
-    - '128.128.164.226:6379'
-    - '128.128.164.245:6379'
+    - 'localhost:6379'
+    - 'localhost:6379'
   database: 0
   
 
 # This Redis DB contains pmid -> date_published mappings
 date_published_development:
   hosts: 
-    - '128.128.164.226:6379'
-    - '128.128.164.245:6379'
+    - 'localhost:6379'
+    - 'localhost:6379'
   database: 1
 
 date_published_test:
@@ -31,6 +31,6 @@ date_published_test:
 
 date_published_production:
   hosts: 
-    - '128.128.164.226:6379'
-    - '128.128.164.245:6379'
+    - 'localhost:6379'
+    - 'localhost:6379'
   database: 1

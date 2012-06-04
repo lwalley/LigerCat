@@ -9,27 +9,10 @@ RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require "bundler/setup"
 
 Rails::Initializer.run do |config|
 
-##
-#Gems moved to Gemfile  
-#  config.gem 'haml'
-#  config.gem 'rspec-rails', :lib => false
-#  config.gem 'mislav-will_paginate', :version => '>= 2.3.1', :lib => 'will_paginate', :source => 'http://gems.github.com'
-#  config.gem 'chronic', :version => '0.2.3'
-#  config.gem 'packet', :version => '0.1.5'
-#  config.gem 'progressbar'
-#  config.gem 'pubmed_search'
-#  config.gem 'daemons'
-#  config.gem 'nokogiri'
-#  config.gem 'bunny', :version => '0.6.0'
-#  config.gem 'memcache-client', :lib => false
-#  config.gem 'eventmachine'
-#  config.gem 'redis', :version => '0.1.2'
-#  config.gem 'treetop'
-#  config.gem 'bio'
-  
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
@@ -81,10 +64,10 @@ Mime::Type.register_alias "text/html", :cloud
 
 
 # Email list for ExceptionNotifier  
-ExceptionNotifier.exception_recipients = %w(agoddard@mbl.edu rschenk@mbl.edu)
+ExceptionNotifier.exception_recipients = %w(recipient1@example.com recipient2@example.com)
 
 # defaults to exception.notifier@default.com
-ExceptionNotifier.sender_address = %("Ligercat Error" <errors@ligercat.ubio.org>)
+ExceptionNotifier.sender_address = %("Ligercat Error" <errors@example.com>)
 
 ActionMailer::Base.delivery_method = :sendmail
 
@@ -95,7 +78,7 @@ ENV['RECAPTCHA_PRIVATE_KEY'] = '6LfYQwcAAAAAAP-wG3o2KdsVrsHpSaB3Frq2HfI6'
 # BioRuby configuration
 begin
   require 'bio'
-  Bio::NCBI.default_email = "rschenk@mbl.edu"
+  Bio::NCBI.default_email = "recipient@example.com"
 rescue Exception => e
   # We require Bio as a gem above, but you can't install the gems with rake gems
   # because of the block of code above. This fixes that. Probably a better way to do this
@@ -103,6 +86,7 @@ end
 
 # Workling configuration
 begin
+  require 'bunny'
   Workling::Clients::SyncAmqpClient.client_class = Bunny
   Workling::Remote.dispatcher = Workling::Remote::Runners::ClientRunner.new
   Workling::Remote.dispatcher.client = Workling::Clients::SyncAmqpClient.new
@@ -112,3 +96,4 @@ rescue NameError => e
   # because of the block of code above. This fixes that. Probably a better way to
   # do this, but whateevrrrr
 end
+

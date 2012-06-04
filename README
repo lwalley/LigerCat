@@ -1,134 +1,97 @@
-Installing Ligercat
-===================
+LigerCat ligercat.org
 
-Preparing the Environment
--------------------------
+INSTALLATION REQUIREMENTS
+=========================
 
-Setting up the environment for LigerCat is more difficult than installing LigerCat itself.
+LigerCat is a Ruby on Rails application. The following instructions assume you are familiar with and using Ruby Version Manager (RVM http://beginrescueend.com) and Bundler (http://gembundler.com/).
 
-This document assumes that you are comfortable installing programs and have perhaps opened the Terminal, but does not assume any level of proficiency.
-
-We will cover the setup on Mac OS X and Linux. At this time, Windows is not supported and probably never will be. The installation instructions for Mac OS X are more explicit, because it is assumed that if you are running Linux, you are comfortable on the command line.
-
-### Setting Up Ruby
-The first step to installing LigerCat is preparing the environment. LigerCat requires Ruby version 1.8.6 or higher and Rubygems 1.3 or higher.
-
-To install on Mac OS X, all you need to do is update your Rubygems. Open a new Terminal and the following command; enter your login password when prompted.
-
-`sudo gem update --system`
-
-To install on Linux, install Ruby using your preferred method: a package manager, download the rpms or source from <http://www.ruby-lang.org/en/downloads/> (scroll down to the Linux section).
-
-### Setting up MySQL
-LigerCat also requires MySQL version 5.0 or higher. 
-
-On Mac OS X, we recommend downloading the binary package from <http://dev.mysql.com/downloads/mysql/5.1.html#macosx-dmg>
-
-If you are running Leopard, at this time we recommend downloading the 32-bit version of MySQL, even if you have a 64-bit processor. This is due to vagaries between Ruby and MySQL, and compiling the MySQL Ruby Driver. The 32-bit version is the one marked "Mac OS X 10.5 (x86)". If you already have the 64-bit version installed, don't sweat it
-
-On Linux, install MySQL using your preferred method: a package manager, download the rpms, or compile the source.
-
-### Compiling the MySQL Ruby Gem (Optional)
-If you are not running LigerCat in a production environment, for instance if you are installing it on your personal computer, skip this step. It will be horrible, and unnecessary for your purposes.
-
-Otherwise, let's begin.
-
-On Mac OS X, you must have the XCode Developer Tools installed. If you have them installed, try the following two commands. If one fails, try the other. If they both fail, punt.
-
-Good Luck!
-
-Attempt #1:
-
-`sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql`
-
-Attempt #2:
-
-`sudo -s
-ARCHFLAGS="-arch i386" gem install mysql -- --with-mysql-dir=/usr/local/mysql`
-
-On Linux, we do this on our CentOS boxes. Your mileage will vary depending on your distro.
-
-`sudo yum install mysql-devel
-sudo gem install mysql -- --with-mysql-config=/usr/bin/mysql_config --with-mysql-lib=/usr/lib/mysql`
+Additional requirements:
+* Git
+* MySQL 5.0 +
+* RabbitMQ
+* Redis
 
 
-Installing LigerCat and Friends
--------------------------------
+INSTALLATION INSTRUCTIONS
+=========================
 
-### Check Out the LigerCat Code
-Now that you have Ruby 1.8.6 or higher, Rubygems 1.3 or higher, and MySQL 5 or higher, we can install LigerCat. First, you need to check out the LigerCodes. In the Terminal, navigate to the location on your filesystem where you'd like to install ligercat, and type in 
+Clone the LigerCat application code to your machine:
 
-`git checkout git@github.com:mbl-cli/LigerCat.git`
+READ ONLY:
+$ git clone git://github.com/mbl-cli/LigerCat.git
 
-### Configure LigerCat's Database Connection
-Open RAILS_ROOT/config/database.yml.example in your favorite text editor. Under the "login" section, fill in the appropriate values, making sure that you use a user that has the ability to create and modify databases.
+Or READ/WRITE:
+$ git clone git@github.com:mbl-cli/LigerCat.git
 
-If you've just installed MySQL, then you should use:
+Navigate to the root directory of the LigerCat application that you just cloned:
+$ cd LigerCat
 
-`adapter: mysql
-username: root
-password: 
-host: localhost`
+Assuming you are using RVM you should receive a notice regarding a new .rvmrc file when you enter the root directory of the application:
+...RVM has encountered a new or modified .rvmrc file in the current directory...
+...Do you wish to trust this .rvmrc file?
 
-Save this file as RAILS_ROOT/config/database.yml (in other words, just remove the .example extension)
+Trust the .rvmrc file by entering: y
 
-Then, in the RAILS_ROOT directory run the following command to create the database
+If the Ruby version required is not yet installed RVM will indicate this with a warning:
+WARN: ruby ruby-1.8.7 is not installed
 
-`rake db:create`
+To install Ruby 1.8.7 follow the RVM instructions:
+$ rvm install ruby-1.8.7
+
+With Ruby installed you should see a notice indicating which Ruby version and gemset you are using when you navigate to the LigerCat application root directory:
+$ cd LigerCat
+Using ~/.rvm/gems/ruby-1.8.7-p352 with gemset ligercat
 
 
-### Install the Required Rubygems
-Now you need to install the Ruby libraries (called gems) that LigerCat requires.
+The following instructions assume you are in the root directory (RAILS_ROOT) of the LigerCat application:
 
-Enter in the ligercat directory that you just checked out. *This directory will be referred to as the RAILS_ROOT directory from now on.*
+Add bundler gem to ligercat gemset:
+$ gem install bundler
 
-`cd ligercat`
+Check bundler gem is installed in the ligercat gemset:
+$ gem list
 
-Now paste the following three commands into the terminal.
+Add required gems to the ligercat gemset using bundler:
+$ bundle install
 
-`sudo gem install rails --version=2.1.2
-sudo gem install packet --version=0.1.5
-sudo rake gems:install`
 
-### Load the Database
-First, make sure MySQL is running.
+Create a symbolic link for the Blast Binary (only if required, note that Mac OS X creates the symlink for you automagically):
+$ ln -nfs lib/blast_bin/blastcl3-linux lib/blast_bin/blastcl3
 
-In the RAILS_ROOT directory, run the following command.
 
-A word to the wise: the LigerCat database has large lookup tables; they will take up approximately 11 gB of space on disc, and this command will take an hour or more to run. We recommend performing this step overnight.
+Creating and populating the database
+------------------------------------
+WARNING: The LigerCat database can take up more than 11 GB of hard disk space. Running migrations (populating the database) can take up to an hour or more.
 
-`rake db:migrate`
+An example of the required MySQL connection settings can be found in RAILS_ROOT/config/database.yml.example. Copy this file and rename it to RAILS_ROOT/config/database.yml. Edit the "login" section of your new RAILS_ROOT/config/database.yml to use your MySQL username, password and host values, ensure that your MySQL user has create and update databases privileges.
 
-### Symlink the Blast Binary (Linux Only)
-On Linux, you need to create the following symlink:
+Create LigerCat database:
+$ rake db:create
 
-In the RAILS_ROOT Directory...
+Populate the LigerCat database - WARNING: may take more than an hour:
+$ rake db:migrate
 
-`ln -nfs lib/blast_bin/blastcl3-linux lib/blast_bin/blastcl3`
 
-*This symlink is already created for you on Mac OS X, so this step is not necessary.*
 
-Running LigerCat
+
+RUNNING LIGERCAT
+================
+
+Development Mode
 ----------------
+From the RAILS_ROOT directory start the Web server, use -p to specify a different port, default is 3000. Use CTRL-C to stop the server:
+$ script/server
 
-Open two Terminal windows, and cd both of them to the RAILS_ROOT directory
+Open a Web browser and navigate to <http://0.0.0.0:3000>
 
-In the first Terminal window, type the following command. This will start up the LigerCat web server.
+LigerCat also uses RabbitMQ and Redis to handle background processes for new queries. You will need to install and configure these appropriately - instructions are pending, but if you are familiar with these tools you can get started by adjusting the config files in RAILS_ROOT/config and running start and stop commands for RAILS_ROOT/script/working_client.
 
-`./script/server`
 
-In the second Terminal window, type the following command. This will start up the BackgrounDRB server, which LigerCat uses to search PubMed asynchronously outside the HTTP Request/Response cycle.
+Production Mode
+---------------
+LigerCat cannot be run in a production environment by the method detailed above.
 
-`./script/backgroundrb start`
-
-Now open a browser and navigate to <http://localhost:3000/> to start using LigerCat!
-
-To shut down LigerCat, click on the first terminal window (the one running the webserver) and hit Ctrl-C to kill the process. In the second terminal window, type `./script/backgroundrb stop`
-
-Deploying LigerCat
-------------------
-LigerCat cannot be run in a production environment by the method detailed above. 
-
-We at the MBL run LigerCat using Apache + Phusion Passenger, although there's nothing stopping you from using Mongrel or Thin behind an Apache or Nginx proxy. 
+We at the MBL run LigerCat using Apache + Phusion Passenger, although there's nothing stopping you from using Mongrel or Thin behind an Apache or Nginx proxy.
 
 Effectively hosting a Rails application in a production environment is beyond the scope of this document, however we have included a sample Capfile that we use to deploy to Phusion Passenger.
+

@@ -1,7 +1,10 @@
 log/*
 tmp/**/*
 .DS_Store
+*.swp
 doc/api
 doc/app
 config/database.yml
 config/deploy.rb
+config/redis.yml
+config/workling.yml
