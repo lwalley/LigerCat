@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'rails', '2.3.5'
+gem 'rails', '2.3.4'
 gem 'json'
 gem 'haml'
 gem 'rspec-rails', '1.3.4'
