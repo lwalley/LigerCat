@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 require 'redis'
-require 'dist_redis'
+require 'redis/distributed'
 
 
 # Monkey patches to provide easy access to Redis instance vars
@@ -39,48 +39,48 @@ describe RedisFactory do
         Rails.stub!(:env).and_return 'development'
         r = RedisFactory.gimme
         r.should be_a Redis
-        r.host.should == 'dev_host'
-        r.port.should == 6379
-        r.db.should   == 0
+        r.client.host.should == 'dev_host'
+        r.client.port.should == 6379
+        r.client.db.should   == 0
         
         Rails.stub!(:env).and_return 'production'
         r = RedisFactory.gimme
-        r.host.should == 'prod_host'
-        r.port.should == 6381
-        r.db.should   == 2
+        r.client.host.should == 'prod_host'
+        r.client.port.should == 6381
+        r.client.db.should   == 2
         
         Rails.stub!(:env).and_return 'test'
         r = RedisFactory.gimme
-        r.host.should == 'test_host'
-        r.port.should == 6380
-        r.db.should   == 1
+        r.client.host.should == 'test_host'
+        r.client.port.should == 6380
+        r.client.db.should   == 1
       end
     end
     
     describe "with a prefix" do
       before(:each) do
         RedisFactory.configurations = YAML.load("a_development:        \n"+
-                                                "  host: 'a_dev_host'  \n"+
+                                                "  host: 'a.dev.host'  \n"+
                                                 "  port: 6379          \n"+
                                                 "  database: 0         \n"+
                                                 "a_test:               \n"+
-                                                "  host: 'a_test_host' \n"+
+                                                "  host: 'a.test.host' \n"+
                                                 "  port: 6380          \n"+
                                                 "  database: 1         \n"+
                                                 "a_production:         \n"+
-                                                "  host: 'a_prod_host' \n"+
+                                                "  host: 'a.prod.host' \n"+
                                                 "  port: 6381          \n"+
                                                 "  database: 2         \n"+
                                                 "b_development:        \n"+
-                                                "  host: 'b_dev_host'  \n"+
+                                                "  host: 'b.dev.host'  \n"+
                                                 "  port: 6382          \n"+
                                                 "  database: 3         \n"+
                                                 "b_test:               \n"+
-                                                "  host: 'b_test_host' \n"+
+                                                "  host: 'b.test.host' \n"+
                                                 "  port: 6383          \n"+
                                                 "  database: 4         \n"+
                                                 "b_production:         \n"+
-                                                "  host: 'b_prod_host' \n"+
+                                                "  host: 'b.prod.host' \n"+
                                                 "  port: 6384          \n"+
                                                 "  database: 5         \n")                                       
       end
@@ -88,37 +88,37 @@ describe RedisFactory do
         Rails.stub!(:env).and_return 'development'
         a = RedisFactory.gimme(:a)
         a.should be_a Redis
-        a.host.should == 'a_dev_host'
-        a.port.should == 6379
-        a.db.should   == 0
+        a.client.host.should == 'a.dev.host'
+        a.client.port.should == 6379
+        a.client.db.should   == 0
         
         b = RedisFactory.gimme('b')
-        b.host.should == 'b_dev_host'
-        b.port.should == 6382
-        b.db.should   == 3
+        b.client.host.should == 'b.dev.host'
+        b.client.port.should == 6382
+        b.client.db.should   == 3
         
         Rails.stub!(:env).and_return 'production'
         a = RedisFactory.gimme('a')
-        a.host.should == 'a_prod_host'
-        a.port.should == 6381
-        a.db.should   == 2
+        a.client.host.should == 'a.prod.host'
+        a.client.port.should == 6381
+        a.client.db.should   == 2
         
         
         b = RedisFactory.gimme('b')
-        b.host.should == 'b_prod_host'
-        b.port.should == 6384
-        b.db.should   == 5
+        b.client.host.should == 'b.prod.host'
+        b.client.port.should == 6384
+        b.client.db.should   == 5
         
         Rails.stub!(:env).and_return 'test'
         a = RedisFactory.gimme('a')
-        a.host.should == 'a_test_host'
-        a.port.should == 6380
-        a.db.should   == 1
+        a.client.host.should == 'a.test.host'
+        a.client.port.should == 6380
+        a.client.db.should   == 1
         
         b = RedisFactory.gimme('b')
-        b.host.should == 'b_test_host'
-        b.port.should == 6383
-        b.db.should   == 4
+        b.client.host.should == 'b.test.host'
+        b.client.port.should == 6383
+        b.client.db.should   == 4
       end
     end
   end
@@ -128,8 +128,8 @@ describe RedisFactory do
       before(:each) do
         RedisFactory.configurations = YAML.load("development:             \n"+
                                                 "  hosts:                 \n"+
-                                                "    - 'dev_host_1:6379'  \n"+
-                                                "    - 'dev_host_2:6379'  \n"+
+                                                "    - 'dev.host1:6379'  \n"+
+                                                "    - 'dev.host2:6379'  \n"+
                                                 "  database: 0            \n"+
                                                 "test:                    \n"+
                                                 "  host: 'test_host'      \n"+
@@ -137,39 +137,39 @@ describe RedisFactory do
                                                 "  database: 1            \n"+
                                                 "production:              \n"+
                                                 "  hosts:                 \n"+
-                                                "    - 'prod_host_1:6381' \n"+
-                                                "    - 'prod_host_2:6381' \n"+
+                                                "    - 'prod.host1:6381' \n"+
+                                                "    - 'prod.host2:6381' \n"+
                                                 "  database: 2            \n" )
       end
-      it '#gimme should return a DistRedis instance for each environment with multiple hosts' do
+      it '#gimme should return a Redis::Distributed instance for each environment with multiple hosts' do
         Rails.stub!(:env).and_return 'development'
         r = RedisFactory.gimme
-        r.should be_a DistRedis
-        r.ring.nodes[0].host.should == 'dev_host_1'
-        r.ring.nodes[0].port.should == 6379
-        r.ring.nodes[0].db.should   == 0
-        
-        r.ring.nodes[1].host.should == 'dev_host_2'
-        r.ring.nodes[1].port.should == 6379
-        r.ring.nodes[1].db.should   == 0
+        r.should be_a Redis::Distributed
+        r.nodes[0].client.host.should == 'dev.host1'
+        r.nodes[0].client.port.should == 6379
+        r.nodes[0].client.db.should   == 0
+
+        r.nodes[1].client.host.should == 'dev.host2'
+        r.nodes[1].client.port.should == 6379
+        r.nodes[1].client.db.should   == 0
         
         Rails.stub!(:env).and_return 'production'
         r = RedisFactory.gimme
-        r.should be_a DistRedis
-        r.ring.nodes[0].host.should == 'prod_host_1'
-        r.ring.nodes[0].port.should == 6381
-        r.ring.nodes[0].db.should   == 2
+        r.should be_a Redis::Distributed
+        r.nodes[0].client.host.should == 'prod.host1'
+        r.nodes[0].client.port.should == 6381
+        r.nodes[0].client.db.should   == 2
         
-        r.ring.nodes[1].host.should == 'prod_host_2'
-        r.ring.nodes[1].port.should == 6381
-        r.ring.nodes[1].db.should   == 2
+        r.nodes[1].client.host.should == 'prod.host2'
+        r.nodes[1].client.port.should == 6381
+        r.nodes[1].client.db.should   == 2
         
         Rails.stub!(:env).and_return 'test'
         r = RedisFactory.gimme
         r.should be_a Redis
-        r.host.should == 'test_host'
-        r.port.should == 6380
-        r.db.should   == 1
+        r.client.host.should == 'test_host'
+        r.client.port.should == 6380
+        r.client.db.should   == 1
       end
     end
     
@@ -177,84 +177,84 @@ describe RedisFactory do
       before(:each) do
         RedisFactory.configurations = YAML.load("a_development:             \n"+
                                                 "  hosts:                   \n"+
-                                                "    - 'a_dev_host_1:6379'  \n"+
-                                                "    - 'a_dev_host_2:6379'  \n"+
+                                                "    - 'a.dev.host1:6379'  \n"+
+                                                "    - 'a.dev.host2:6379'  \n"+
                                                 "  database: 0              \n"+
                                                 "a_test:                    \n"+
-                                                "  host: 'a_test_host'      \n"+
+                                                "  host: 'a.test.host'      \n"+
                                                 "  port: 6380               \n"+
                                                 "  database: 1              \n"+
                                                 "a_production:              \n"+
                                                 "  hosts:                   \n"+
-                                                "    - 'a_prod_host_1:6381' \n"+
-                                                "    - 'a_prod_host_2:6381' \n"+
+                                                "    - 'a.prod.host1:6381' \n"+
+                                                "    - 'a.prod.host2:6381' \n"+
                                                 "  database: 2              \n"+
                                                 "b_development:             \n"+
                                                 "  hosts:                   \n"+
-                                                "    - 'b_dev_host_1:6382'  \n"+
-                                                "    - 'b_dev_host_2:6382'  \n"+
+                                                "    - 'b.dev.host1:6382'  \n"+
+                                                "    - 'b.dev.host2:6382'  \n"+
                                                 "  database: 3              \n"+
                                                 "b_test:                    \n"+
-                                                "  host: 'b_test_host'      \n"+
+                                                "  host: 'b.test.host'      \n"+
                                                 "  port: 6383               \n"+
                                                 "  database: 4              \n"+
                                                 "b_production:              \n"+
                                                 "  hosts:                   \n"+
-                                                "   - 'b_prod_host_1:6384'  \n"+
-                                                "   - 'b_prod_host_2:6384'  \n"+
+                                                "   - 'b.prod.host1:6384'  \n"+
+                                                "   - 'b.prod.host2:6384'  \n"+
                                                 "  database: 5              \n")                                       
       end
-      it '#gimme should return a DistRedis instance for each prefix and environment with multiple hosts' do
+      it '#gimme should return a Redis::Distributed instance for each prefix and environment with multiple hosts' do
         Rails.stub!(:env).and_return 'development'
         a = RedisFactory.gimme('a')
-        a.should be_a DistRedis
-        a.ring.nodes[0].host.should == 'a_dev_host_1'
-        a.ring.nodes[0].port.should == 6379
-        a.ring.nodes[0].db.should   == 0
-        a.ring.nodes[1].host.should == 'a_dev_host_2'
-        a.ring.nodes[1].port.should == 6379
-        a.ring.nodes[1].db.should   == 0
+        a.should be_a Redis::Distributed
+        a.nodes[0].client.host.should == 'a.dev.host1'
+        a.nodes[0].client.port.should == 6379
+        a.nodes[0].client.db.should   == 0
+        a.nodes[1].client.host.should == 'a.dev.host2'
+        a.nodes[1].client.port.should == 6379
+        a.nodes[1].client.db.should   == 0
         
         b = RedisFactory.gimme('b')
-        b.should be_a DistRedis
-        b.ring.nodes[0].host.should == 'b_dev_host_1'
-        b.ring.nodes[0].port.should == 6382
-        b.ring.nodes[0].db.should   == 3
-        b.ring.nodes[1].host.should == 'b_dev_host_2'
-        b.ring.nodes[1].port.should == 6382
-        b.ring.nodes[1].db.should   == 3
+        b.should be_a Redis::Distributed
+        b.nodes[0].client.host.should == 'b.dev.host1'
+        b.nodes[0].client.port.should == 6382
+        b.nodes[0].client.db.should   == 3
+        b.nodes[1].client.host.should == 'b.dev.host2'
+        b.nodes[1].client.port.should == 6382
+        b.nodes[1].client.db.should   == 3
         
         Rails.stub!(:env).and_return 'production'
         a = RedisFactory.gimme('a')
-        a.should be_a DistRedis
-        a.ring.nodes[0].host.should == 'a_prod_host_1'
-        a.ring.nodes[0].port.should == 6381
-        a.ring.nodes[0].db.should   == 2
-        a.ring.nodes[1].host.should == 'a_prod_host_2'
-        a.ring.nodes[1].port.should == 6381
-        a.ring.nodes[1].db.should   == 2
+        a.should be_a Redis::Distributed
+        a.nodes[0].client.host.should == 'a.prod.host1'
+        a.nodes[0].client.port.should == 6381
+        a.nodes[0].client.db.should   == 2
+        a.nodes[1].client.host.should == 'a.prod.host2'
+        a.nodes[1].client.port.should == 6381
+        a.nodes[1].client.db.should   == 2
         
         b = RedisFactory.gimme('b')
-        b.should be_a DistRedis
-        b.ring.nodes[0].host.should == 'b_prod_host_1'
-        b.ring.nodes[0].port.should == 6384
-        b.ring.nodes[0].db.should   == 5
-        b.ring.nodes[1].host.should == 'b_prod_host_2'
-        b.ring.nodes[1].port.should == 6384
-        b.ring.nodes[1].db.should   == 5
+        b.should be_a Redis::Distributed
+        b.nodes[0].client.host.should == 'b.prod.host1'
+        b.nodes[0].client.port.should == 6384
+        b.nodes[0].client.db.should   == 5
+        b.nodes[1].client.host.should == 'b.prod.host2'
+        b.nodes[1].client.port.should == 6384
+        b.nodes[1].client.db.should   == 5
         
         Rails.stub!(:env).and_return 'test'
         a = RedisFactory.gimme('a')
         a.should be_a Redis
-        a.host.should == 'a_test_host'
-        a.port.should == 6380
-        a.db.should   == 1
+        a.client.host.should == 'a.test.host'
+        a.client.port.should == 6380
+        a.client.db.should   == 1
         
         b = RedisFactory.gimme('b')
         b.should be_a Redis
-        b.host.should == 'b_test_host'
-        b.port.should == 6383
-        b.db.should   == 4
+        b.client.host.should == 'b.test.host'
+        b.client.port.should == 6383
+        b.client.db.should   == 4
       end
     end
   end

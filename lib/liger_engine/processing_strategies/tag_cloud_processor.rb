@@ -30,7 +30,7 @@ module LigerEngine
       # If they exist, it adds them into the occurrence summer,
       # If none exist, it returns nil
       def each_pmid(pmid)
-        mesh_keywords = @redis.set_members(pmid)
+        mesh_keywords = @redis.smembers(pmid)
         unless mesh_keywords.empty?
           @occurrence_summer.sum(mesh_keywords)
         end
@@ -58,7 +58,7 @@ module LigerEngine
           @occurrence_summer.sum(mesh_ids)
           
           mesh_ids.each do |mesh_id|
-            @redis.set_add(pmid, mesh_id)
+            @redis.sadd(pmid, mesh_id)
           end
         end
       rescue SystemCallError => e

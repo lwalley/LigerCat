@@ -1,5 +1,5 @@
 require 'redis'
-require 'dist_redis'
+require 'redis/distributed'
 require 'yaml'
 
 # This class is for managing Redis database configurations
@@ -16,7 +16,12 @@ class RedisFactory
       config = current_config(prefix)
       
       if config[:hosts].is_a? Array
-        DistRedis.new(config)
+        
+        # TODO: loop through hosts array, passing each host and the database id to a build-url method, instantiate Redis::Distributed with those options
+        
+        host_urls = config[:hosts].map{|host| build_uri(host, config[:database]) }
+        
+        Redis::Distributed.new(host_urls)
       else
         Redis.new(config)
       end
@@ -47,5 +52,10 @@ class RedisFactory
     def configurations
       @@configurations ||= YAML.load_file(RAILS_ROOT + '/config/redis.yml')
     end
+    
+    def build_uri(host_port, database)
+      "redis://#{host_port}/#{database}"
+    end
+    
   end
 end

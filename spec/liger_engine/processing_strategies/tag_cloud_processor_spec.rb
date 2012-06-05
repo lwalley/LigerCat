@@ -34,12 +34,12 @@ describe 'TagCloudProcessor' do
       
       # Sanity Check
       r = RedisFactory.gimme(:mesh)
-      r.delete(pmid)
-      r.set_members(pmid).should be_empty, "Sanity Check: PMID #{pmid} should not have any MeshKeywords, but did"
+      r.del(pmid)
+      r.smembers(pmid).should be_empty, "Sanity Check: PMID #{pmid} should not have any MeshKeywords, but did"
       
       @processor.each_nonlocal(medline_record)
       
-      r.set_members(pmid).length.should == 8
+      r.smembers(pmid).length.should == 8
     end
     
     it "should not duplicate entries to the occurrence summer" do
@@ -49,8 +49,8 @@ describe 'TagCloudProcessor' do
       
       # Sanity Check
       r = RedisFactory.gimme(:mesh)
-      r.delete(nonlocal_pmid)
-      r.set_members(nonlocal_pmid).should be_empty, "Sanity Check: PMID #{nonlocal_pmid} should not have any MeshKeywords, but did"
+      r.del(nonlocal_pmid)
+      r.smembers(nonlocal_pmid).should be_empty, "Sanity Check: PMID #{nonlocal_pmid} should not have any MeshKeywords, but did"
               
       @processor.each_pmid(local_pmid)
       @processor.each_nonlocal(medline_record)

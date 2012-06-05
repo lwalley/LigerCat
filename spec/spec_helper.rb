@@ -63,11 +63,11 @@ def redis_fixture(prefix)
   redis = RedisFactory.gimme(prefix)
   fixture_file = Spec::Runner.configuration.fixture_path + "/#{prefix}.redis"
   File.open(fixture_file) do |redis_commands|
-    redis.flush_db
+    redis.flushdb
     
     redis_commands.each_line do |line|
       line.chomp!
-      redis.call_command(line.split(/\t/)) unless line.empty? or line.starts_with?('#')
+      redis.client.write(line.split(/\t/)) unless line.empty? or line.starts_with?('#')
     end
   end
 end
