@@ -75,10 +75,16 @@ ENV['RECAPTCHA_PUBLIC_KEY']  = '6LfYQwcAAAAAADEL1aBd2qTA1bGJaie9DijCQEPE'
 ENV['RECAPTCHA_PRIVATE_KEY'] = '6LfYQwcAAAAAAP-wG3o2KdsVrsHpSaB3Frq2HfI6'
 
 
-# BioRuby configuration
+# EUtils configuration
 begin
   require 'bio'
-  Bio::NCBI.default_email = "recipient@example.com"
+  EUTILS_CONFIG = YAML.load_file(RAILS_ROOT + '/config/eutils.yml')
+  Bio::NCBI.default_email = EUTILS_CONFIG['email']
+  LigerEngine::SearchStrategies::PubmedSearchStrategy.email = EUTILS_CONFIG['email']
+  LigerEngine::SearchStrategies::PubmedSearchStrategy.tool = EUTILS_CONFIG['tool']
+  LigerEngine::PubmedFetcher.email = EUTILS_CONFIG['email']
+  LigerEngine::PubmedFetcher.tool = EUTILS_CONFIG['tool']
+  
 rescue Exception => e
   # We require Bio as a gem above, but you can't install the gems with rake gems
   # because of the block of code above. This fixes that. Probably a better way to do this

@@ -35,8 +35,8 @@ module LigerEngine
       # * _query_ - A species binomial
       def search(query)
         special_pubmed_query = self.class.species_specific_query(query)
-    
-        results = PubmedSearch.search(special_pubmed_query, :tool => 'ligercat', :email => 'hmiller@mbl.edu', :load_all_results => true)
+        
+        results = PubmedSearch.search(special_pubmed_query, :tool => self.tool, :email => self.email, :load_all_results => true)
     
         results.pmids
       end

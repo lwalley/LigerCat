@@ -16,12 +16,14 @@ module LigerEngine
     # Author:: Ryan Schenk (mailto:rschenk@mbl.edu)
 
     class PubmedSearchStrategy
+      cattr_accessor :tool
+      cattr_accessor :email
   
       # Accepts a String to send to Pubmed, and returns an Array of Integer PMIDs that result.
       # === Parameters
       # * _query_ - A string to send to Pubmed
       def search(query)
-        results = PubmedSearch.search(query, :tool => 'ligercat', :email => 'hmiller@mbl.edu', :load_all_pmids => true)
+        results = PubmedSearch.search(query, :tool => self.tool, :email => self.email, :load_all_pmids => true)
         results.pmids
       end
     end
