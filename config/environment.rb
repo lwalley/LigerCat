@@ -69,6 +69,8 @@ ExceptionNotifier.exception_recipients = %w(recipient1@example.com recipient2@ex
 # defaults to exception.notifier@default.com
 ExceptionNotifier.sender_address = %("Ligercat Error" <errors@example.com>)
 
+FEEDBACK_RECIPIENTS = %w(recipient1@example.com recipient2@example.com)
+
 ActionMailer::Base.delivery_method = :sendmail
 
 ENV['RECAPTCHA_PUBLIC_KEY']  = '6LfYQwcAAAAAADEL1aBd2qTA1bGJaie9DijCQEPE'
