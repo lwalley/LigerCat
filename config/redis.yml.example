@@ -1,36 +1,48 @@
+# Shared host and port configuration to keep things DRY below
+dev_host: &dev_host
+  host: 'localhost'
+  port: 6379
+
+test_host: &test_host
+  host: 'localhost'
+  port: 6379
+
+prod_host: &prod_host
+  hosts:
+    - 'prodhost1:6379'
+    - 'prodhost2:6379'
+
+
+# Shared database configuration to keep things DRY below
+mesh_database: &mesh_database
+  database: 0
+
+date_database: &date_database
+  database: 1
+
+
 # This Redis DB contains pmid -> mesh_id mappings
 mesh_development:
-  hosts:
-    - 'localhost:6379'
-    - 'localhost:6379'
-  database: 0
+  <<: *dev_host
+  <<: *mesh_database
 
 mesh_test:
-  host: 'localhost'
-  port: 6379
-  database: 0
+  <<: *test_host
+  <<: *mesh_database
 
 mesh_production:
-  hosts: 
-    - 'localhost:6379'
-    - 'localhost:6379'
-  database: 0
+  <<: *prod_host
+  <<: *mesh_database
   
-
 # This Redis DB contains pmid -> date_published mappings
 date_published_development:
-  hosts: 
-    - 'localhost:6379'
-    - 'localhost:6379'
-  database: 1
+  <<: *dev_host
+  <<: *date_database
 
 date_published_test:
-  host: 'localhost'
-  port: 6379
-  database: 1
+  <<: *test_host
+  <<: *date_database
 
 date_published_production:
-  hosts: 
-    - 'localhost:6379'
-    - 'localhost:6379'
-  database: 1
+  <<: *prod_host
+  <<: *data_database
