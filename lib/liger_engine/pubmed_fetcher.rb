@@ -19,6 +19,9 @@ module LigerEngine
   # TODO: Refactor this to pass some sort of Proxy object to the block to hide
   # the XML implementation, while still being fairly memory efficient
   class PubmedFetcher
+    cattr_accessor :tool
+    cattr_accessor :email
+    
     # Accepts a list of Pubmed IDs, performs an eFetch, and
     # passes each result as a Nokogiri::XML::Element object to the given block
     def self.fetch(pmid_list, &block)
@@ -29,7 +32,7 @@ module LigerEngine
       # TODO: This is a great opportunity speed things up by parallelizing/mapreducing.
       # Instead of fetching each batch in serial, we could fetch and process them in parallel
       pmid_list.in_groups_of(7000) do |pmids|
-        results = Bio::NCBI::REST.efetch(pmids, { "db" => "pubmed", "rettype" => 'medline', "retmode" => 'xml', "tool" => 'ligercat', "email" => 'hmiller@mbl.edu' }, 100000)            
+        results = Bio::NCBI::REST.efetch(pmids, { "db" => "pubmed", "rettype" => 'medline', "retmode" => 'xml', "tool" => self.tool, "email" => self.email }, 100000)            
         doc = Nokogiri::XML(results)
         doc.xpath('/PubmedArticleSet/PubmedArticle').each do |pubmed_article|
           yield(pubmed_article)
