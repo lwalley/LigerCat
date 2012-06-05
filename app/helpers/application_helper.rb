@@ -63,6 +63,12 @@ module ApplicationHelper
     options = {:classes => %w(not-popular somewhat-popular popular quite-popular very-popular), :partial => 'shared/keyword', :no_keywords_partial => 'shared/no_keywords'}.merge(options)
     
     classes = options[:classes]
+    
+    # FIXME: Quick fix for nil mesh_keywords, which can come about if a non-existant MeSH ID gets inserted into Redis.
+    # Not sure why this is happening at the moment, but will debug. In the mean time, this ensures clouds get
+    # rendered as best they can.
+    keywords.delete_if{|k| k.mesh_keyword.nil? }
+    
     max, min = 0, 0x7FFFFFF # A really big fixnum!
     keywords.each do |t|
       next if t.name == 'Animals'
