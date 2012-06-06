@@ -70,7 +70,7 @@ module LigerEngine
       # * The results of the processing
       def process(pmid_list)
         nonlocal_pmids = []
-        
+                
         RAILS_DEFAULT_LOGGER.error "DEBUG: Looking up #{pmid_list.length} PMIDs"
         
         

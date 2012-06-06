@@ -8,9 +8,7 @@ require 'yaml'
 # If multiple hosts are defined, it will generate you a DistRedis,
 # otherwise you get a Redis object, both defined in the redis-rb rubygem
 
-class RedisFactory
-  cattr_accessor :configurations
-  
+class RedisFactory  
   class << self
     def gimme(prefix='')
       config = current_config(prefix)
@@ -29,17 +27,23 @@ class RedisFactory
     
     def current_config(prefix)
       prefix = prefix.to_s
+      rails_env = ENV['RAILS_ENV'] || 'development'
       
       config_key = if prefix.empty?
-                    Rails.env
+                    rails_env
                   else
-                    prefix.chomp('_') + '_' + Rails.env
+                    prefix.chomp('_') + '_' + rails_env
                   end
       
       config = configurations[config_key]
       
       if config
-        config.symbolize_keys!
+        
+        # This is config.symbolize_keys! but sometimes we want to be able to use this before Rails is loaded
+        config.keys.each do |key|
+          config[(key.to_sym rescue key) || key] = config.delete(key)
+        end        
+        
       else
         raise "Could not find a Redis configuration for '#{config_key}', please doublecheck config/redis.yml"
       end
@@ -50,7 +54,9 @@ class RedisFactory
     end
     
     def configurations
-      @@configurations ||= YAML.load_file(RAILS_ROOT + '/config/redis.yml')
+      rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/..'
+      
+      @@configurations ||= YAML.load_file(rails_root + '/config/redis.yml')
     end
     
     def build_uri(host_port, database)

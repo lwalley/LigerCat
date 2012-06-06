@@ -67,7 +67,7 @@ def redis_fixture(prefix)
     
     redis_commands.each_line do |line|
       line.chomp!
-      redis.client.write(line.split(/\t/)) unless line.empty? or line.starts_with?('#')
+      redis.client.connection.write(line.split(/\t/)) unless line.empty? or line.starts_with?('#')
     end
   end
 end

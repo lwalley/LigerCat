@@ -1,5 +1,5 @@
 class JournalQuery < ActiveRecord::Base
-  include AsynchronousQuery
+  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
   
   has_many :results, :class_name => 'JournalResult', :dependent => :destroy
   has_many :journal_results, :dependent => :destroy
@@ -10,6 +10,20 @@ class JournalQuery < ActiveRecord::Base
   after_create :launch_worker
   
   class << self
+    
+    def perform(query_id)
+      query = JournalQuery.find(query_id)
+      RAILS_DEFAULT_LOGGER.error("DEBUG: JournalQuery-#{query_id} about to begin processing")
+      query.perform_query!
+      query.update_attribute(:done, true)
+      RAILS_DEFAULT_LOGGER.error("DEBUG: JournalQuery-#{query_id} finished processing")
+    rescue Exception => e
+      # TODO: make an error flag in the database to alert user to an error
+      raise e # Resque handles this and puts it in the Failed Jobs list
+    end
+    
+    
+    
     def find_by_query(query)
       find_by_query_key create_query_key(query)
     end
@@ -21,10 +35,6 @@ class JournalQuery < ActiveRecord::Base
   
   def before_create
     self.query_key = self.class.create_query_key(query)
-  end
-  
-  def launch_worker
-    JournalWorker.async_execute_search(:id => self.id)
   end
   
   def perform_query!

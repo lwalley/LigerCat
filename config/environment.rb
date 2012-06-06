@@ -92,16 +92,3 @@ rescue Exception => e
   # because of the block of code above. This fixes that. Probably a better way to do this
 end
 
-# Workling configuration
-begin
-  require 'bunny'
-  Workling::Clients::SyncAmqpClient.client_class = Bunny
-  Workling::Remote.dispatcher = Workling::Remote::Runners::ClientRunner.new
-  Workling::Remote.dispatcher.client = Workling::Clients::SyncAmqpClient.new
-  Workling::Return::Store.instance = Workling::Return::Store::SyncAmqpReturnStore.new
-rescue NameError => e
-  # We require Bunny as a gem above, but you can't install the gems with rake gems
-  # because of the block of code above. This fixes that. Probably a better way to
-  # do this, but whateevrrrr
-end
-

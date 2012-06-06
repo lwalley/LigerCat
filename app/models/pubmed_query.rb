@@ -2,7 +2,7 @@ require 'rubygems'
 require 'pubmed_search'
 
 class PubmedQuery < ActiveRecord::Base
-  include AsynchronousQuery
+  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
   
   # Associations
   has_many :pubmed_mesh_frequencies
@@ -37,10 +37,6 @@ class PubmedQuery < ActiveRecord::Base
   # See the comment above display_query for a discussion into this vagary.
   def before_create
     self.query_key = self.class.create_query_key(full_species_name || query)
-  end
-
-  def launch_worker
-    PubmedWorker.async_execute_search(:id => self.id)
   end
 
   def perform_query!(&block)

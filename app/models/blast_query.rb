@@ -2,7 +2,7 @@ require "#{RAILS_ROOT}/lib/blast"
 require 'digest/md5'
 
 class BlastQuery < ActiveRecord::Base
-  include AsynchronousQuery
+  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
   
   has_many :blast_mesh_frequencies, :dependent => :destroy
   has_many :mesh_frequencies, :class_name => 'BlastMeshFrequency'
@@ -35,11 +35,6 @@ class BlastQuery < ActiveRecord::Base
   def before_create
     self.query_key = self.class.create_query_key(fasta_data)
     build_sequence(:fasta_data => fasta_data)
-  end
-
-  # Uniform interface for all AsynchronousQuery's
-  def launch_worker
-    BlastWorker.async_execute_search(:id => self.id)
   end
   
   # Uniform interface for all AsynchronousQuery's

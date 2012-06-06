@@ -67,7 +67,7 @@ module ApplicationHelper
     # FIXME: Quick fix for nil mesh_keywords, which can come about if a non-existant MeSH ID gets inserted into Redis.
     # Not sure why this is happening at the moment, but will debug. In the mean time, this ensures clouds get
     # rendered as best they can.
-    keywords.delete_if{|k| k.mesh_keyword.nil? }
+    keywords.delete_if{|k| (! k.name) rescue true }
     
     max, min = 0, 0x7FFFFFF # A really big fixnum!
     keywords.each do |t|

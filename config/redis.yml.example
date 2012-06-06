@@ -12,13 +12,14 @@ prod_common: &prod_common
     - 'prodhost1:6379'
     - 'prodhost2:6379'
 
-
 # Shared database configuration to keep things DRY below
 mesh_database: &mesh_database
   database: 0
-
 date_database: &date_database
   database: 1
+resque_database: &resque_database
+  database: 2
+
 
 
 # This Redis DB contains pmid -> mesh_id mappings
@@ -46,3 +47,17 @@ date_published_test:
 date_published_production:
   <<: *prod_common
   <<: *data_database
+
+
+# This Redis DB contains the Resque queues
+resque_development:
+  <<: *dev_common
+  <<: *resque_database
+
+resque_test:
+  <<: *test_common
+  <<: *resque_database
+
+resque_production:
+  <<: *prod_common
+  <<: *resque_database

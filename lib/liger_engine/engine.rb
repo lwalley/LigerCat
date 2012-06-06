@@ -13,11 +13,14 @@ module LigerEngine
     end
   
     def run(query)
+      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{query.class.name} id:#{query.id} Running")
+      
       pmid_list = @search_strategy.search(query)
       results = @processing_strategy.process(pmid_list)
       
       @article_count = pmid_list.length
       
+      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{query.class.name} id:#{query.id} Finished running")
       results
     end
   end
