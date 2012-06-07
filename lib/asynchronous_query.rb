@@ -1,11 +1,11 @@
 module AsynchronousQuery
   
   STATES = {
-    :queued => 1,
+    :queued => 0,
     :queued_for_update => 2,
     :searching => 3,
     :processing => 4,
-    :cached => 5,
+    :cached => 1,
     :error => 6
   }
   
