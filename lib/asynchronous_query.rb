@@ -1,7 +1,16 @@
-module AsynchronousQuery  
+module AsynchronousQuery
+  
+  STATES = {
+    :queued => 1,
+    :queued_for_update => 2,
+    :searching => 3,
+    :processing => 4,
+    :cached => 5,
+    :error => 6
+  }
   
   def self.included includer    
-    includer.extend ClassMethods
+    includer.extend ClassMethods  
   end
   
   
@@ -12,12 +21,11 @@ module AsynchronousQuery
     
     def perform(query_id)
       query = self.find(query_id)
-      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.name} id:#{query_id} about to begin processing")
+      query.update_state(:searching)
       query.perform_query!
-      query.update_attribute(:done, true)
-      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.name} id:#{query_id} finished processing")
+      query.update_state(:cached)
     rescue Exception => e
-      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.name} id:#{query_id} Errored: #{e.message}")
+      query.update_state(:error)
       
       # TODO: make an error flag in the database to alert user to an error
       raise e # Resque handles this and puts it in the Failed Jobs list
@@ -25,7 +33,7 @@ module AsynchronousQuery
   end
 
   def done?
-    read_attribute(:done)
+    [:cached, :queued_for_update].include? self.state
   end
   
   # TODO: Probably don't need this with Resque
@@ -42,5 +50,22 @@ module AsynchronousQuery
     RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} Adding query to the queue")
     
     Resque.enqueue(self.class, self.id)
+    update_state(:queued)
+  end 
+  
+  def state
+    STATES.reverse[read_attribute(:state)]
   end
+  
+  def state=(state_sym)
+    raise AttributeError unless STATES.keys.include? state_sym
+    write_attribute(:state, STATES[state_sym])
+  end
+  
+  def update_state(state_sym)
+    raise AttributeError unless STATES.keys.include? state_sym
+    RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} Changed state to #{state_sym}")
+    update_attribute(:state, STATES[state_sym])
+  end
+    
 end
