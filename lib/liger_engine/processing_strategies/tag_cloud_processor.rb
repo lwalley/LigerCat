@@ -52,9 +52,16 @@ module LigerEngine
           # This maps a text mesh descriptor into the mesh id. Done with an in-memory hash
           # instead of the database to speed things up
           mesh_ids = mesh_terms.map{|term| MeshKeywordLookup[term] }
+
+          # This is a less-than-desirable solution to the problem of encountering MESH terms that NLM has created
+          # since LigerCat's MeshKeywordLookup was last updated. Right now, this fix simply ignores recently
+          # created MESH terms, which is not ideal, but prevents bad data from being inserted into the database. 
+          #
+          # TODO: In the future, we will want to fetch the IDs of these new MESH terms, and save them to the database.
+          mesh_ids.compact!
         
           pmid = pubmed_article_xml.xpath('./MedlineCitation/PMID').first.text
-          
+                    
           @occurrence_summer.sum(mesh_ids)
           
           mesh_ids.each do |mesh_id|

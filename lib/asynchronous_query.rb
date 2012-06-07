@@ -17,6 +17,8 @@ module AsynchronousQuery
       query.update_attribute(:done, true)
       RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.name} id:#{query_id} finished processing")
     rescue Exception => e
+      RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.name} id:#{query_id} Errored: #{e.message}")
+      
       # TODO: make an error flag in the database to alert user to an error
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
