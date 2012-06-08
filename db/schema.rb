@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100115183154) do
+ActiveRecord::Schema.define(:version => 20120607201600) do
 
   create_table "blast_mesh_frequencies", :force => true do |t|
     t.integer  "blast_query_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20100115183154) do
   create_table "blast_queries", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "done",                     :default => false
+    t.integer  "state"
     t.string   "query_key",  :limit => 40
   end
 
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(:version => 20100115183154) do
     t.integer  "max_text_score"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "done",                         :default => false
+    t.integer  "state"
     t.text     "query"
     t.string   "query_key",      :limit => 40
   end
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(:version => 20100115183154) do
   add_index "pubmed_mesh_frequencies", ["pubmed_query_id"], :name => "index_pubmed_mesh_frequencies_on_pubmed_query_id"
 
   create_table "pubmed_queries", :force => true do |t|
-    t.boolean  "done",                            :default => false
+    t.integer  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "query"

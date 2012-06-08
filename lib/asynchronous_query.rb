@@ -36,36 +36,29 @@ module AsynchronousQuery
     [:cached, :queued_for_update].include? self.state
   end
   
-  # TODO: Probably don't need this with Resque
-  def job_key
-    "#{self.class.name}-#{self.id}"
-  end
-  
   def perform_query!
     # Implement this in each included class
     raise "Must Implement perform_query!"
   end
   
-  def launch_worker
-    RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} Adding query to the queue")
-    
+  def launch_worker    
     Resque.enqueue(self.class, self.id)
     update_state(:queued)
   end 
   
   def state
-    STATES.reverse[read_attribute(:state)]
+    STATES.invert[read_attribute(:state)]
   end
   
   def state=(state_sym)
-    raise AttributeError unless STATES.keys.include? state_sym
+    raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
     write_attribute(:state, STATES[state_sym])
   end
   
   def update_state(state_sym)
-    raise AttributeError unless STATES.keys.include? state_sym
+    raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
     RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} Changed state to #{state_sym}")
-    update_attribute(:state, STATES[state_sym])
+    update_attribute(:state, state_sym)
   end
     
 end

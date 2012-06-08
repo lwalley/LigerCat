@@ -20,6 +20,8 @@ class BlastQuery < ActiveRecord::Base
   
   attr_accessor :fasta_data
   
+  validates_presence_of :fasta_data
+  
   after_create  :launch_worker
   
   class << self

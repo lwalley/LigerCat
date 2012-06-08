@@ -57,7 +57,7 @@ class ArticlesController < ApplicationController
         redirect_to article_by_query_url(@query.query)
       end
     else
-      @status = 'searching' #TODO This used to get the status from Backgroundrb. Haven't set that up w/ Workling yet
+      @status = @query.state.to_s.humanize
 
       respond_to do |format|
         format.html #status.haml

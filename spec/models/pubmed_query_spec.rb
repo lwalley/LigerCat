@@ -9,7 +9,7 @@ describe "A PubmedQuery" do
   it_should_behave_like "An Asynchronous Query"
   
   before(:each) do
-    @query = PubmedQuery.new
+    @query = PubmedQuery.new :query => "some_query"
   end
   
   it "should validate presence of 'query' attribute" do
@@ -50,7 +50,7 @@ describe PubmedQuery, '.find_by_query' do
     @query = "biodiversity informatics"
   end
 
-  it "should call find_by_query_key with the MD5'd fasta_data" do
+  it "should call find_by_query_key with the MD5'd query" do
     PubmedQuery.should_receive(:find_by_query_key).with( PubmedQuery.create_query_key @query )
     PubmedQuery.find_by_query(@query)
   end
@@ -128,17 +128,3 @@ describe PubmedQuery, '#perform_query! with an EOL query' do
   end
 end
 
-describe PubmedQuery, "#launch_worker" do
-  before(:each) do
-    @query = PubmedQuery.new
-    @query.id = 1
-  end
-  
-  after(:each) do
-    @query.launch_worker
-  end
-  
-  it "should asynchronously call execute_search" do
-    PubmedWorker.should_receive(:async_execute_search).with(:id => @query.id)
-  end
-end

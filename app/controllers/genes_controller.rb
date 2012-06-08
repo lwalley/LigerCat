@@ -63,7 +63,7 @@ class GenesController < ApplicationController
         redirect_to gene_url(@query)
       end
     else
-      @status = 'searching' #TODO This used to get the status from Backgroundrb. Haven't set that up w/ Workling yet
+      @status = @query.state.humanize
 
       respond_to do |format|
         format.html #status.haml
