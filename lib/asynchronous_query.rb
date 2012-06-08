@@ -50,6 +50,10 @@ module AsynchronousQuery
     STATES.invert[read_attribute(:state)]
   end
   
+  def humanized_state
+    state.to_s.humanize
+  end
+  
   def state=(state_sym)
     raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
     write_attribute(:state, STATES[state_sym])

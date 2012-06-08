@@ -57,7 +57,7 @@ class ArticlesController < ApplicationController
         redirect_to article_by_query_url(@query.query)
       end
     else
-      @status = @query.state.to_s.humanize
+      @status = @query.humanized_state
 
       respond_to do |format|
         format.html #status.haml

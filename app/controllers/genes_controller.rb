@@ -63,7 +63,7 @@ class GenesController < ApplicationController
         redirect_to gene_url(@query)
       end
     else
-      @status = @query.state.humanize
+      @status = @query.humanized_state
 
       respond_to do |format|
         format.html #status.haml
