@@ -51,7 +51,7 @@ module LigerEngine
     # ProcessingStrategyHelper#process.
 
     
-    module ProcessingStrategyHelper
+    class Base < Strategy
       # Accepts a list of PMIDs and does something useful with them.
       #
       # Every Processing Strategy must define this method, and this particular 

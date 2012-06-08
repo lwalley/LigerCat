@@ -1,5 +1,4 @@
-class JournalQuery < ActiveRecord::Base
-  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
+class JournalQuery < AsynchronousQuery
   
   has_many :results, :class_name => 'JournalResult', :dependent => :destroy
   has_many :journal_results, :dependent => :destroy

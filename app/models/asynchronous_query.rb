@@ -1,4 +1,5 @@
-module AsynchronousQuery
+class AsynchronousQuery < ActiveRecord::Base
+  self.abstract_class = true
   
   STATES = {
     :queued => 0,
@@ -6,15 +7,14 @@ module AsynchronousQuery
     :searching => 3,
     :processing => 4,
     :cached => 1,
-    :error => 6
+    :error => 6,
+    :processing_tag_cloud => 7,
+    :processing_histogram => 8
   }
   
-  def self.included includer    
-    includer.extend ClassMethods  
-  end
   
   
-  module ClassMethods
+  class << self
     def queue
       :ligercat
     end
@@ -26,8 +26,6 @@ module AsynchronousQuery
       query.update_state(:cached)
     rescue Exception => e
       query.update_state(:error)
-      
-      # TODO: make an error flag in the database to alert user to an error
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
   end

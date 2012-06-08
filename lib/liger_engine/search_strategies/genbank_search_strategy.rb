@@ -15,7 +15,7 @@ module LigerEngine
     #
     # Author:: Ryan Schenk (mailto:rschenk@mbl.edu)
 
-    class GenbankSearchStrategy
+    class GenbankSearchStrategy < Base
       attr_accessor :blast_algorithm
   
       # === Parameters

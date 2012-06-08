@@ -6,8 +6,7 @@ module LigerEngine
   module ProcessingStrategies
     # The HistogramProcessor takes a list of PMIDs, and builds a histogram
     # from the Date of Publication of all those PMIDs
-    class HistogramProcessor
-      include ProcessingStrategyHelper
+    class HistogramProcessor < Base
       
       attr_accessor :histogram
       attr_accessor :redis

@@ -30,4 +30,38 @@ describe LigerEngine do
       engine.run(query).should == 'Yeehaw!'
     end
   end
+  
+  describe 'Events' do
+    before(:each) do
+      @observer            = mock('A generic observer', :liger_engine_update => '')
+      @search_strategy     = mock("SearchStragegy",     :search => [123,456])
+      @processing_strategy = mock("ProcessingStrategy", :process => "Yeehaw!")
+      
+      @engine = LigerEngine::Engine.new(@search_strategy, @processing_strategy)
+      @engine.add_observer(@observer, :liger_engine_update)
+      
+      @query = "some query"
+    end
+    
+    after(:each) do
+      @engine.run(@query)
+    end
+    
+    it "should notify observers before_search with the query to be searched" do
+      @observer.should_receive(:liger_engine_update).with(:before_search, @query)
+    end
+    
+    it "should notify observers after_search with the number of results" do
+      @observer.should_receive(:liger_engine_update).with(:after_search, 2) 
+    end
+    
+    it "should notify observers before_processing with the number of results to be processed" do
+      @observer.should_receive(:liger_engine_update).with(:before_processing, 2) 
+    end
+    
+    it "should notify observers after_processing with nothing" do
+      @observer.should_receive(:liger_engine_update).with(:after_processing) 
+    end
+    
+  end
 end

@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'pubmed_search'
 
-class PubmedQuery < ActiveRecord::Base
-  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
+class PubmedQuery < AsynchronousQuery 
   
   # Associations
   has_many :pubmed_mesh_frequencies
@@ -47,6 +46,9 @@ class PubmedQuery < ActiveRecord::Base
              end
     process = LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor.new
     engine  = LigerEngine::Engine.new(search,process)
+    engine.add_observer(self, :liger_engine_update)
+
+    
     results = engine.run(self.query)
 
     results.tag_cloud.each do |mesh_frequency|
@@ -57,9 +59,19 @@ class PubmedQuery < ActiveRecord::Base
       self.publication_dates.build(:year => year, :publication_count => publication_count)
     end
     
-    self.num_articles = engine.article_count
+    self.num_articles = engine.count
 
     self.save
+  end
+  
+  # Observer method for LigerEngine
+  def liger_engine_update(event_name, *args)
+    case event_name
+    when :before_search               : self.update_state(:searching)
+    when :before_processing           : self.update_state(:processing)
+    when :before_tag_cloud_processing : self.update_state(:processing_tag_cloud)
+    when :before_histogram_processing : self.update_state(:processing_histogram)
+    end
   end
 
   # Are we an EoL species query, or a regular old query? 

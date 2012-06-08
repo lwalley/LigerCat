@@ -11,15 +11,24 @@ module LigerEngine
     #
     # This could be handled more elegantly with a bit of metaprogramming, but I'm
     # keeping it simple for now.
-    class TagCloudAndHistogramProcessor
+    class TagCloudAndHistogramProcessor < Base
       def initialize
         @tag_cloud = TagCloudProcessor.new
         @histogram = HistogramProcessor.new
       end
       
       def process(id_list)
-        OpenStruct.new({ :tag_cloud => @tag_cloud.process(id_list),
-                         :histogram => @histogram.process(id_list) } )
+          changed; notify_observers :before_tag_cloud_processing, id_list.count
+        tag_cloud_results =  @tag_cloud.process(id_list)
+          changed; notify_observers :after_tag_cloud_processing
+        
+          changed; notify_observers :before_histogram_processing, id_list.count
+        histogram_results = @histogram.process(id_list)
+          changed; notify_observers :after_histogram_processing
+          
+        
+        OpenStruct.new({ :tag_cloud => tag_cloud_results,
+                         :histogram => histogram_results } )
       end
     end
   end

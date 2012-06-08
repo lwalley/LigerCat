@@ -1,5 +1,4 @@
-class NuccoreQuery < ActiveRecord::Base
-  include AsynchronousQuery
+class NuccoreQuery < AsynchronousQuery
   
   has_many :results,         :class_name => 'NuccoreResult', :dependent => :destroy
   has_many :nuccore_results, :dependent  => :destroy
@@ -9,11 +8,6 @@ class NuccoreQuery < ActiveRecord::Base
   
   after_create :launch_worker
   
-  def launch_worker
-    logger.info "INFO: Launching a nuccore_worker with job key #{self.job_key}"
-    MiddleMan.new_worker(:worker => :nuccore_worker, :job_key => self.job_key)
-    MiddleMan.worker(:nuccore_worker, self.job_key).execute_search(self.id)
-  end
   
   def perform_query!(&block)
     gi_numbers = NuccoreSearch.new.search(self.query)

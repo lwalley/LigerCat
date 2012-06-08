@@ -12,8 +12,7 @@ module LigerEngine
   module ProcessingStrategies
     # The TagCloudProcessor takes a list of PMIDs, and builds a tag cloud
     # from the MeSH terms of all those PMIDs
-    class TagCloudProcessor
-      include ProcessingStrategyHelper
+    class TagCloudProcessor < Base
       attr_accessor :occurrence_summer
       attr_accessor :e_value_threshold # This is the e_value above which we'll consider a MeSH Term
       attr_accessor :max_mesh_terms    # Maximum MeSH terms to return

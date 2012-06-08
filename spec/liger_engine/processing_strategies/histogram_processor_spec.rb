@@ -7,7 +7,6 @@ describe 'HistogramProcessor' do
   before(:each) do
     redis_fixture :date_published
     
-    
     # This faked was snagged from the actual pubmed efetch. It contains medline records for the three @non_local_pmids
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:post, "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",

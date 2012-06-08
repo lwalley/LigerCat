@@ -1,8 +1,7 @@
 require "#{RAILS_ROOT}/lib/blast"
 require 'digest/md5'
 
-class BlastQuery < ActiveRecord::Base
-  include AsynchronousQuery # Includes interface and some implementation for Resque queuing
+class BlastQuery < AsynchronousQuery
   
   has_many :blast_mesh_frequencies, :dependent => :destroy
   has_many :mesh_frequencies, :class_name => 'BlastMeshFrequency'
@@ -45,6 +44,8 @@ class BlastQuery < ActiveRecord::Base
     search  = LigerEngine::SearchStrategies::GenbankSearchStrategy.new(sequence_type) 
     process = LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor.new
     engine  = LigerEngine::Engine.new(search,process)
+    engine.add_observer(self, :liger_engine_update)
+    
     results = engine.run(sequence.fasta_data)
 
     results.tag_cloud.each do |mesh_frequency|
@@ -57,4 +58,22 @@ class BlastQuery < ActiveRecord::Base
     
     self.save
   end
+  
+  # Observer method for LigerEngine
+  def liger_engine_update(event_name, *args)
+    case event_name
+    when :before_search               : self.update_state(:searching)
+    when :before_processing           : self.update_state(:processing)
+    when :before_tag_cloud_processing : self.update_state(:processing_tag_cloud)
+    when :before_histogram_processing : self.update_state(:processing_histogram)
+    end
+  end
+  
+  def humanized_state
+    self.state == :searching ? "Blasting" : super
+  end
+    
+  
+  
+  
 end

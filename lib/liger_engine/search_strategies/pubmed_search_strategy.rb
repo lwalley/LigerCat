@@ -15,7 +15,7 @@ module LigerEngine
     #
     # Author:: Ryan Schenk (mailto:rschenk@mbl.edu)
 
-    class PubmedSearchStrategy
+    class PubmedSearchStrategy < Base
       cattr_accessor :tool
       cattr_accessor :email
   
