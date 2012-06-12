@@ -71,6 +71,7 @@ class PubmedQuery < AsynchronousQuery
     when :before_processing           : self.update_state(:processing)
     when :before_tag_cloud_processing : self.update_state(:processing_tag_cloud)
     when :before_histogram_processing : self.update_state(:processing_histogram)
+    when :log                         : log_liger_engine("#{args[1]} #{args[0]}")
     end
   end
 

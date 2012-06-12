@@ -71,9 +71,7 @@ module LigerEngine
       def process(pmid_list)
         nonlocal_pmids = []
                 
-        RAILS_DEFAULT_LOGGER.error "DEBUG: Looking up #{pmid_list.length} PMIDs"
-        
-        
+        log "Looking up #{pmid_list.length} PMIDs in local caches"
         # Loop through each PMID from the list sent by the Search Strategy
         pmid_list.each do |pmid|
           unless each_pmid(pmid)
@@ -81,17 +79,15 @@ module LigerEngine
           end
         end
         
-        RAILS_DEFAULT_LOGGER.error "DEBUG: Retrieving #{nonlocal_pmids.length} nonlocal PMIDs"
         
+        log "Retrieving #{nonlocal_pmids.length} nonlocal PMIDs that were not in the local cache"
         # Retrieve unannotated PMIDS and add those to the histogram.
         unless nonlocal_pmids.empty?
           LigerEngine::PubmedFetcher.fetch(nonlocal_pmids) do |medline_citation|
             each_nonlocal(medline_citation)
           end
         end
-    
-        RAILS_DEFAULT_LOGGER.error "DEBUG: Returning Results"
-        
+            
         return_results
       end
       

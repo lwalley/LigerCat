@@ -59,8 +59,12 @@ class AsynchronousQuery < ActiveRecord::Base
   
   def update_state(state_sym)
     raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
-    RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} Changed state to #{state_sym}")
+    log_liger_engine "Changed state to #{state_sym}"
     update_attribute(:state, state_sym)
+  end
+  
+  def log_liger_engine(msg)
+    RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
   end
     
 end
