@@ -35,6 +35,7 @@ class Journal < ActiveRecord::Base
   
   # We're going to use full NLM ids in the URLS, and since our PK's are
   # the integerized version of an NLM id, we don't have to do any de-converting!
+  # This works because .find will call .to_i on any ids passed to it.
   #   Ex: "12345R".to_i --> 12345, "0000201".to_i --> 201
   def to_param
     self.nlm_id

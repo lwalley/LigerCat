@@ -13,9 +13,8 @@ module ApplicationHelper
 	# Used when clicking on the logo to return the user
 	# home, based on their current context
 	def context_home_url 
-		self.send "#{@context}_home_url" rescue root_url
+		self.send "#{@context}_url" rescue root_url
 	end
-
 	#
 	# Navigation tabs and contents
 	#

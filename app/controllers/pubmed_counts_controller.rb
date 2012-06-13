@@ -2,6 +2,8 @@
 # http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&usehistory=y&retmax=0&term=<YOUR TERM(S) HERE>
 
 class PubmedCountsController < ApplicationController
+
+  # GET /pubmed_count
   def show
     if params[:term].blank?
        head :no_content

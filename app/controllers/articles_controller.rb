@@ -1,33 +1,16 @@
 class ArticlesController < ApplicationController
-  before_filter :redirect_if_searching, :only => :new
   helper_method  :query
-  caches_action :new
+  # FIXME: Make this work for articles home page caches_action :new
   
   # GET /articles
-  # NOTE that a before_filter redirects GET /articles?q=my_search_query to GET /articles/my_search_query
-  # This is done in a before_filter to let us do action_caching on #new, and page_caching on #show
-  def new
+  def index
+    create_or_show and return unless params[:q].blank?
     render :layout => 'home'
-  end
-  
-  # GET /articles/:q
-  def create_or_show
-    if @query = PubmedQuery.find_by_query(params[:q])
-      show
-    else
-      create
-    end
-  end
-  
-  # POST /articles
-  def create
-    @query = PubmedQuery.create(:query => params[:q])    
-    redirect_to article_status_url(@query)
   end
   
   # GET /articles/:id
   def show
-    @query ||= PubmedQuery.find(params[:id])
+    @query = PubmedQuery.find(params[:id])
     if @query.done?
       @mesh_frequencies = @query.pubmed_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')      
       respond_to do |format|
@@ -40,7 +23,7 @@ class ArticlesController < ApplicationController
         
       cache_page
     else
-      redirect_to article_status_url(@query)
+      redirect_to status_article_url(@query)
     end
   end
   
@@ -54,7 +37,7 @@ class ArticlesController < ApplicationController
       if request.xhr?
         render :text => 'done'
       else
-        redirect_to article_by_query_url(@query.query)
+        redirect_to slug_article_url(@query, @query.slug)
       end
     else
       @status = @query.humanized_state
@@ -77,13 +60,17 @@ class ArticlesController < ApplicationController
     @query.query rescue nil
   end
 
-  # Redirects GET /articles?q=my_search_query to GET /articles/my_search_query
-  # This is done in a before_filter to let us do action_caching on #new, and page_caching on #show
-  def redirect_if_searching
-    if params.has_key? :q
-      redirect_to article_by_query_url params[:q] 
+  def create_or_show
+    if @query = PubmedQuery.find_by_query(params[:q])
+      redirect_to slug_article_url(@query, @query.slug)
     else
-      true
+      create
     end
+  end
+
+  # This is called from create_or_show, there is not a POST /articles so we make it private.
+  def create
+    @query = PubmedQuery.create(:query => params[:q])    
+    redirect_to status_article_url(@query)
   end
 end

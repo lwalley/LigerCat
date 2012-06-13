@@ -1,7 +1,7 @@
 class EolController < ApplicationController
   helper_method  :query
   
-  # GET /articles/:id
+  # GET /eol/:id
   def show
     if @query = PubmedQuery.find_by_eol_taxa_id(params[:id])
       @mesh_frequencies = @query.pubmed_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')

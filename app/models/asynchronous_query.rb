@@ -40,6 +40,10 @@ class AsynchronousQuery < ActiveRecord::Base
     end
   end
 
+  def slug
+    query
+  end
+  
   def done?
     [:cached, :queued_for_update].include? self.state
   end

@@ -13,28 +13,18 @@ class GenesController < ApplicationController
   }
 	
   # GET /genes
-  def new
-    if params.has_key? :q
-	    create_or_show
-    else
-      render :layout => 'home'
-    end
-	end
-  
-  # GET /genes/:q
-  def create_or_show
-    if @query = BlastQuery.find_by_sequence(params[:q])
-      show
-    else
-      create
-    end
+  def index
+    render :layout => 'home'
   end
   
   # POST /genes
   def create
-    @query = BlastQuery.create(:fasta_data => params[:q])
-        
-    redirect_to gene_status_url(@query)
+    if @query = BlastQuery.find_by_sequence(params[:q])
+      redirect_to gene_path(@query)
+    else
+      @query = BlastQuery.create(:fasta_data => params[:q])
+      redirect_to status_gene_path(@query)
+    end
   end
   
   # GET /genes/:id
@@ -46,7 +36,7 @@ class GenesController < ApplicationController
       render :action => 'show'
 			cache_page unless params[:id].blank? # page cache only urls in the form of /genes/123, not ones coming in from create_or_show
     else
-      redirect_to gene_status_url(@query)
+      redirect_to status_gene_path(@query)
     end
   end
   
@@ -60,7 +50,7 @@ class GenesController < ApplicationController
       if request.xhr?
         render :text => 'done'
       else
-        redirect_to gene_url(@query)
+        redirect_to gene_path(@query)
       end
     else
       @status = @query.humanized_state

@@ -13,11 +13,11 @@
   %p This search usually takes less than one minute, however it could take up to one hour. You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
   %p Alternatively, you can can save this URL and come back to it later:
   .current_url
-    %span.url= article_status_url @query
+    %span.url= status_article_url @query
     %span.help Copy this url to come back later
 
 :javascript
-  status_request = new Request({url:"#{article_status_url(@query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
+  status_request = new Request({url:"#{status_article_url(@query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
   status_request.send.periodical(5000, status_request);
 
 -content_for :help do

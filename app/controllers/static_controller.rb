@@ -7,10 +7,16 @@ class StaticController < ApplicationController
   before_filter :clear_errors_and_recaptcha
   before_filter :set_context
   
+  # GET or POST /about
   def about
-    # Render about.haml
+    if request.post?
+      send_feedback
+    end
   end
-  
+
+
+  private
+
   def send_feedback
     @sender = params["email_sender"]
     @errors[:sender] = "Please enter a valid e-mail address." if @sender.blank? || @sender !~ /(.+)@(.+)\.(.{3})/
@@ -29,10 +35,6 @@ class StaticController < ApplicationController
       render :action => "about", :layout => 'static'
     end
   end
-  
-    
-  
-  private
   
   def set_context
     @context = 'journals'

@@ -27,8 +27,8 @@
             %span.tagline Literature and Genomics Resource Catalogue
         %ul.navigation
           = nav_tab 'journals', journals_url
-          = nav_tab 'articles', new_article_url
-          = nav_tab 'genes',    new_gene_url
+          = nav_tab 'articles', articles_url
+          = nav_tab 'genes',    genes_url
 
     .search_panel{ :class => @context }= render :partial => "#{@context}/search_form", :locals => {:height => '12' }
 

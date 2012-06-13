@@ -1,9 +1,10 @@
 class JournalQueriesController < ApplicationController
+  # GET /journals?q=
   def show
     @query = JournalQuery.find(params[:id])
      
     if @query.done?
-      redirect_url = url_for :controller => 'journals', :action => 'index', :q => @query.query
+      redirect_url = journals_url(:q => @query.query)
       
       if request.xhr?
         render :text => 'done'

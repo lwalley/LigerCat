@@ -1,4 +1,4 @@
-%form{:method=>"post", :url=>send_feedback_url }
+- form_tag({}, :method=> :post) do
   - unless @errors.blank?
     .errors= @errors[:general] 
   

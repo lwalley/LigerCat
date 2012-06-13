@@ -15,27 +15,13 @@ class JournalsController < ApplicationController
     # This is done to allow us to do page caching on this action
     render :layout => 'home'
   end
-  
+
   def show
     ids = params[:id].split(';')
     @journals = Journal.find(ids)
 		@selections = @journals
     @mesh_frequencies = JournalMeshFrequency.find_frequencies_for_journals(ids)
     @text_frequencies = JournalTextFrequency.find_frequencies_for_journals(ids)
-  end
-  
-  def auto_complete_for_expanded_journal_keyword
-    auto_complete_responder_for_expanded_journal_keywords params[:q]
-  end
-  
-  # This is used to test the ExceptionNotification plugin/ActionMailer configuration on the server
-  def error
-    begin
-      raise RuntimeError, "Generating an error"  
-    rescue Exception => e
-      ExceptionNotifier.deliver_custom_notification("Exception in JournalWorker#execute_search", e)
-      raise e
-    end
   end
   
   private
