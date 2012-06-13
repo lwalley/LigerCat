@@ -347,33 +347,33 @@ h1 span.amp {
 	background: url(/images/journals_home_bg.gif) repeat-x left top;
 }
 
-#articles_new #contextualized_copy {
+#articles_index #contextualized_copy {
 	border-top-color: #A7D77C;
 	background: url(/images/articles_home_bg.gif) repeat-x left top;
 }
 
-#articles_new .text_wrapper {
+#articles_index .text_wrapper {
   overflow:hidden;
 }
 
-#articles_new .image_wrapper {
+#articles_index .image_wrapper {
   clear:left;
 }
 
-#genes_new #contextualized_copy {
+#genes_index #contextualized_copy {
 	border-top-color: #FFE170;
 	background: url(/images/genes_home_bg.gif) repeat-x left top;
 }
 
-#genes_new #contextualized_copy p{
+#genes_index #contextualized_copy p{
 	margin-bottom: 0;
 }
 
-#genes_new .text_wrapper {
+#genes_index .text_wrapper {
   overflow:hidden;
 }
 
-#genes_new .image_wrapper {
+#genes_index .image_wrapper {
   margin-top: 1.5em;
   clear:left;
 }
@@ -626,13 +626,13 @@ html > body .timeline.huge   li a:hover .year {
    look and feel */
    
 #genes_show .timeline li a:hover,
-#genes_new  .timeline li a:hover {
+#genes_index  .timeline li a:hover {
 	color: #494949;
 	cursor: default;
 }
 
 #genes_show .timeline li a:hover .bar,
-#genes_new  .timeline li a:hover .bar {
+#genes_index  .timeline li a:hover .bar {
 	background-color: #494949;
 }
 

@@ -65,6 +65,11 @@ class PubmedQuery < AsynchronousQuery
     not eol_taxa_id.nil?
   end
   
+  def slug
+    query[0,100].parameterize
+  end
+  
+  
   # This is the verbatim string that gets sent out to PubMed in the Search Strategy. We
   # need this accessor method, because the "Selected Terms" panel and the Publication
   # Histogram both need this information to perform their respective AJAX calls.

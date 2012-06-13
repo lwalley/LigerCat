@@ -131,3 +131,22 @@ describe PubmedQuery, '#perform_query! with an EOL query' do
   end
 end
 
+describe PubmedQuery, '#slug' do
+  before(:each) do
+    @query = PubmedQuery.new
+  end
+  
+  it "should replace special characters in a string so that it may be used as part of a ‘pretty’ URL." do
+    @query.query = "George Clinton"
+    @query.slug.should == "george-clinton"
+    
+    @query.query = "some query [tiab]"
+    @query.slug.should == 'some-query-tiab'
+  end
+  
+  it "should trunctate a really long string to 100 characters" do
+    @query.query = 'a' * 2000
+    @query.slug.length.should == 100
+  end
+end
+

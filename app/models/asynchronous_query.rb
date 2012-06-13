@@ -39,10 +39,6 @@ class AsynchronousQuery < ActiveRecord::Base
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
   end
-
-  def slug
-    query
-  end
   
   def done?
     [:cached, :queued_for_update].include? self.state
