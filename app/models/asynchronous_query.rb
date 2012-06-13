@@ -25,7 +25,7 @@ class AsynchronousQuery < ActiveRecord::Base
       query.perform_query!
       query.update_state(:cached)
     rescue Exception => e
-      query.update_state(:error)
+      query.update_state(:error) unless query.blank?
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
   end
