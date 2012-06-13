@@ -17,8 +17,8 @@ describe LigerEngine do
   
   describe '#run' do
     it "should call the search strategy, then the processing strategy, then return the results" do
-      search_strategy     = mock("Search Stragegy",     :search => [123,456])
-      processing_strategy = mock("Processing Strategy", :process => "Yeehaw!")
+      search_strategy     = mock("Search Stragegy",     :search => [123,456],  :add_observer => nil)
+      processing_strategy = mock("Processing Strategy", :process => "Yeehaw!", :add_observer => nil)
       
       engine = LigerEngine::Engine.new(search_strategy, processing_strategy)
 
@@ -33,9 +33,9 @@ describe LigerEngine do
   
   describe 'Events' do
     before(:each) do
-      @observer            = mock('A generic observer', :liger_engine_update => '')
-      @search_strategy     = mock("SearchStragegy",     :search => [123,456])
-      @processing_strategy = mock("ProcessingStrategy", :process => "Yeehaw!")
+      @observer            = mock('A generic observer', :liger_engine_update => nil)
+      @search_strategy     = mock("SearchStragegy",     :search => [123,456],  :add_observer => nil)
+      @processing_strategy = mock("ProcessingStrategy", :process => "Yeehaw!", :add_observer => nil)
       
       @engine = LigerEngine::Engine.new(@search_strategy, @processing_strategy)
       @engine.add_observer(@observer, :liger_engine_update)
@@ -61,6 +61,14 @@ describe LigerEngine do
     
     it "should notify observers after_processing with nothing" do
       @observer.should_receive(:liger_engine_update).with(:after_processing) 
+    end
+    
+    it "should listen for events on its Strategies" do
+      @search_strategy.should_receive(:add_observer).with an_instance_of LigerEngine::Engine
+      @processing_strategy.should_receive(:add_observer).with an_instance_of LigerEngine::Engine
+      
+      LigerEngine::Engine.new(@search_strategy, @processing_strategy)
+      
     end
     
   end

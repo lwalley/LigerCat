@@ -23,7 +23,7 @@ module LigerEngine
       # 
       # Each PMID should be looked up locally. If it exists locally, it is added
       # to the histogram. If it doesn't exist, this method will return nil
-      def each_pmid(pmid)
+      def each_id(pmid)
         if dp_str = @redis.get(pmid)
           date_published = Date.parse(dp_str)
           add_to_histogram(date_published)

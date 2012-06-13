@@ -30,4 +30,13 @@ describe 'TagCloudAndHistogramProcessor' do
       results.histogram[2009].should == 5
     end
   end
+  
+  describe 'Events' do
+    it "should listen for events on its TagCloud- and HistogramProcessor" do
+      # Soooo hacky!
+      @processor.instance_variable_get(:@tag_cloud).instance_variable_get(:@observer_peers).should be_include @processor
+      @processor.instance_variable_get(:@histogram).instance_variable_get(:@observer_peers).should be_include @processor
+    end
+  end
+  
 end

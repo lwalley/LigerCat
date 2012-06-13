@@ -28,7 +28,7 @@ module LigerEngine
       # Looks up the MeSH keywords for each PMID.
       # If they exist, it adds them into the occurrence summer,
       # If none exist, it returns nil
-      def each_pmid(pmid)
+      def each_id(pmid)
         mesh_keywords = @redis.smembers(pmid)
         unless mesh_keywords.empty?
           @occurrence_summer.sum(mesh_keywords)

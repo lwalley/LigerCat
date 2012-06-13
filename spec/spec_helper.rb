@@ -16,6 +16,10 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  
+  # Make the after_commit gem play nice with tests
+  ActiveRecord::Base.send(:include, AfterCommit::AfterSavepoint)
+  ActiveRecord::Base.include_after_savepoint_extensions
 end
 
 

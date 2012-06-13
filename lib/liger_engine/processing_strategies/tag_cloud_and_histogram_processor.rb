@@ -15,6 +15,9 @@ module LigerEngine
       def initialize
         @tag_cloud = TagCloudProcessor.new
         @histogram = HistogramProcessor.new
+        
+        @tag_cloud.add_observer self, :forward_notification
+        @histogram.add_observer self, :forward_notification
       end
       
       def process(id_list)

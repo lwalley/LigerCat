@@ -45,7 +45,6 @@ class PubmedQuery < AsynchronousQuery
     engine  = LigerEngine::Engine.new(search,process)
     engine.add_observer(self, :liger_engine_update)
 
-    
     results = engine.run(self.query)
 
     results.tag_cloud.each do |mesh_frequency|
@@ -59,17 +58,6 @@ class PubmedQuery < AsynchronousQuery
     self.num_articles = engine.count
 
     self.save
-  end
-  
-  # Observer method for LigerEngine
-  def liger_engine_update(event_name, *args)
-    case event_name
-    when :before_search               : self.update_state(:searching)
-    when :before_processing           : self.update_state(:processing)
-    when :before_tag_cloud_processing : self.update_state(:processing_tag_cloud)
-    when :before_histogram_processing : self.update_state(:processing_histogram)
-    when :log                         : log_liger_engine("#{args[1]} #{args[0]}")
-    end
   end
 
   # Are we an EoL species query, or a regular old query? 

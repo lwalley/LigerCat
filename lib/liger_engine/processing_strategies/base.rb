@@ -11,8 +11,8 @@ module LigerEngine
     
     
     # A processing strategy needs to do four things:
-    # 1. Accept a list of PMIDs
-    # 2. Look up those PMIDs locally, and process the ones we have locally
+    # 1. Accept a list of IDs
+    # 2. Look up those IDs locally, and process the ones we have locally
     # 3. Fetch the ones that we don't have locally from PubMed
     # 4. Save the fetched ones locally, then process them
     #
@@ -25,21 +25,21 @@ module LigerEngine
     #
     # When your class includes ProcessingStrategyHelper, then you must *not* 
     # define a +process+ method in your own class, it is defined in the 
-    # helper. Instead, you must define three methods: +each_pmid+, 
+    # helper. Instead, you must define three methods: +each_id+, 
     # +each_nonlocal+, and +return_results+. These methods are explained 
     # below.
     #
     # The +process+ method defined in this helper loops through the list of 
-    # PMIDs, calling the method +each_pmid+ with each one. +each_pmid+ must do 
-    # something rather special. It must look up the given PMID locally. If it 
+    # IDs, calling the method +each_id+ with each one. +each_id+ must do 
+    # something rather special. It must look up the given ID locally. If it 
     # exists, it should do something useful and return true (or more 
-    # accurately non-false). If the PMID does not exist locally, +each_pmid+ 
+    # accurately non-false). If the ID does not exist locally, +each_id+ 
     # must return *false* or *nil*.  When it does, the 
-    # ProcessingStrategyHelper will automatically add that PMID to the list of 
-    # nonlocal PMIDs.
+    # ProcessingStrategyHelper will automatically add that ID to the list of 
+    # nonlocal IDs.
     #
-    # When each PMID has been processed, ProcessingStrategyHelper will
-    # automatically go and fetch the nonlocal pmids from PubMed. It will pass 
+    # When each ID has been processed, ProcessingStrategyHelper will
+    # automatically go and fetch the nonlocal ids from PubMed. It will pass 
     # each one to the method +each_nonlocal+ as a Nokogiri::XML::Element object. 
     # +each_nonlocal+ should process the Nokogiri::XML::Element object, and I would 
     # suggest it get cached locally so that it will never have to be looked up  
@@ -52,7 +52,7 @@ module LigerEngine
 
     
     class Base < Strategy
-      # Accepts a list of PMIDs and does something useful with them.
+      # Accepts a list of IDs and does something useful with them.
       #
       # Every Processing Strategy must define this method, and this particular 
       # helper provides a general structure for you, so you don't have to.
@@ -64,26 +64,26 @@ module LigerEngine
       # repeating myself.
       #
       # === Parameters
-      # * _pmid_list_: An array of integers of Pubmed IDs
+      # * _id_list_: An array of integers of Pubmed IDs
       #
       # === Returns
       # * The results of the processing
-      def process(pmid_list)
-        nonlocal_pmids = []
+      def process(id_list)
+        nonlocal_ids = []
                 
-        log "Looking up #{pmid_list.length} PMIDs in local caches"
-        # Loop through each PMID from the list sent by the Search Strategy
-        pmid_list.each do |pmid|
-          unless each_pmid(pmid)
-            nonlocal_pmids << pmid
+        log "Looking up #{id_list.length} IDs in local caches"
+        # Loop through each ID from the list sent by the Search Strategy
+        id_list.each do |id|
+          unless each_id(id)
+            nonlocal_ids << id
           end
         end
         
         
-        log "Retrieving #{nonlocal_pmids.length} nonlocal PMIDs that were not in the local cache"
-        # Retrieve unannotated PMIDS and add those to the histogram.
-        unless nonlocal_pmids.empty?
-          LigerEngine::PubmedFetcher.fetch(nonlocal_pmids) do |medline_citation|
+        log "Retrieving #{nonlocal_ids.length} nonlocal IDs that were not in the local cache"
+        # Retrieve unannotated IDS and add those to the histogram.
+        unless nonlocal_ids.empty?
+          LigerEngine::PubmedFetcher.fetch(nonlocal_ids) do |medline_citation|
             each_nonlocal(medline_citation)
           end
         end
@@ -91,31 +91,31 @@ module LigerEngine
         return_results
       end
       
-      # +process+ loops through the list of PMIDs, calling the +each_pmid+ 
+      # +process+ loops through the list of IDs, calling the +each_id+ 
       # with each one. 
       #
-      # +each_pmid+ must do something rather special. 
+      # +each_id+ must do something rather special. 
       #
-      # It must look up the given PMID locally. If the PMID exists locally, do 
+      # It must look up the given ID locally. If the ID exists locally, do 
       # something useful and return true (or more accurately non-false). 
       #
-      # If the PMID does not exist locally, +each_pmid+ must return *false* or
+      # If the ID does not exist locally, +each_id+ must return *false* or
       # *nil*.  
       # When it does, the ProcessingStrategyHelper will automatically 
-      # add that PMID to the list of nonlocal PMIDs.
+      # add that ID to the list of nonlocal IDs.
       # 
       # === Parameters
-      # * _pmid_: an integer Pubmed ID
+      # * _id_: an integer Pubmed ID
       #
       # === Should Return
-      # * "true" (non-false and non-nil) if the PMID can be found locally
-      # * false or nil if the PMID needs to be retrieved from PubMed
-      def each_pmid(pmid)
-        raise 'You must define each_pmid in your Processor'
+      # * "true" (non-false and non-nil) if the ID can be found locally
+      # * false or nil if the ID needs to be retrieved from PubMed
+      def each_id(id)
+        raise 'You must define each_id in your Processor'
       end
       
-      # When each PMID has been processed, ProcessingStrategyHelper will
-      # automatically go and fetch the nonlocal pmids from PubMed.
+      # When each ID has been processed, ProcessingStrategyHelper will
+      # automatically go and fetch the nonlocal ids from PubMed.
       #  
       # This method is called with each one as a Nokogiri::XML::Element object,
       # representing the PubmedArticle node of the eFetch XML Response. See

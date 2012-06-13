@@ -57,16 +57,6 @@ class BlastQuery < AsynchronousQuery
     self.save
   end
   
-  # Observer method for LigerEngine
-  def liger_engine_update(event_name, *args)
-    case event_name
-    when :before_search               : self.update_state(:searching)
-    when :before_processing           : self.update_state(:processing)
-    when :before_tag_cloud_processing : self.update_state(:processing_tag_cloud)
-    when :before_histogram_processing : self.update_state(:processing_histogram)
-    end
-  end
-  
   def humanized_state
     self.state == :searching ? "Blasting" : super
   end

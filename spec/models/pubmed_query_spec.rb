@@ -82,7 +82,8 @@ describe PubmedQuery, '#perform_query!' do
   before(:each) do
     @mocked_liger_engine = mock("LigerEngine")
     @mocked_liger_engine.stub!(:run).and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
-    @mocked_liger_engine.stub!(:article_count).and_return(1234)
+    @mocked_liger_engine.stub!(:count).and_return(1234)
+    @mocked_liger_engine.stub!(:add_observer)
     
     LigerEngine::Engine.stub!(:new).and_return(@mocked_liger_engine)
   end
@@ -111,7 +112,9 @@ describe PubmedQuery, '#perform_query!' do
                                                   an_instance_of(LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor)).and_return(mocked_liger_engine)
     
     mocked_liger_engine.should_receive(:run).with('biodiversity informatics').and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
-    mocked_liger_engine.should_receive(:article_count).and_return(17)
+    mocked_liger_engine.should_receive(:count).and_return(17)
+    mocked_liger_engine.stub!(:add_observer)
+    
   end
 end
 
