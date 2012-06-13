@@ -1,5 +1,8 @@
+require 'after_commit'
+
 class AsynchronousQuery < ActiveRecord::Base
   self.abstract_class = true
+  after_commit_on_create :launch_worker
   
   STATES = {
     :queued => 0,
@@ -11,8 +14,6 @@ class AsynchronousQuery < ActiveRecord::Base
     :processing_tag_cloud => 7,
     :processing_histogram => 8
   }
-  
-  
   
   class << self
     def queue

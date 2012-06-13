@@ -16,10 +16,7 @@ class PubmedQuery < AsynchronousQuery
   
   # Validators
   validates_presence_of :query
-  
-  # Callbacks
-  after_create :launch_worker
-  
+    
   class << self
     def find_by_query(query)
       find_by_query_key create_query_key(query)

@@ -5,17 +5,13 @@ class JournalQuery < AsynchronousQuery
   has_many :journals, :through => :journal_results
   
   validates_presence_of :query
-  
-  after_create :launch_worker
-  
+    
   class << self
     
     def perform(query_id)
       query = JournalQuery.find(query_id)
-      RAILS_DEFAULT_LOGGER.error("DEBUG: JournalQuery-#{query_id} about to begin processing")
       query.perform_query!
       query.update_attribute(:done, true)
-      RAILS_DEFAULT_LOGGER.error("DEBUG: JournalQuery-#{query_id} finished processing")
     rescue Exception => e
       # TODO: make an error flag in the database to alert user to an error
       raise e # Resque handles this and puts it in the Failed Jobs list

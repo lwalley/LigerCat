@@ -13,6 +13,7 @@ gem 'mysql'
 gem 'system_timer'
 gem 'redis','2.2.2'
 gem 'resque', "~> 1.20.0"
+gem 'after_commit'
 
 group :development, :test do
   gem 'ruby-debug'

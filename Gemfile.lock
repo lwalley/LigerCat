@@ -11,6 +11,8 @@ GEM
     activeresource (2.3.4)
       activesupport (= 2.3.4)
     activesupport (2.3.4)
+    after_commit (1.0.10)
+      activerecord (>= 1.15.6, < 3.0.0)
     bio (1.4.2)
     chronic (0.2.3)
       hoe (>= 1.2.1)
@@ -70,6 +72,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  after_commit
   bio
   chronic (= 0.2.3)
   fakeweb
