@@ -23,7 +23,7 @@ class ArticlesController < ApplicationController
         
       cache_page
     else
-      redirect_to status_article_url(@query)
+      redirect_to status_article_path(@query)
     end
   end
   
@@ -37,7 +37,7 @@ class ArticlesController < ApplicationController
       if request.xhr?
         render :text => 'done'
       else
-        redirect_to slug_article_url(@query, @query.slug)
+        redirect_to slug_article_path(@query, @query.slug)
       end
     else
       @status = @query.humanized_state
@@ -62,7 +62,7 @@ class ArticlesController < ApplicationController
 
   def create_or_show
     if @query = PubmedQuery.find_by_query(params[:q])
-      redirect_to slug_article_url(@query, @query.slug)
+      redirect_to slug_article_path(@query, @query.slug)
     else
       create
     end
@@ -71,6 +71,6 @@ class ArticlesController < ApplicationController
   # This is called from create_or_show, there is not a POST /articles so we make it private.
   def create
     @query = PubmedQuery.create(:query => params[:q])    
-    redirect_to status_article_url(@query)
+    redirect_to status_article_path(@query)
   end
 end

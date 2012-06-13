@@ -4,22 +4,22 @@ biodiversity_informatics:
   id: 1
   query: 'Biodiversity Informatics'
   query_key: "9d299d6a1adb037baf4d8443ff2faf16"
-  done: 1
+  state: 1
   
 still_searching:
   id: 2
   query: 'Medical Informatics'
   query_key: "049b5f9389504f8a27d3920f6d50409c"
-  done: 0
+  state: 0
   
 long_query_still_searching:
   id: 3
   query: <%= '(english[la] OR hasabstract)' * 10 %>
   query_key: '8867c6e36bbfc7d96b64b3d7ead333bd'
-  done: 0
+  state: 0
   
 long_query:
   id: 4
   query: <%= '("lewy bodies") OR ("inclusion bodies")' * 10 %>
   query_key: 'ec7601f61d74a90a8e12453abaae1ae4'
-  done: 1
+  state: 1
