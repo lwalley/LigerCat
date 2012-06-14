@@ -91,7 +91,6 @@ describe 'GET /articles/:id GIVEN a PubmedQuery that is DONE Searching' do
 end
 
 
-
 describe 'GET /articles/:id/status' do
   controller_name :articles
   
