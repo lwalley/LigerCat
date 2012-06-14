@@ -1,4 +1,4 @@
-- form_tag(articles_path, {:method => 'get', :class=>'search_form container'}) do
+- form_tag(search_articles_path, {:method => 'get', :class=>'search_form container'}) do
   %fieldset
     - query_string = @query.display_query rescue nil
     = articles_text_field_tag(query_string)

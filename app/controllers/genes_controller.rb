@@ -1,16 +1,5 @@
 class GenesController < ApplicationController
-  # Whoa Nelly. This allows us to action cache the genes "home" page
-  # in addition to the mesh cloud of a specific gene, all from one action.
-  # The two are kept separate by appending the gene query key onto the name of 
-  # the action.
-  #
-  # This is in addition to the page caching in #show. The approach used in ArticlesController
-  # to use redirects and page caching throughout don't work here because the sequence strings are so long
-  caches_action :new, :cache_path => Proc.new { |controller|
-    controller.params[:q] ?
-      controller.send(:genes_url) + "_#{BlastQuery.create_query_key(controller.params[:q])}" :
-      controller.send(:genes_url)
-  }
+  caches_action :index
 	
   # GET /genes
   def index
@@ -34,7 +23,7 @@ class GenesController < ApplicationController
       @mesh_frequencies = @query.blast_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')
       @publication_histogram = @query.publication_dates.to_histohash
       render :action => 'show'
-			cache_page unless params[:id].blank? # page cache only urls in the form of /genes/123, not ones coming in from create_or_show
+			cache_page 
     else
       redirect_to status_gene_path(@query)
     end

@@ -18,6 +18,16 @@ class PubmedQuery < AsynchronousQuery
   validates_presence_of :query
     
   class << self
+    def find_or_create_by_query(query)
+      find_by_query(query) || create(:query => query)      
+    end
+    
+    # The query string could possibly be very long. It's unfeasible to index such a long field,
+    # so we create a MD5 hash of the query, called query_key, and store it in an indexed field.
+    #
+    # When users type a query into the search box, we want to expeditiously see if that query exists
+    # in the database, so this method provides a seamless interface to do that, hiding the query_key
+    # thing from the PubmedQuery API.
     def find_by_query(query)
       find_by_query_key create_query_key(query)
     end

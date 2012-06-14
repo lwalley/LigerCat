@@ -56,6 +56,19 @@ describe PubmedQuery, '.find_by_query' do
   end
 end
 
+describe PubmedQuery, '.find_or_create_by_query' do
+  before(:each) do
+    @query = "biodiversity informatics"
+    Resque.stub!(:enqueue)
+  end
+
+  it "should call find_by_query, which abstracts the query_key thing" do
+    PubmedQuery.should_receive(:find_by_query).with( @query )
+    PubmedQuery.find_or_create_by_query(@query)
+  end
+end
+
+
 describe PubmedQuery, "#actual_pubmed_query" do
   it "should run the query through EolSearchStrategy if an EoL query" do
     normal_query = PubmedQuery.new(:query => "Mr. T")

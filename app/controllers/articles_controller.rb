@@ -1,11 +1,19 @@
 class ArticlesController < ApplicationController
   helper_method  :query
-  # FIXME: Make this work for articles home page caches_action :new
-  
+  caches_page :index
+    
   # GET /articles
   def index
-    create_or_show and return unless params[:q].blank?
     render :layout => 'home'
+  end
+  
+  # GET /articles/search
+  # This is essentially a create method on a GET method
+  def search
+    redirect_to(articles_path) and return if params[:q].blank?
+    
+    @query = PubmedQuery.find_or_create_by_query(params[:q])
+    redirect_to slug_article_path(@query, @query.slug)
   end
   
   # GET /articles/:id
@@ -14,14 +22,12 @@ class ArticlesController < ApplicationController
     if @query.done?
       @mesh_frequencies = @query.pubmed_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')      
       respond_to do |format|
-          format.html do
-            @publication_histogram = @query.publication_dates.to_histohash # Keeps histogram out of the cloud iframe thingy. TODO refactor the views so this hack isn't needed
-            render :action => 'show'; cache_page
-          end
-          format.cloud { render :action => 'embedded_cloud', :layout => 'iframe'; cache_page }
+        format.html do
+          @publication_histogram = @query.publication_dates.to_histohash # Keeps histogram out of the cloud iframe thingy. TODO refactor the views so this hack isn't needed
+          render :action => 'show'; cache_page
         end
-        
-      cache_page
+        format.cloud { render :action => 'embedded_cloud', :layout => 'iframe'; cache_page }
+      end
     else
       redirect_to status_article_path(@query)
     end
@@ -58,19 +64,5 @@ class ArticlesController < ApplicationController
   
   def query
     @query.query rescue nil
-  end
-
-  def create_or_show
-    if @query = PubmedQuery.find_by_query(params[:q])
-      redirect_to slug_article_path(@query, @query.slug)
-    else
-      create
-    end
-  end
-
-  # This is called from create_or_show, there is not a POST /articles so we make it private.
-  def create
-    @query = PubmedQuery.create(:query => params[:q])    
-    redirect_to status_article_path(@query)
   end
 end
