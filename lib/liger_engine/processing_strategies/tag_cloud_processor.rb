@@ -1,5 +1,6 @@
 require 'occurrence_summer'
 require 'mesh_keyword_lookup'
+require 'mesh_score_lookup'
 require 'redis'
 
 # A LigerEngine Processing Strategy is responsible for taking 
@@ -51,21 +52,30 @@ module LigerEngine
           # This maps a text mesh descriptor into the mesh id. Done with an in-memory hash
           # instead of the database to speed things up
           mesh_ids = mesh_terms.map{|term| MeshKeywordLookup[term] }
-
-          # This is a less-than-desirable solution to the problem of encountering MESH terms that NLM has created
-          # since LigerCat's MeshKeywordLookup was last updated. Right now, this fix simply ignores recently
-          # created MESH terms, which is not ideal, but prevents bad data from being inserted into the database. 
-          #
-          # TODO: In the future, we will want to fetch the IDs of these new MESH terms, and save them to the database.
-          mesh_ids.compact!
-        
-          pmid = pubmed_article_xml.xpath('./MedlineCitation/PMID').first.text
-                    
-          @occurrence_summer.sum(mesh_ids)
           
-          mesh_ids.each do |mesh_id|
-            @redis.sadd(pmid, mesh_id)
+          pmid = pubmed_article_xml.xpath('./MedlineCitation/PMID').first.text
+          
+          
+          # If we detect a MeSH term that we don't know about (ie it maps to nil in MeshKeywordLookup)
+          # then we send an email notification to the LigerCat administrators suggesting they update
+          # LigerCat's MeSH term database.
+          #
+          # We also do not add this PMID's mesh ids to Redis, because we know that list is incomplete.
+          # Presumably, after the admins update LigerCat's MeSH database, the same PMID will show up
+          # in a different search, the MeSH id list will then be complete, and it will be added to Redis 
+          if i = mesh_ids.index(nil)
+            term = mesh_terms[i] # TODO: this only pulls out the first unknown MESH term. It'd be better to pull all of them out if possible
+            Feedback.deliver_update_mesh(term, pmid)
+          else 
+            
+            # Cache the PMIDs that we've retrieved into Redis
+            mesh_ids.each do |mesh_id|
+              @redis.sadd(pmid, mesh_id)
+            end
+            
           end
+             
+          @occurrence_summer.sum(mesh_ids.compact)
         end
       rescue SystemCallError => e
         raise "Could not connect to Redis!"
@@ -81,14 +91,24 @@ module LigerEngine
       # * An array of OpenStructs, +max_mesh_terms+ long, of the most relevant MeshKeywords
       #
       def return_results
-        e_value_calc = EValueCalculator.new(@occurrence_summer.occurrences, @e_value_threshold)
-        
-        hashes = []
-        e_value_calc.each do |mesh_keyword_id, frequency, e_value|
-          hashes << {:mesh_keyword_id => mesh_keyword_id, :frequency => frequency, :e_value => e_value}
+        weighted_frequencies = {}
+        @occurrence_summer.occurrences.each do |mesh_id, frequency|
+          score = MeshScoreLookup[mesh_id]
+          score = 0 if score.nil? # If we've not computed a score for this mesh_id, just fail gracefully 
+                    
+          weighted_frequency = (frequency * (1-score)).ceil
+    
+          weighted_frequencies[mesh_id] = weighted_frequency
         end
         
-        hashes.sort_by{|e| e[:e_value] }.first(@max_mesh_terms)
+        e_value_calc = EValueCalculator.new(weighted_frequencies, @e_value_threshold)
+        
+        hashes = []
+        e_value_calc.each do |mesh_keyword_id, weighted_frequency, e_value|
+          hashes << {:mesh_keyword_id => mesh_keyword_id, :frequency => @occurrence_summer.occurrences[mesh_keyword_id], :weighted_frequency => weighted_frequency}
+        end
+        
+        hashes.sort_by{|h| h[:weighted_frequency] }.last(@max_mesh_terms)
       end
     end
   end

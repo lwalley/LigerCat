@@ -9,13 +9,13 @@ describe 'TagCloudProcessor' do
     redis_fixture :mesh
   end
   
-  describe '#each_pmid' do
+  describe '#each_id' do
     it "should add the MeshKeywords to the OccurrenceSummer and return non-nil if MeshKeywords for that PMID exist" do
-      @processor.each_pmid(18445641).should_not be_nil # 18445641 has several mesh keywords in the fixture file
+      @processor.each_id(18445641).should_not be_nil # 18445641 has several mesh keywords in the fixture file
       @processor.occurrence_summer.occurrences.should_not be_empty
     end
     it "should return nil if MeshKeywords for that PMID do not exist" do
-      @processor.each_pmid(3029822).should be_nil # 3029810 has no mesh keywords in the fixture file
+      @processor.each_id(3029822).should be_nil # 3029810 has no mesh keywords in the fixture file
     end
   end
   
@@ -52,7 +52,7 @@ describe 'TagCloudProcessor' do
       r.del(nonlocal_pmid)
       r.smembers(nonlocal_pmid).should be_empty, "Sanity Check: PMID #{nonlocal_pmid} should not have any MeshKeywords, but did"
               
-      @processor.each_pmid(local_pmid)
+      @processor.each_id(local_pmid)
       @processor.each_nonlocal(medline_record)
       
       @processor.occurrence_summer.occurrences[368].should == 2   # Aged
@@ -67,6 +67,30 @@ describe 'TagCloudProcessor' do
       @processor.occurrence_summer.occurrences[9262].should == 1  # Nails
       @processor.occurrence_summer.occurrences[12983].should == 1 # Soft Tissue Neoplasms
     end
+    
+    describe 'Given a MeSH term that we do not know about' do
+      it "should email the ligercat administrators" do
+        pmid = medline_record_with_unknown_mesh_term.xpath('./MedlineCitation/PMID').first.text # Same PMID as in medline_record below
+        mesh_descriptor = "An Unknown MeSH Descriptor"
+        
+        Feedback.should_receive(:deliver_update_mesh).with(mesh_descriptor, pmid)
+        
+        @processor.each_nonlocal(medline_record_with_unknown_mesh_term)
+      end
+      
+      it "should NOT insert any MeSH IDs into Redis" do
+        pmid = medline_record_with_unknown_mesh_term.xpath('./MedlineCitation/PMID').first.text # Same PMID as in medline_record below
+        
+        # Sanity Check
+        r = RedisFactory.gimme(:mesh)
+        r.del(pmid)
+        r.smembers(pmid).should be_empty, "Sanity Check: PMID #{pmid} should not have any MeshKeywords, but did"
+        
+        @processor.each_nonlocal(medline_record_with_unknown_mesh_term)
+        
+        r.smembers(pmid).should be_empty, "Processor inserted mesh terms into the database when it shouldn't have"
+      end
+    end
   end
   
   describe '#return_results' do
@@ -74,7 +98,7 @@ describe 'TagCloudProcessor' do
       local_pmid    = 1285630 # Cached in local database. See pmids_mesh_keywords fixture
       nonlocal_pmid = medline_record.xpath('./MedlineCitation/PMID').first.text # Same PMID as in medline_record below
             
-      @processor.each_pmid(local_pmid)
+      @processor.each_id(local_pmid)
       @processor.each_nonlocal(medline_record)
       
       results = @processor.return_results
@@ -83,7 +107,7 @@ describe 'TagCloudProcessor' do
 
       results.first[:mesh_keyword_id].should be_a Fixnum
       results.first[:frequency].should be_a Fixnum
-      results.first[:e_value].should be_a Float
+      results.first[:weighted_frequency].should be_a Fixnum
     end
   end
 end
@@ -101,8 +125,6 @@ describe "TagCloudProcessor with Real Data" do
     results.length.should <= 75
   end
 end
-
-
 
 def medline_record
 Nokogiri::XML(%(<?xml version="1.0"?>
@@ -213,6 +235,155 @@ Nokogiri::XML(%(<?xml version="1.0"?>
                   <DescriptorName MajorTopicYN="N">Soft Tissue Neoplasms</DescriptorName>
                   <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
               </MeshHeading>
+          </MeshHeadingList>
+      </MedlineCitation>
+      <PubmedData>
+          <History>
+              <PubMedPubDate PubStatus="pubmed">
+                  <Year>1986</Year>
+                  <Month>1</Month>
+                  <Day>1</Day>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="medline">
+                  <Year>1986</Year>
+                  <Month>1</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>1</Minute>
+              </PubMedPubDate>
+              <PubMedPubDate PubStatus="entrez">
+                  <Year>1986</Year>
+                  <Month>1</Month>
+                  <Day>1</Day>
+                  <Hour>0</Hour>
+                  <Minute>0</Minute>
+              </PubMedPubDate>
+          </History>
+          <PublicationStatus>ppublish</PublicationStatus>
+          <ArticleIdList>
+              <ArticleId IdType="pubmed">3029822</ArticleId>
+          </ArticleIdList>
+      </PubmedData>
+  </PubmedArticle>
+
+
+  </PubmedArticleSet>)).xpath('//PubmedArticleSet/PubmedArticle').first
+end
+
+# The same article as above, but I added a fake Mesh Descriptor "An Unknown MeSH Descriptor"
+def medline_record_with_unknown_mesh_term
+Nokogiri::XML(%(<?xml version="1.0"?>
+  <!DOCTYPE PubmedArticleSet PUBLIC "-//NLM//DTD PubMedArticle, 1st January 2009//EN" "http://www.ncbi.nlm.nih.gov/entrez/query/DTD/pubmed_090101.dtd">
+  <PubmedArticleSet>
+  <PubmedArticle>
+      <MedlineCitation Owner="NLM" Status="MEDLINE">
+          <PMID>3029822</PMID>
+          <DateCreated>
+              <Year>1987</Year>
+              <Month>04</Month>
+              <Day>14</Day>
+          </DateCreated>
+          <DateCompleted>
+              <Year>1987</Year>
+              <Month>04</Month>
+              <Day>14</Day>
+          </DateCompleted>
+          <DateRevised>
+              <Year>2006</Year>
+              <Month>11</Month>
+              <Day>15</Day>
+          </DateRevised>
+          <Article PubModel="Print">
+              <Journal>
+                  <ISSN IssnType="Print">0035-1040</ISSN>
+                  <JournalIssue CitedMedium="Print">
+                      <Volume>72</Volume>
+                      <Issue>7</Issue>
+                      <PubDate>
+                          <Year>1986</Year>
+                      </PubDate>
+                  </JournalIssue>
+                  <Title>Revue de chirurgie orthop&#xE9;dique et r&#xE9;paratrice de l'appareil moteur</Title>
+              </Journal>
+              <ArticleTitle>[Subungual glomus tumor. A case of unusual form]</ArticleTitle>
+              <Pagination>
+                  <MedlinePgn>509-10</MedlinePgn>
+              </Pagination>
+              <Abstract>
+                  <AbstractText>The authors report a case of glomus tumour developing beneath the nail of the ring finger in a 95 year old woman. In contrast with other similar cases, the pain was moderate and had been present for 20 years. The bony phalanx was deformed. Microscopic examination confirmed the diagnosis of a glomus tumour developing in the soft tissues. The phalanx was amputated.</AbstractText>
+              </Abstract>
+              <AuthorList CompleteYN="Y">
+                  <Author ValidYN="Y">
+                      <LastName>Watelet</LastName>
+                      <ForeName>F</ForeName>
+                      <Initials>F</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Menez</LastName>
+                      <ForeName>D</ForeName>
+                      <Initials>D</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Pageaut</LastName>
+                      <ForeName>G</ForeName>
+                      <Initials>G</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Tropet</LastName>
+                      <ForeName>Y</ForeName>
+                      <Initials>Y</Initials>
+                  </Author>
+                  <Author ValidYN="Y">
+                      <LastName>Vichard</LastName>
+                      <ForeName>P</ForeName>
+                      <Initials>P</Initials>
+                  </Author>
+              </AuthorList>
+              <Language>fre</Language>
+              <PublicationTypeList>
+                  <PublicationType>Case Reports</PublicationType>
+                  <PublicationType>English Abstract</PublicationType>
+                  <PublicationType>Journal Article</PublicationType>
+              </PublicationTypeList>
+              <VernacularTitle>Tumeur glomique sous ungu&#xE9;ale. Un cas de forme inhabituelle.</VernacularTitle>
+          </Article>
+          <MedlineJournalInfo>
+              <Country>FRANCE</Country>
+              <MedlineTA>Rev Chir Orthop Reparatrice Appar Mot</MedlineTA>
+              <NlmUniqueID>1272427</NlmUniqueID>
+          </MedlineJournalInfo>
+          <CitationSubset>IM</CitationSubset>
+          <MeshHeadingList>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Aged</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Aged, 80 and over</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Female</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="Y">Fingers</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Glomus Tumor</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Humans</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="Y">Nails</DescriptorName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="N">Soft Tissue Neoplasms</DescriptorName>
+                  <QualifierName MajorTopicYN="Y">diagnosis</QualifierName>
+              </MeshHeading>
+              <MeshHeading>
+                  <DescriptorName MajorTopicYN="Y">An Unknown MeSH Descriptor</DescriptorName>
+              </MeshHeading>
+              
           </MeshHeadingList>
       </MedlineCitation>
       <PubmedData>

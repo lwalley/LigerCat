@@ -63,17 +63,19 @@ module ApplicationHelper
     
     classes = options[:classes]
     
-    # FIXME: Quick fix for nil mesh_keywords, which can come about if a non-existant MeSH ID gets inserted into Redis.
-    # Not sure why this is happening at the moment, but will debug. In the mean time, this ensures clouds get
-    # rendered as best they can.
+    # Sometimes non-existent MeSH IDs can get inserted into Redis.
+    # This can happen when NLM changes its MeSH headings, and then back-updates the catalogue.
+    # As the MESH database is updated periodically, these kinks will work themselves out,
+    # but we must have this line here to account for the lag between updating the MeSH database
+    # and said kinks working themselves out
     keywords.delete_if{|k| (! k.name) rescue true }
     
     max, min = 0, 0x7FFFFFF # A really big fixnum!
     keywords.each do |t|
       next if t.name == 'Animals'
-      weighted_frequency = t.weighted_frequency
-      max = weighted_frequency if weighted_frequency > max
-      min = weighted_frequency if weighted_frequency < min
+      f = t.weighted_frequency
+      max = f if f > max
+      min = f if f < min
     end
     
     divisor = (max - min) / classes.size

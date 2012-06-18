@@ -1,0 +1,3 @@
+In the Pubmed Article <%= @pmid %>, LigerCat encountered the MeSH term "<%= @term %>" which it currently does not know about.
+
+You should check this term in NLM's MeSH Browser (http://www.nlm.nih.gov/mesh/MBrowser.html). It term was probably added to MeSH after LigerCat's last updated its MeSH database on <%= MeshKeywordLookup.updated_at %>. If this is the case, you should update LigerCat's MeSH database by running `rake cranky:crankypants`

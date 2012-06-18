@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607201600) do
+ActiveRecord::Schema.define(:version => 20120618152344) do
 
   create_table "blast_mesh_frequencies", :force => true do |t|
     t.integer  "blast_query_id"
@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(:version => 20120607201600) do
     t.integer  "frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "e_value"
+    t.integer  "weighted_frequency"
   end
 
   add_index "blast_mesh_frequencies", ["blast_query_id", "mesh_keyword_id"], :name => "by_blast_query_id_and_mesh_keyword_id"
@@ -130,8 +130,6 @@ ActiveRecord::Schema.define(:version => 20120607201600) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "score"
-    t.float    "genbank_score"
   end
 
   create_table "nuccore_queries", :force => true do |t|
@@ -175,7 +173,7 @@ ActiveRecord::Schema.define(:version => 20120607201600) do
     t.integer  "frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "e_value"
+    t.integer  "weighted_frequency"
   end
 
   add_index "pubmed_mesh_frequencies", ["mesh_keyword_id"], :name => "index_pubmed_mesh_frequencies_on_mesh_keyword_id"

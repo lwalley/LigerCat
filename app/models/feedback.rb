@@ -1,11 +1,16 @@
 class Feedback < ActionMailer::Base
-   def contact(sender, message, sent_at = Time.now)
-      @subject = 'LigerCat Feedback'
-      @recipients = FEEDBACK_RECIPIENTS
-      @from = sender
-      @sent_on = sent_at
-  	  @body["email"] = sender
-   	  @body["message"] = message
-      @headers = {}
+   def contact(sender, message)
+     subject    'LigerCat Feedback'
+     from       sender
+     recipients FEEDBACK_RECIPIENTS
+     body       :message => message
+   end
+   
+   def update_mesh(term, pmid)
+     subject    'LigerCat May Need to Update MeSH Terms'
+     from       'no-reply@ligercat.org'
+     recipients FEEDBACK_RECIPIENTS
+     body       :term => term,
+                :pmid => pmid
    end
 end
