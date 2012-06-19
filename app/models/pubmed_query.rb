@@ -4,9 +4,9 @@ require 'pubmed_search'
 class PubmedQuery < AsynchronousQuery 
   
   # Associations
-  has_many :pubmed_mesh_frequencies
+  has_many :pubmed_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_keywords, :through => :pubmed_mesh_frequencies
-  has_many :publication_dates, :as => :query do
+  has_many :publication_dates, :as => :query, :dependent => :delete_all do
     def to_histohash
       returning Hash.new(0) do |histohash|
         find(:all).each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
@@ -57,10 +57,12 @@ class PubmedQuery < AsynchronousQuery
 
     results = engine.run(self.query)
 
+    self.pubmed_mesh_frequencies.clear
     results.tag_cloud.each do |mesh_frequency|
       self.pubmed_mesh_frequencies.build(mesh_frequency)
     end
 
+    self.publication_dates.clear
     results.histogram.each do |year, publication_count|
       self.publication_dates.build(:year => year, :publication_count => publication_count)
     end

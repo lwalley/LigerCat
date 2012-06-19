@@ -3,11 +3,10 @@ require 'digest/md5'
 
 class BlastQuery < AsynchronousQuery
   
-  has_many :blast_mesh_frequencies, :dependent => :destroy
+  has_many :blast_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_frequencies, :class_name => 'BlastMeshFrequency'
   has_many :mesh_keywords, :through => :blast_mesh_frequencies
-  
-  has_many :publication_dates, :as => :query do
+  has_many :publication_dates, :as => :query, :dependent => :delete_all do
     def to_histohash
       returning Hash.new(0) do |histohash|
         find(:all).each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
