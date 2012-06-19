@@ -14,7 +14,7 @@ namespace :mesh do
     require 'mesh_keyword_lookup'
     require 'progressbar'
     
-    puts "Loading MeSH terms from mesh_keyword_lookup"
+    puts "Loading MeSH terms from MeshKeywordLookup into database"
     pbar = ProgressBar.new("loading", MeshKeywordLookup.length)
     MeshKeywordLookup.each do |name, id|
       pbar.inc
@@ -24,18 +24,19 @@ namespace :mesh do
     pbar.finish
   end
   
-  desc "Creates MeSH indexes from file"
-  task :create_indexes, [:filename] => [:environment] do |t, args|
+  desc "Creates MeSH indexes from MBR's mh_freq_count file"
+  task :create_indexes, [:path_to_mh_freq_count] => [:environment] do |t, args|
     
     abort "You must pass in the name of a file to load,\n"+
-          " Example: rake mesh:create_indexes[./mh_freq_count]" unless File.exists?(args.filename)
+          " Example: rake mesh:create_indexes[./mh_freq_count]" unless File.exists?(args.path_to_mh_freq_count)
     
     keyword_lookup = {}
     count_lookup   = {}
     
     max_mesh_count = 0
     
-    File.open(args.filename) do |f|
+    puts "Creating indexes from '#{args.path_to_mh_freq_count}'"
+    File.open(args.path_to_mh_freq_count) do |f|
       f.each_line do |line|
         next if line.strip.blank?
         
@@ -50,7 +51,7 @@ namespace :mesh do
         # Manipulate desired columns as necessary
         count        = count.to_i
         mesh_heading = mesh_heading.upcase
-        mesh_id      = mesh_id.to_i # TODO this will probably need to be updated given the real mh_freq_count
+        mesh_id      = mesh_id.scan(/.*?(\d+)/).flatten.first.to_i
 
         # Check for errors in data and abort if necessary
         abort "Detected blank MeSH Descriptor in line '#{line.inspect}'" if mesh_heading.blank? 
@@ -79,14 +80,17 @@ namespace :mesh do
     
     
     # Write the results of this parse out to the appropriate files in /lib
-    @today = Time.now.strftime("%d %B %Y")
     
+    @today = Time.now.strftime("%d %B %Y")
+  
+    puts "Writing mesh_keyword_lookup.rb"
     File.open( File.join(RAILS_ROOT, 'lib', 'mesh_keyword_lookup.rb'), 'w') do |f|
       output = ERB.new(mesh_keyword_lookup_template)
       descriptor_hash_string =  keyword_lookup.map{|name, id| %("#{name}" => #{id})}.join(",\n")
       f.puts output.result(binding)
     end
     
+    puts "Writing mesh_score_lookup.rb"
     File.open( File.join(RAILS_ROOT, 'lib', 'mesh_score_lookup.rb'), 'w') do |f|
       output = ERB.new(mesh_score_lookup_template)
       score_hash_string =  count_lookup.map{|id, count| %(#{id} => #{count})}.join(",\n")
