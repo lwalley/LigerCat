@@ -45,10 +45,12 @@ class BlastQuery < AsynchronousQuery
     
     results = engine.run(sequence.fasta_data)
 
+    self.blast_mesh_frequencies.clear
     results.tag_cloud.each do |mesh_frequency|
       self.blast_mesh_frequencies.build(mesh_frequency)
     end
-
+    
+    self.publication_dates.clear
     results.histogram.each do |year, publication_count|
       self.publication_dates.build(:year => year, :publication_count => publication_count)
     end
