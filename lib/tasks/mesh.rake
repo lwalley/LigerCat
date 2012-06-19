@@ -40,7 +40,6 @@ namespace :mesh do
       f.each_line do |line|
         next if line.strip.blank?
         
-        # TODO: Update the line below to reflect the real columns when those are known
         count, 
         count_when_starred, 
         count_without_subheading, 
