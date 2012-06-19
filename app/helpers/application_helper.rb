@@ -78,7 +78,7 @@ module ApplicationHelper
       min = f if f < min
     end
     
-    divisor = (max - min) / classes.size
+    divisor = (max - min) / classes.size.to_f
         
     returning String.new do |keyword_list|
       keywords.each do |t|
