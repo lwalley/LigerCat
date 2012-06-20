@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
-gem 'rails', '2.3.4'
+gem 'rails', '2.3.14'
+gem 'i18n'
 gem 'json'
 gem 'haml'
 gem 'will_paginate','>= 2.3.1'
@@ -14,6 +15,7 @@ gem 'system_timer'
 gem 'redis','2.2.2'
 gem 'resque', "~> 1.20.0"
 gem 'after_commit'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'ruby-debug'

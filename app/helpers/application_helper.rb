@@ -21,7 +21,7 @@ module ApplicationHelper
 	def nav_tab(name, url)
     active_class = (@context == name) ? ' active' : ''
 
-    returning String.new do |html|
+    String.new.tap do |html|
       html << "<li class='#{name + active_class}'>"
       html << link_to_unless(@context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>" }
       html << '</li>'
@@ -79,8 +79,8 @@ module ApplicationHelper
     end
     
     divisor = (max - min) / classes.size.to_f
-        
-    returning String.new do |keyword_list|
+    
+    String.new.tap do |keyword_list|
       keywords.each do |t|
         next if t.name == 'Animals'
         

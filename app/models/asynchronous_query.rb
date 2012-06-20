@@ -10,7 +10,7 @@ class AsynchronousQuery < ActiveRecord::Base
   # meaningless aside from their uniqueness
   STATES = {
     :queued => 0,
-    :queued_for_update => 2,
+    :queued_for_refresh => 2,
     :searching => 3,
     :processing => 4,
     :cached => 1,
@@ -22,7 +22,21 @@ class AsynchronousQuery < ActiveRecord::Base
   class << self
     # Sets the queue that Resque should use
     def queue
-      :ligercat
+      :new_queries
+    end
+    
+    def refresh_queue
+      :refresh_cached_queries
+    end
+    
+    def enqueue_refresh_candidates(limit = 1000)
+      candidates = self.find(:all, :conditions => ["state=? AND updated_at<?", STATES[:cached], 1.minute.ago], 
+                                   :order => 'updated_at ASC',
+                                   :limit => limit )
+
+      logger.info( candidates.empty? ? "#{Time.now} No #{self.name.pluralize} are candidates for refresh. Skipping" : "#{Time.now} Enqueing #{candidates.length} #{self.name.pluralize}" )
+      
+      candidates.each{|c| c.enqueue_for_refresh }
     end
     
     # Command-patternt type interface called by a Resque worker.
@@ -41,7 +55,7 @@ class AsynchronousQuery < ActiveRecord::Base
   end
   
   def done?
-    [:cached, :queued_for_update].include? self.state
+    [:cached, :queued_for_refresh].include? self.state
   end
   
   def perform_query!
@@ -54,6 +68,11 @@ class AsynchronousQuery < ActiveRecord::Base
     Resque.enqueue(self.class, self.id)
     update_state(:queued)
   end 
+  
+  def enqueue_for_refresh
+    Resque.enqueue_to(self.class.refresh_queue, self.class, self.id)
+    update_state(:queued_for_refresh)
+  end
   
   # Returns the symbol version of the state integer code stored in the database
   def state
@@ -106,7 +125,7 @@ class AsynchronousQuery < ActiveRecord::Base
   # For example, the log messages from a PubmedQuery#id-12 would look like:
   #    LigerEngine: PubmedQuery id:12 Changed state to cached
   def log_liger_engine(msg)
-    RAILS_DEFAULT_LOGGER.info("LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
+    RAILS_DEFAULT_LOGGER.info("#{Time.now} LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
   end
     
 end
