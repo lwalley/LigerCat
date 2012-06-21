@@ -1,19 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe SelectionsController, '#index' do
-  it "should display nothing if the session is empty" do
-    get :index
-    assigns[:selections].should be_empty
-  end
-  
-  it "should display session contents if the session is not empty" do
-    session[:selections] = [mock_model(Journal), mock_model(Journal)]
-    Journal.should_receive(:find).and_return([mock_model(Journal), mock_model(Journal)])
-    get :index
-    assigns[:selections].size.should == 2
-  end
-end
-
 describe SelectionsController, '#create' do
   before(:each) do
     Journal.stub!(:find).and_return(mock_model(Journal))
@@ -38,13 +24,6 @@ describe SelectionsController, '#create' do
     
     post :create, :journal_id => '111;222;333'
     session[:selections].should == [67890,111,222,333]
-  end
-end
-
-describe SelectionsController, '#show' do
-  it "should redirect to the journal page" do
-    get :show, :id => 12345
-    response.should redirect_to('/journals/12345')
   end
 end
 

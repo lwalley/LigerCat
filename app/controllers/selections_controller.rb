@@ -29,7 +29,8 @@ class SelectionsController < ApplicationController
     # @journal_ids set by before_filter
     session[:selections] = session[:selections] - @journal_ids
 
-    respond_to do |format|        
+    respond_to do |format|
+      format.html { render :nothing => true, :status => :no_content }
       format.js   { head :created, :location => selection_url(@journal_id) }
       format.xml  { head :created, :location => selection_url(@journal_id) }
     end
@@ -39,7 +40,7 @@ class SelectionsController < ApplicationController
   def destroy_all
     session[:selections] = []
     respond_to do |format|
-      flash[:notice] = "Deleted all selections"
+      format.html { render :nothing => true, :status => :no_content }
       format.js   { head :ok }
       format.xml  { head :ok }
     end
