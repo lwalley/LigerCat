@@ -1,6 +1,9 @@
 require 'after_commit'
+require 'rest_client'
 
 class AsynchronousQuery < ActiveRecord::Base
+  include ActionController::UrlWriter
+  
   self.abstract_class = true
   after_commit_on_create :launch_worker
 
@@ -43,11 +46,14 @@ class AsynchronousQuery < ActiveRecord::Base
     # This does the leg-work of finding the respective query AR object
     # and calls the perform_query method.
     # Subclasses will need to implement the perform_query! method to their liking
-    def perform(query_id)
+    def perform(query_id, cache_webhook=nil)
       query = self.find(query_id)
       query.update_state(:searching)
       query.perform_query!
       query.update_state(:cached)
+      
+      RestClient.delete(cache_webhook) rescue nil
+      query.log_liger_engine("Received webhook: #{cache_webhook.inspect}")
     rescue Exception => e
       query.update_state(:error) unless query.blank?
       raise e # Resque handles this and puts it in the Failed Jobs list
@@ -70,8 +76,21 @@ class AsynchronousQuery < ActiveRecord::Base
   end 
   
   def enqueue_for_refresh
-    Resque.enqueue_to(self.class.refresh_queue, self.class, self.id)
+    Resque.enqueue_to(self.class.refresh_queue, self.class, self.id, cache_webhook_uri)
     update_state(:queued_for_refresh)
+  end
+  
+  # The HTML pages for these queries are page-cached on the webserver.
+  # After a worker is finished refreshing a Query's tag cloud and histogram,
+  # it needs to inform the webserver to delete the page cache.
+  #
+  # This is done with a webhook whose uri is passed to the worker as a parameter.
+  # This uri is generated in this method, which is kind of non-MVC, so we quarrantine 
+  # it in its own method.
+  def cache_webhook_uri
+    url_for(:controller => self.class.name.underscore.pluralize,
+            :action     => :cache,
+            :id         => self.id)
   end
   
   # Returns the symbol version of the state integer code stored in the database

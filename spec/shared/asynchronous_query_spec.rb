@@ -4,6 +4,7 @@ describe "An Asynchronous Query", :shared => true do
   before :each do
     Resque.stub!(:enqueue)
     Resque.stub!(:enqueue_to)
+    RestClient.stub!(:delete)
   end
   
   it "should define self.queue" do
@@ -14,12 +15,51 @@ describe "An Asynchronous Query", :shared => true do
     @query.class.refresh_queue.should == :refresh_cached_queries
   end
   
-  it "should define self.perform" do
-    @query.class.should respond_to(:perform)
-  end
-  
   it "should respond to perform_query!" do
     @query.should respond_to(:perform_query!)
+  end
+  
+  describe '.perform' do
+    before(:each) do
+      @query.class.stub!(:find).and_return(@query)
+      @query.stub!(:perform_query!)
+    end
+    it "should find the query with the given id" do
+      @query.class.should_receive(:find).and_return(@query)
+      @query.class.perform(@query.id)
+    end
+    
+    it "should call perform_query! on the query" do
+      @query.should_receive(:perform_query!)
+      @query.class.perform(@query.id)
+    end
+    
+    it "should update the state before and after #perform_query!" do
+      @query.should_receive(:update_state).with(:searching).ordered
+      @query.should_receive(:perform_query!).ordered
+      @query.should_receive(:update_state).with(:cached).ordered
+      @query.class.perform(@query.id)
+    end
+    
+    it "should catch any error, update the query's status to :error, then raise the same error" do
+      @query.stub!(:perform_query!).and_raise(RuntimeError)
+      @query.should_receive(:update_state).with(:searching).once.ordered
+      @query.should_receive(:update_state).with(:error).once.ordered
+  
+      expect { @query.class.perform(@query.id) }.should raise_error(RuntimeError)
+    end
+    
+    it "should fire off a webhook to clear the cache of the given query, if provided" do
+      RestClient.should_receive(:delete).with("http://some.webhook/")
+      @query.class.perform(@query.id, "http://some.webhook/")
+    end
+    
+    it "should ignore any errors thrown by the webhook call" do
+      RestClient.should_receive(:delete).and_raise(SocketError)
+      @query.class.perform(@query.id, "http://some.webhook/")
+    end
+    
+    
   end
   
   describe ".enqueue_refresh_candidates" do
@@ -69,7 +109,7 @@ describe "An Asynchronous Query", :shared => true do
   
   describe "#enqueue_for_refresh" do
     it "should enqueue to the #refresh_queue" do
-      Resque.should_receive(:enqueue_to).with(@query.class.refresh_queue, @query.class, @query.id)
+      Resque.should_receive(:enqueue_to).with(@query.class.refresh_queue, @query.class, @query.id, an_instance_of(String))
       @query.enqueue_for_refresh
     end
     
@@ -80,6 +120,13 @@ describe "An Asynchronous Query", :shared => true do
       @query.state.should_not == :queued_for_refresh
       @query.enqueue_for_refresh
       @query.state.should == :queued_for_refresh
+    end
+    
+    it "should generate a webhook URL to expire the cache of the" do
+      webhook = "http://some.webhook"
+      @query.should_receive(:cache_webhook_uri).and_return(webhook)
+      Resque.should_receive(:enqueue_to).with(@query.class.refresh_queue, @query.class, @query.id, webhook)
+      @query.enqueue_for_refresh
     end
   end
   

@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class PubmedQueriesController < ApplicationController
   helper_method  :query
   caches_page :index
     
@@ -10,10 +10,10 @@ class ArticlesController < ApplicationController
   # GET /articles/search
   # This is essentially a create method on a GET method
   def search
-    redirect_to(articles_path) and return if params[:q].blank?
+    redirect_to(pubmed_queries_path) and return if params[:q].blank?
     
     @query = PubmedQuery.find_or_create_by_query(params[:q])
-    redirect_to slug_article_path(@query, @query.slug)
+    redirect_to slug_pubmed_query_path(@query, @query.slug)
   end
   
   # GET /articles/:id
@@ -29,7 +29,7 @@ class ArticlesController < ApplicationController
         format.cloud { render :action => 'embedded_cloud', :layout => 'iframe'; cache_page }
       end
     else
-      redirect_to status_article_path(@query)
+      redirect_to status_pubmed_query_path(@query)
     end
   end
   
@@ -43,7 +43,7 @@ class ArticlesController < ApplicationController
       if request.xhr?
         render :text => 'done'
       else
-        redirect_to slug_article_path(@query, @query.slug)
+        redirect_to slug_pubmed_query_path(@query, @query.slug)
       end
     else
       @status = @query.humanized_state
@@ -57,9 +57,18 @@ class ArticlesController < ApplicationController
     end
   end
   
+  # DELETE /articles/:id/cache
+  def cache
+    query = PubmedQuery.find(params[:id])
+    expire_page :action => :show
+    expire_page :action => :show, :slug => query.slug
+    render :nothing => true, :status => :no_content
+  end
+  
+  
   private
   def set_context
-    @context = 'articles'
+    @context = 'pubmed_queries' # 'articles'
   end
   
   def query

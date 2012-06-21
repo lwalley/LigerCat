@@ -63,6 +63,10 @@ end
 Mime::Type.register_alias "text/html", :cloud
 
 
+# TODO move to private.yml file
+AsynchronousQuery.default_url_options[:host] = 'localhost:3000'
+
+
 # Email list for ExceptionNotifier  
 ExceptionNotifier.exception_recipients = %w(recipient1@example.com recipient2@example.com)
 

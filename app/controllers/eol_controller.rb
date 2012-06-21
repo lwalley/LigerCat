@@ -23,9 +23,6 @@ class EolController < ApplicationController
   end
 
   private
-  def set_context
-    @context = 'articles'
-  end
   
   def query
     @query.query rescue nil

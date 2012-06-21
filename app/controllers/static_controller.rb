@@ -5,7 +5,6 @@
 class StaticController < ApplicationController
   layout 'static'
   before_filter :clear_errors_and_recaptcha
-  before_filter :set_context
   
   # GET or POST /about
   def about
@@ -34,10 +33,6 @@ class StaticController < ApplicationController
       flash[:error] = @errors
       render :action => "about", :layout => 'static'
     end
-  end
-  
-  def set_context
-    @context = 'journals'
   end
   
   def clear_errors_and_recaptcha

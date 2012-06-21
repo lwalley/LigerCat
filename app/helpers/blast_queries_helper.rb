@@ -1,4 +1,4 @@
-module GenesHelper
+module BlastQueriesHelper
   
 
   

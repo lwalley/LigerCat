@@ -24,9 +24,5 @@ class JournalQueriesController < ApplicationController
     end
   end
   
-  private
-  
-  def set_context
-    @context = 'journals'
-  end
+
 end

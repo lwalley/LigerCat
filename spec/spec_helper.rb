@@ -122,3 +122,12 @@ end
 def action_from(method, url)
   params_from(method, url)[:action]
 end
+
+def cached?(path)
+  File.exists? ActionController::Base.send(:page_cache_path, path)
+end
+
+def clear_cache(path)
+  File.delete ActionController::Base.send(:page_cache_path, path) if cached?(path)
+end
+

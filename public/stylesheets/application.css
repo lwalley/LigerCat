@@ -1,12 +1,3 @@
-/* @override 
-	http://localhost:3000/stylesheets/application.css?1264800592
-	http://localhost:3000/stylesheets/application.css?1265142171
-	http://localhost:3000/stylesheets/application.css?1265314338
-	http://localhost:3000/stylesheets/application.css?1265321750
-	http://localhost:3000/stylesheets/application.css?1265323015
-	http://localhost:3000/stylesheets/application.css?1292267168
-*/
-
 #content {
 	margin-top: 3em;
 	margin-bottom: 4.5em;
@@ -65,11 +56,11 @@ a.external_link.img_link {
 	background-color: #f0fbff;
 }
 
-.articles {
+.pubmed_queries {
 	background-color: #eaffd6;
 }
 
-.genes {
+.blast_queries {
 	background-color: #FDFFCF;
 }
 
@@ -141,7 +132,7 @@ a.external_link.img_link {
 	float: left;
 }
 
-.navigation li.genes {
+.navigation li.blast_queries {
 	width: 28%;
 }
 
@@ -176,12 +167,12 @@ a.external_link.img_link {
 	background-image: url(../images/journals.gif);
 }
 
-.navigation li.articles *{
+.navigation li.pubmed_queries *{
 	border-color: #A7D77C;
 	background-image: url(../images/articles.gif);
 }
 
-.navigation li.genes *{
+.navigation li.blast_queries *{
 	border-color: #FFE170;
 	background-image: url(../images/genes.gif);
 }
@@ -206,12 +197,12 @@ a.external_link.img_link {
 	border-bottom: 1px solid #99D9EB;
 }
 
-.search_panel.articles {
+.search_panel.pubmed_queries {
 	border-top: 1px solid #A7D77C;
 	border-bottom: 1px solid #A7D77C;
 }
 
-.search_panel.genes {
+.search_panel.blast_queries {
 	border-top: 1px solid #FFE170;
 	border-bottom: 1px solid #FFE170;
 }
@@ -347,33 +338,33 @@ h1 span.amp {
 	background: url(/images/journals_home_bg.gif) repeat-x left top;
 }
 
-#articles_index #contextualized_copy {
+#pubmed_queries_index #contextualized_copy {
 	border-top-color: #A7D77C;
 	background: url(/images/articles_home_bg.gif) repeat-x left top;
 }
 
-#articles_index .text_wrapper {
+#pubmed_queries_index .text_wrapper {
   overflow:hidden;
 }
 
-#articles_index .image_wrapper {
+#pubmed_queries_index .image_wrapper {
   clear:left;
 }
 
-#genes_index #contextualized_copy {
+#blast_queries_index #contextualized_copy {
 	border-top-color: #FFE170;
 	background: url(/images/genes_home_bg.gif) repeat-x left top;
 }
 
-#genes_index #contextualized_copy p{
+#blast_queries_index #contextualized_copy p{
 	margin-bottom: 0;
 }
 
-#genes_index .text_wrapper {
+#blast_queries_index .text_wrapper {
   overflow:hidden;
 }
 
-#genes_index .image_wrapper {
+#blast_queries_index .image_wrapper {
   margin-top: 1.5em;
   clear:left;
 }
@@ -461,7 +452,7 @@ ol.search_results {
 
 /* @group Keyword Clouds */
 
-.num_articles {
+.num_pubmed_queries {
 	margin-top: -0.5em;
 	margin-bottom: 1.0em;
 }
@@ -622,17 +613,17 @@ html > body .timeline.huge   li a:hover .year {
 
 
 /* The histograms are not clickable on the
-   genes#show page, so we give them a different
+   blast_queries#show page, so we give them a different
    look and feel */
    
-#genes_show .timeline li a:hover,
-#genes_index  .timeline li a:hover {
+#blast_queries_show .timeline li a:hover,
+#blast_queries_index  .timeline li a:hover {
 	color: #494949;
 	cursor: default;
 }
 
-#genes_show .timeline li a:hover .bar,
-#genes_index  .timeline li a:hover .bar {
+#blast_queries_show .timeline li a:hover .bar,
+#blast_queries_index  .timeline li a:hover .bar {
 	background-color: #494949;
 }
 
@@ -885,12 +876,12 @@ ul.toolbar.disabled li.explore_selected a span {
 	border-top-style: solid;
 }
 
-#footer.articles {
+#footer.pubmed_queries {
 	background-image: url(/images/articles_home_bg.gif);
 	border-top-color: #A7D77C;
 }
 
-#footer.articles h2 {
+#footer.pubmed_queries h2 {
 	color: #557e31;
 }
 
@@ -899,7 +890,7 @@ ul.toolbar.disabled li.explore_selected a span {
 		border-top-color: #99D9EB;
 }
 
-#footer.genes {
+#footer.blast_queries {
 		background-image: url(/images/genes_home_bg.gif);
 		border-top-color: #FFE170;
 }

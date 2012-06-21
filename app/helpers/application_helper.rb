@@ -1,6 +1,14 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
+  def context
+    context ||=    case controller_name
+                    when "pubmed_queries", "eol", "static": "pubmed_queries"
+                    when "journal_queries", "journals"    : "journals"
+                    else  controller_name
+                    end
+  end
+  
   def title
     # query is a helper method defined in the articles and eol controllers
     query.blank? ? 'LigerCat' : awesome_truncate(query) + ' - LigerCat' rescue 'LigerCat'
@@ -13,24 +21,24 @@ module ApplicationHelper
 	# Used when clicking on the logo to return the user
 	# home, based on their current context
 	def context_home_url 
-		self.send "#{@context}_url" rescue root_url
+		self.send "#{context}_url" rescue root_url
 	end
 	#
 	# Navigation tabs and contents
 	#
 	def nav_tab(name, url)
-    active_class = (@context == name) ? ' active' : ''
+    active_class = (context == name) ? ' active' : ''
 
     String.new.tap do |html|
       html << "<li class='#{name + active_class}'>"
-      html << link_to_unless(@context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>" }
+      html << link_to_unless(context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>" }
       html << '</li>'
     end
 	end
 	
 	# This adds the "hint" text to the search fields.
 	def searchbox_hint_javascript
-	  case @context
+	  case context
 	  when 'journals' : "TextBoxHint.add('journals_q', 'Enter One or More Terms to Search NLM Journals');"
     when 'articles' : "TextBoxHint.add('articles_q', 'Enter One or More Terms to Search PubMed');"
     when 'genes'    : "TextBoxHint.add('genes_q',    '> Paste in one FASTA-formatted sequence to BLAST');"
@@ -46,7 +54,7 @@ module ApplicationHelper
 	end
 	
 	def contextualized_text_field_tag(query_string, context)
-		contents = query_string if @context == context
+		contents = query_string if context == context
 		text_field_tag :q, contents, {:class => 'text searchbox', :id => "#{context}_q"}
 	end
 	
@@ -255,7 +263,7 @@ module ApplicationHelper
   
   def insert_big_footer
     content_for :footer do
-      render(:partial=>'shared/big_footer', :locals => {:footer_class => @context})
+      render(:partial=>'shared/big_footer', :locals => {:footer_class => context})
     end
   end
 end

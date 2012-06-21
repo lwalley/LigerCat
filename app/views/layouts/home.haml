@@ -22,10 +22,10 @@
             %span.tagline Literature and Genomics Resource Catalogue
         %ul.navigation
           = nav_tab 'journals', journals_url
-          = nav_tab 'articles', articles_url
-          = nav_tab 'genes',    genes_url
+          = nav_tab 'pubmed_queries', pubmed_queries_url
+          = nav_tab 'blast_queries',    blast_queries_url
     
-    .search_panel{ :class => @context }= render :partial => "#{@context}/search_form", :locals => {:height => '12' }
+    .search_panel{ :class => context }= render :partial => "#{context}/search_form", :locals => {:height => '12' }
     
     #intro_copy.container
       .search_pubmed_articles.col-3

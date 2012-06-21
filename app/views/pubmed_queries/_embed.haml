@@ -2,7 +2,7 @@
 	%p To embed this tag cloud in your own blog or website, simply copy the code below.
 	
 	%p
-		- query_url = article_url(@query, :format => 'cloud')
+		- query_url = pubmed_query_url(@query, :format => 'cloud')
 		- embed_code = h %(<iframe src="#{query_url}" title="LigerCat Cloud" frameborder=0 width=600 height=400></iframe>)
 		- url_code = h %(#{query_url})
 	%label{ :for => 'site'} Embed

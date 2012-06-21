@@ -28,7 +28,7 @@
   #selected_terms_panel.sidebar_panel.selections_panel
     = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a', {optional_scope:'#{@query.actual_pubmed_query}'})"
   #share_panel.sidebar_panel
-    = render :partial => 'articles/embed'
+    = render :partial => 'embed'
 	
 	
 -content_for :domready do

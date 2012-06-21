@@ -103,4 +103,15 @@ describe "A BlastQuery" do
       BlastQuery.create_query_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
     end
   end
+  
+  describe "#cache_webhook_uri" do
+    before(:each) do
+      @query = BlastQuery.new()
+      @query.id = 1234
+    end
+    it "should generate a URI to the PubmedQueriesController#cache route" do
+      @query.cache_webhook_uri.should =~ /\/genes\/#{@query.id}\/cache/
+    end
+  end
+  
 end

@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'pubmed_search'
 
-class PubmedQuery < AsynchronousQuery 
-  
+class PubmedQuery < AsynchronousQuery   
   # Associations
   has_many :pubmed_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_keywords, :through => :pubmed_mesh_frequencies

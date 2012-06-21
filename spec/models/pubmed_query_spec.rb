@@ -163,3 +163,14 @@ describe PubmedQuery, '#slug' do
   end
 end
 
+describe PubmedQuery, "#cache_webhook_uri" do
+  before(:each) do
+    @query = PubmedQuery.new()
+    @query.id = 1234
+  end
+  it "should generate a URI to the PubmedQueriesController#cache route" do
+    @query.cache_webhook_uri.should =~ /\/articles\/#{@query.id}\/cache/
+  end
+end
+
+

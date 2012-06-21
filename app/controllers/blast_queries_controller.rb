@@ -1,4 +1,4 @@
-class GenesController < ApplicationController
+class BlastQueriesController < ApplicationController
   caches_action :index
 	
   # GET /genes
@@ -9,10 +9,10 @@ class GenesController < ApplicationController
   # POST /genes
   def create
     if @query = BlastQuery.find_by_sequence(params[:q])
-      redirect_to gene_path(@query)
+      redirect_to blast_query_path(@query)
     else
       @query = BlastQuery.create(:fasta_data => params[:q])
-      redirect_to status_gene_path(@query)
+      redirect_to status_blast_query_path(@query)
     end
   end
   
@@ -25,7 +25,7 @@ class GenesController < ApplicationController
       render :action => 'show'
 			cache_page 
     else
-      redirect_to status_gene_path(@query)
+      redirect_to status_blast_query_path(@query)
     end
   end
   
@@ -39,7 +39,7 @@ class GenesController < ApplicationController
       if request.xhr?
         render :text => 'done'
       else
-        redirect_to gene_path(@query)
+        redirect_to blast_query_path(@query)
       end
     else
       @status = @query.humanized_state
@@ -53,8 +53,11 @@ class GenesController < ApplicationController
     end
   end
   
-  private
-  def set_context
-    @context = 'genes'
+  # DELETE /genes/:id/cache
+  def cache
+    query = BlastQuery.find(params[:id])
+    expire_page :action => :show
+    render :nothing => true, :status => :no_content
   end
+  
 end

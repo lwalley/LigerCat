@@ -16,6 +16,7 @@ gem 'redis','2.2.2'
 gem 'resque', "~> 1.20.0"
 gem 'after_commit'
 gem 'whenever', :require => false
+gem 'rest-client'
 
 group :development, :test do
   gem 'ruby-debug'
