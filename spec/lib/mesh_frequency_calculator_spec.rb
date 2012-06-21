@@ -78,7 +78,7 @@ describe "MeshFrequencyCalculator" do
                                  mesh_keywords(:information_dissemination),
                                  mesh_keywords(:population_dynamics)]
       
-      mesh_terms_for_17704120_minus_stop_terms = [ mesh_keywords(:computational_biology), mesh_keywords(:databases_genetic), mesh_keywords(:information_dissemination), mesh_keywords(:population_dynamics)]
+      mesh_terms_for_17704120_minus_stop_terms = [ mesh_keywords(:population_dynamics), mesh_keywords(:computational_biology), mesh_keywords(:databases_genetic), mesh_keywords(:information_dissemination)]
       
       @frequency_calculator.mesh_freqs = OccurrenceSummer.new
       @frequency_calculator.mesh_freqs.should_receive(:sum).with(mesh_terms_for_17704120_minus_stop_terms)
