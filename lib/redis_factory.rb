@@ -59,6 +59,11 @@ class RedisFactory
       @@configurations ||= YAML.load_file(rails_root + '/config/redis.yml')
     end
     
+    # This is only used in testing. Don't use it for real
+    def configurations=(config_hash)
+      @@configurations = config_hash
+    end
+    
     def build_uri(host_port, database)
       "redis://#{host_port}/#{database}"
     end
