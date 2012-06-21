@@ -196,9 +196,7 @@ ActiveRecord::Schema.define(:version => 20120620170635) do
   add_index "pubmed_queries", ["eol_taxa_id"], :name => "index_pubmed_queries_on_eol_taxa_id"
   add_index "pubmed_queries", ["query_key"], :name => "index_pubmed_queries_on_query_key"
   add_index "pubmed_queries", ["state"], :name => "index_pubmed_queries_on_state"
-  add_index "pubmed_queries", ["state"], :name => "pubmed_queries_state"
   add_index "pubmed_queries", ["updated_at"], :name => "index_pubmed_queries_on_updated_at"
-  add_index "pubmed_queries", ["updated_at"], :name => "pubmed_queries_updated_at"
 
   create_table "sequences", :force => true do |t|
     t.datetime "created_at"
