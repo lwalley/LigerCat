@@ -28,7 +28,7 @@ namespace :mesh do
   task :create_indexes, [:path_to_mh_freq_count] => [:environment] do |t, args|
     
     abort "You must pass in the name of a file to load,\n"+
-          " Example: rake mesh:create_indexes[./mh_freq_count]" unless File.exists?(args.path_to_mh_freq_count)
+          " Example: rake mesh:create_indexes[./mh_freq_count]" unless args.path_to_mh_freq_count && File.exists?(args.path_to_mh_freq_count)
     
     keyword_lookup = {}
     count_lookup   = {}
@@ -74,7 +74,25 @@ namespace :mesh do
     
     if missing_mesh_ids.length > 0
       # We know we'll need to remove the offenders from Redis
-      puts "Detected removed/renamed MeSH IDs: #{missing_mesh_ids.join(', ')}"
+      
+      mesh_keywords = MeshKeywordLookup::DESCRIPTORS.invert
+      
+      puts "During this import, we have detected some removed/renamed MeSH IDs:",
+           missing_mesh_ids.map{|id| "* #{id} - #{mesh_keywords[id]}" }.join("\n"),
+           "",
+           "These are MeSH terms that NLM has probably moved or renamed. Unfortunately,",
+           "this makes the Redis cache invalid, and we must wipe it out. It will rebuild",
+           "those caches, but will run slowly for the next several queries while doing so.",
+           ""
+      print "Do you wish to proceed? (N) y: "
+      
+      if STDIN.gets.downcase.starts_with? 'y'
+        puts "Flushing Redis..."
+        RedisFactory.gimme('mesh').flushdb
+      else
+        abort("MeSH update cancelled. You will want to update the MeSH database at some point, but it's probably a good idea to review those MeSH terms first.")
+      end
+           
     end
     
     
