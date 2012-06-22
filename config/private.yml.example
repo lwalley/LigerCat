@@ -1,0 +1,20 @@
+host: 'ligercat.example.edu'
+
+session_key: '_ligercat_example_session'
+session_secret: 'Generate this using rake secret'
+
+exception_recipients:
+  - recipient1@example.edu
+  - recipient2@example.edu
+	
+feedback_recipients:
+  - recipient1@example.edu
+  - recipient2@example.edu
+
+no_reply_address: no-reply@example.edu
+
+recaptcha_public_key:  'get one of these at recaptcha.net'
+recaptcha_private_key: 'ditto'
+
+eutils_tool: 'ligercat'
+eutils_email: 'you@example.edu'

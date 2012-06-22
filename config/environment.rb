@@ -11,88 +11,40 @@ RAILS_GEM_VERSION = '2.3.14' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 require "bundler/setup"
 
+PRIVATE_CONFIG = YAML.load_file(RAILS_ROOT + '/config/private.yml')
+
+
 Rails::Initializer.run do |config|
 
-  # Settings in config/environments/* take precedence over those specified here.
-  # Application configuration should go into files in config/initializers
-  # -- all .rb files in that directory are automatically loaded.
-  # See Rails::Configuration for more options.
-
-  # Skip frameworks you're not going to use (only works if using vendor/rails).
-  # To use Rails without a database, you must remove the Active Record framework
-  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
-
-  # Only load the plugins named here, in the order given. By default, all plugins 
-  # in vendor/plugins are loaded in alphabetical order.
-  # :all can be used as a placeholder for all plugins not explicitly named
-  # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-  # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
-
-  # Force all environments to use the same logger level
-  # (by default production uses :info, the others :debug)
-  # config.log_level = :debug
-
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_ligercat_session',
-    :secret      => '5b507d24406a825a82c38c3282b93c574aba04d491c0fc610b6e80609ef74074faf4fb3db7112061c42e64275efdd77cdf9dcc8955a970e6e7e093ebfe9bef70'
+    :key    => PRIVATE_CONFIG['session_key'],
+    :secret => PRIVATE_CONFIG['session_secret']
   }
 
-  # Use the database for sessions instead of the cookie-based default,
-  # which shouldn't be used to store highly confidential information
-  # (create the session table with 'rake db:sessions:create')
-  # config.action_controller.session_store = :active_record_store
-
-  # Use SQL instead of Active Record's schema dumper when creating the test database.
-  # This is necessary if your schema can't be completely dumped by the schema dumper,
-  # like if you have constraints or database-specific column types
-  # config.active_record.schema_format = :sql
-
-  # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector
-
-  # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
 end
 
 Mime::Type.register_alias "text/html", :cloud
 
-
-# TODO move to private.yml file
-AsynchronousQuery.default_url_options[:host] = 'localhost:3000'
-
+AsynchronousQuery.default_url_options[:host] = PRIVATE_CONFIG['host']
 
 # Email list for ExceptionNotifier  
-ExceptionNotifier.exception_recipients = %w(recipient1@example.com recipient2@example.com)
+ExceptionNotifier.exception_recipients = PRIVATE_CONFIG['exception_recipients']
 
-# defaults to exception.notifier@default.com
-ExceptionNotifier.sender_address = %("Ligercat Error" <errors@example.com>)
+ExceptionNotifier.sender_address = PRIVATE_CONFIG['no_reply_address']
 
-FEEDBACK_RECIPIENTS = %w(recipient1@example.com recipient2@example.com)
+FEEDBACK_RECIPIENTS = PRIVATE_CONFIG['feedback_recipients']
 
 ActionMailer::Base.delivery_method = :sendmail
 
-ENV['RECAPTCHA_PUBLIC_KEY']  = '6LfYQwcAAAAAADEL1aBd2qTA1bGJaie9DijCQEPE'
-ENV['RECAPTCHA_PRIVATE_KEY'] = '6LfYQwcAAAAAAP-wG3o2KdsVrsHpSaB3Frq2HfI6'
-
+ENV['RECAPTCHA_PUBLIC_KEY']  = PRIVATE_CONFIG['recaptcha_public_key']
+ENV['RECAPTCHA_PRIVATE_KEY'] = PRIVATE_CONFIG['recaptcha_private_key']
 
 # EUtils configuration
-begin
-  require 'bio'
-  EUTILS_CONFIG = YAML.load_file(RAILS_ROOT + '/config/eutils.yml')
-  Bio::NCBI.default_email = EUTILS_CONFIG['email']
-  LigerEngine::SearchStrategies::PubmedSearchStrategy.email = EUTILS_CONFIG['email']
-  LigerEngine::SearchStrategies::PubmedSearchStrategy.tool = EUTILS_CONFIG['tool']
-  LigerEngine::PubmedFetcher.email = EUTILS_CONFIG['email']
-  LigerEngine::PubmedFetcher.tool = EUTILS_CONFIG['tool']
+require 'bio'
+Bio::NCBI.default_email = PRIVATE_CONFIG['eutils_email']
+LigerEngine::SearchStrategies::PubmedSearchStrategy.email = PRIVATE_CONFIG['eutils_email']
+LigerEngine::SearchStrategies::PubmedSearchStrategy.tool = PRIVATE_CONFIG['eutils_tool']
+LigerEngine::PubmedFetcher.email = PRIVATE_CONFIG['eutils_email']
+LigerEngine::PubmedFetcher.tool = PRIVATE_CONFIG['eutils_tool']
   
-rescue Exception => e
-  # We require Bio as a gem above, but you can't install the gems with rake gems
-  # because of the block of code above. This fixes that. Probably a better way to do this
-end
 
