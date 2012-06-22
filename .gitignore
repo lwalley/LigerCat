@@ -7,5 +7,4 @@ doc/app
 config/database.yml
 config/deploy.rb
 config/redis.yml
-config/workling.yml
-config/eutils.yml
+config/private.yml
