@@ -1,8 +1,9 @@
 # TODO: Update this to use my new nlm_eutil_search class
+require 'cgi'
 
 class NLMJournalSearch
   def self.getValidSubjectTerms
-    #puts "----READING AND LOADING JOURNAL SUBJECT TERMS----"
+    # puts "----READING AND LOADING JOURNAL SUBJECT TERMS----"
     validSubjectTermHash ={}
     File.open(RAILS_ROOT + "/lib/journalSubjectTerms.txt").each do |journalSubjectLine|
       journalSubjectLine.chomp!
@@ -16,7 +17,7 @@ class NLMJournalSearch
     validSubjectTermHash
   end
   def self.getStopWords
-    #puts "----READING AND LOADING STOP WORDS----"
+    # puts "----READING AND LOADING STOP WORDS----"
     stopWordHash= {}
     File.open(RAILS_ROOT + "/lib/journalStopWords.txt").each do |stopWord|
       stopWord.chomp!
@@ -59,7 +60,7 @@ class NLMJournalSearch
     # and since searchTermHash is added to on every iteration, we keep the initial results here
     @subjectTermHash.each{|k,v| @initial_subject_term_hash[k] = true }
     
-    #puts "@subjectTermHash has been initialized to:  #{@subjectTermHash.keys.join(", ")}"
+    # puts "@subjectTermHash has been initialized to:  #{@subjectTermHash.keys.join(", ")}"
     
     # Add every "valid search term" available for our subject terms into @searchTermHash
     @subjectTermHash.each_key do |subject_term|
@@ -67,7 +68,7 @@ class NLMJournalSearch
         @@validSearchTermHash[subject_term].each{|t| @searchTermHash[t] = 0}
       end
     end
-    #puts "@searchTermHash has been initialized to:  #{@searchTermHash.keys.join(", ")}"
+    # puts "@searchTermHash has been initialized to:  #{@searchTermHash.keys.join(", ")}"
   end
   
   def search
@@ -99,7 +100,7 @@ class NLMJournalSearch
       
       # Get additional search terms based on journal titles
       searchTermThreshold -= @@searchTermThresholdDecrement
-      #puts "getting terms at threshold: #{searchTermThreshold}"
+      # puts "getting terms at threshold: #{searchTermThreshold}"
       getSearchTerms(searchTermThreshold)
       
       # Add subject terms to general search terms
@@ -125,7 +126,7 @@ class NLMJournalSearch
   
   # get list of nlm journal ids based on subject terms
   def getJournalsFromSubjectTerms
-    #puts "  ... Retrieving journal identifiers using journal subject terms ..."
+    # puts "  ... Retrieving journal identifiers using journal subject terms ..."
    subjectTermList = []
 
    # create query for all subject entry terms in subjectTermHash
@@ -138,7 +139,7 @@ class NLMJournalSearch
         subjectTerms = @@validSearchTermHash[entryTerm]
       end
 
-      # #puts "    ... Mapped entry term (#{entryTerm}) -to-> journal subject term(s) (#{subjectTerms.join(', ')}) ..."
+      # puts "    ... Mapped entry term (#{entryTerm}) -to-> journal subject term(s) (#{subjectTerms.join(', ')}) ..."
 
       # append subject terms to the main list
       subjectTermList += subjectTerms
@@ -149,16 +150,19 @@ class NLMJournalSearch
     
     subjectTermString = subjectTermList.collect{|t| url_escape_subject_term(t)}.join("+OR+")
 
-    # run query to entry and get the query and webenv variables
-    # #puts "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=journals&usehistory=y&retmax=0&term=#{subjectTermString}"
-    entrezResults = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=journals&usehistory=y&retmax=0&term=#{subjectTermString}"`  
-    
+    # run query to entry and get the query and webenv variables    
+    url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&usehistory=y&retmax=0&term=(#{subjectTermString})+AND+(serial%5BItem+Type%5D+AND+nlmcatalog+pubmed%5Bsb%5D)"
+    # puts %(curl --silent "#{url}")
+    entrezResults = `curl --silent "#{url}"`
+        
     entrezResults[/<QueryKey>(.*)<\/QueryKey>/] 
     query_key = $1
 
     entrezResults[/<WebEnv>(.*)<\/WebEnv>/] 
     web_env = $1
 
+
+    # puts "WebEnv: #{web_env}", "QueryKey: #{query_key}"
     # get each journal's details
     getJournalDetails(query_key, web_env)
   end
@@ -167,38 +171,12 @@ class NLMJournalSearch
   # get required journal details based on nlm ids (for those ids with not details)
   # RMS - I added the get_nlm_ids_using_journal_ids instead of setting and testing for 
   #       a query_key and web_env that were 0, because I thought that might be dangerous
-  def getJournalDetails(query_key, web_env, get_nlm_ids_using_journal_ids = false)
-    #puts "  ... Getting journal details ..."
+  def getJournalDetails(query_key, web_env)
+    # puts "  ... Getting journal details ..."
 
-    journalDetails = ""
-    # if we want to get nlm id's using nlm journal id's
-    if get_nlm_ids_using_journal_ids
+    journalDetails = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nlmcatalog&query_key=#{query_key}&WebEnv=#{web_env}&retmode=text"`
 
-      nlmJournalIdList = ""
-      @nlmJournalList.each_key do |nlmJournalId|
-        nlmJournalIdList += "#{nlmJournalId}\\[Nlmid\\]+OR+" if @nlmJournalList[nlmJournalId] == ""
-      end
-
-      #puts nlmJournalIdList
-      journalDetails = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=journals&usehistory=y&retmax=0&term=#{nlmJournalIdList}"`
-
-      journalDetails[/<QueryKey>(.*)<\/QueryKey>/] 
-      query_key = $1
-
-      journalDetails[/<WebEnv>(.*)<\/WebEnv>/] 
-      web_env = $1
-
-      journalDetails = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=journals&query_key=#{query_key}&WebEnv=#{web_env}&retmode=text"`
-
-      #puts "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=journals&query_key=#{query_key}&WebEnv=#{web_env}&retmode=text"
-
-
-    # otherwise, use querykey and webenv to retrieve journal listing
-    else
-      journalDetails = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=journals&query_key=#{query_key}&WebEnv=#{web_env}&retmode=text"`
-    end
-
-    #puts journalDetails
+    # puts journalDetails[0,10] + "..."
 
     # extract out the title, abbrv title, and subject terms for each journal
     stFlag = 0
@@ -238,7 +216,7 @@ class NLMJournalSearch
       # get additional subject terms
       if stFlag == 1 && listingLine !~ /:/
         newTerm = listingLine
-        #puts "---> #{newTerm}"
+        # puts "---> #{newTerm}"
 
         if newTerm != nil
           newTerm = newTerm.gsub(/^\s+/,"")
@@ -250,7 +228,7 @@ class NLMJournalSearch
       # get first subject term
       if listingLine =~ /^Subject Term\(s\): (.*)/
         journalSubjectTerms[$1] = "st"
-        #puts "st--> #{$1}"
+        # puts "st--> #{$1}"
         stFlag = 1
       end
 
@@ -300,8 +278,8 @@ class NLMJournalSearch
     if subject_terms.length < 1
       return -1.0
     else
-      #puts "Journal Subject Terms: #{subject_terms.join ', '}"
-      #puts "Initial Subject Terms: #{@initial_subject_term_hash.keys.join ', '}"
+      # puts "Journal Subject Terms: #{subject_terms.join ', '}"
+      # puts "Initial Subject Terms: #{@initial_subject_term_hash.keys.join ', '}"
       matches = 0.0
       denominator = subject_terms.length.to_f # [subject_terms.length, @initial_subject_term_hash.length].max.to_f
     
@@ -309,7 +287,7 @@ class NLMJournalSearch
         matches += 1.0 if @initial_subject_term_hash.has_key?(normalize_subject_term(term))
       end
     
-      #puts "  Rank: #{matches / denominator}"
+      # puts "  Rank: #{matches / denominator}"
     
       matches / denominator
     end
@@ -317,13 +295,13 @@ class NLMJournalSearch
   
   # update subject terms from nlm journal list...
   def updateSubjectTermsFromJournalList
-    #puts "Journal Count = #{@nlmJournalList.size}"
+    # puts "Journal Count = #{@nlmJournalList.size}"
 
     stCandidateHash = Hash.new
 
     @nlmJournalList.each do |nlmIdKey,journalListing|
-      #puts journalListing
-      #puts "NLMID --> #{nlmIdKey} --> #{journalListing}"
+      # puts journalListing
+      # puts "NLMID --> #{nlmIdKey} --> #{journalListing}"
       nlmId = journalListing.nlm_id
       fullTitle = journalListing.title
       issn = journalListing.issn
@@ -333,7 +311,7 @@ class NLMJournalSearch
       if keywords != nil
         keywords.split(/,/).each do |subjectTerm|
           subjectTerm = subjectTerm.gsub(/\s/,"\+")
-          #puts "---->>> #{subjectTerm}"
+          # puts "---->>> #{subjectTerm}"
           if !(stCandidateHash.has_key?(subjectTerm))
             stCandidateHash[subjectTerm] = 1
           else
@@ -358,7 +336,7 @@ class NLMJournalSearch
   
   # From the journal titles, get additional search terms
   def getSearchTerms(thresholdValue)
-    #puts "... Deriving additional search terms from journal title information ..."
+    # puts "... Deriving additional search terms from journal title information ..."
 
     fullTitleWordHash = Hash.new
     abbrTitleWordHash = Hash.new
@@ -371,13 +349,13 @@ class NLMJournalSearch
       issn = journalListing.issn
       abbrTitle = journalListing.title_abbreviation
       keywords = journalListing.nlm_search_subject_terms
-      #puts "* #{journalListing} "
+      # puts "* #{journalListing} "
 
       if fullTitle != nil
         fullTitle.split(/\s+/).each do |word|
           word = word.gsub(/[^A-Za-z]/,"")
           if !(@@stopWordHash.has_key?("#{word.downcase}")) && word.size > 1
-            #puts "word--> #{word.downcase}" 
+            # puts "word--> #{word.downcase}" 
             if !(newSearchTermList.has_key?(word.downcase))
               newSearchTermList[word.downcase] = 1
             else
@@ -391,7 +369,7 @@ class NLMJournalSearch
         abbrTitle.split(/\s+/).each do |word|
           word = word.gsub(/[^A-Za-z]/,"")
           if !(@@stopWordHash.has_key?("#{word.downcase}")) && word.size > 1
-            #puts "word--> #{word.downcase}" 
+            # puts "word--> #{word.downcase}" 
             if !(newSearchTermList.has_key?(word.downcase))
               newSearchTermList[word.downcase] = 1
             else
@@ -404,7 +382,7 @@ class NLMJournalSearch
     end
 
     newSearchTermList.each_key do |newSearchTerm|
-      #puts "*** #{newSearchTerm} = #{newSearchTermList[newSearchTerm]}" if newSearchTermList[newSearchTerm] >= (thresholdValue * nlmJournalList.size)
+      # puts "*** #{newSearchTerm} = #{newSearchTermList[newSearchTerm]}" if newSearchTermList[newSearchTerm] >= (thresholdValue * nlmJournalList.size)
       if newSearchTermList[newSearchTerm] >= (thresholdValue * @nlmJournalList.size)
         if !(@searchTermHash.has_key?(newSearchTerm))
           @searchTermHash[newSearchTerm] = 0
@@ -414,7 +392,7 @@ class NLMJournalSearch
   end
   
   def getJournalsFromSearchTerms
-   #puts "  ... Retrieving journal identifiers using search terms ..."
+   # puts "  ... Retrieving journal identifiers using search terms ..."
 
    searchTermList = ""
 
@@ -424,8 +402,10 @@ class NLMJournalSearch
         searchTermList += "\"#{searchTerm}\"\\[All+Fields\\]+OR+"
     end
 
-    #puts "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=journals&usehistory=y&retmax=0&term=#{searchTermList}"
-    entrezResults = `curl --silent "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=journals&usehistory=y&retmax=0&term=#{searchTermList}"`
+
+    url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nlmcatalog&usehistory=y&retmax=0&term=(#{searchTermList})+AND+(serial%5BItem+Type%5D+AND+nlmcatalog+pubmed%5Bsb%5D)"
+    # puts url
+    entrezResults = `curl --silent "#{url}"`
 
     entrezResults[/<QueryKey>(.*)<\/QueryKey>/] 
     query_key = $1
@@ -433,7 +413,7 @@ class NLMJournalSearch
     entrezResults[/<WebEnv>(.*)<\/WebEnv>/] 
     web_env = $1
 
-    # #puts '!!!!!!!!!!!', entrezResults, '!!!!!!!!!!!!!!!!'
+    # puts '!!!!!!!!!!!', entrezResults, '!!!!!!!!!!!!!!!!'
 
 
     getJournalDetails(query_key, web_env)
@@ -451,11 +431,10 @@ class NLMJournalSearch
   
   # Wraps term in quotes, escapes parenthasis, -and-appends-[st]- (not anymore)
   def url_escape_subject_term(term)
-    require 'cgi'
     term = normalize_subject_term(term)
-    term = CGI.escape(term) #gsub(/([^a-zA-Z\+])/, "\\\\&").tr('\\\\','\\')
-    # "\"#{term}\"\\[st\\]"
-    "\"#{term}\""
+    term = CGI.escape(term) 
+
+    term
   end
   
 end
