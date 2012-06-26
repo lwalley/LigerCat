@@ -1,13 +1,13 @@
 LigerCat
 ========
 
-LigerCat (ligercat.org) is a search tool for the [NCBI's PubMed] (http://www.ncbi.nlm.nih.gov/pubmed/) that uses tag clouds to provide an overview of important concepts and trends.
+LigerCat (ligercat.org) is a search tool for the [NCBI's PubMed](http://www.ncbi.nlm.nih.gov/pubmed/) that uses tag clouds to provide an overview of important concepts and trends.
 
 
 Installing LigerCat
 -------------------
 
-LigerCat is a Ruby on Rails application. The following instructions assume you are familiar with and using [Ruby Version Manager] (http://beginrescueend.com) and [Bundler] (http://gembundler.com/).
+LigerCat is a Ruby on Rails application. The following instructions assume you are familiar with and using [Ruby Version Manager](http://beginrescueend.com) and [Bundler](http://gembundler.com/).
 
 ### Requirements
 
@@ -72,14 +72,14 @@ LigerCat relies on environment settings, such as email addresses and private key
 
 ### Configure Blast+
 
-LigerCat uses [Blast+] (http://www.ncbi.nlm.nih.gov/books/NBK1762/) blastn and tblastn binaries to perform remote BLAST queries. The binary files for Mac OS X and Linux systems are included in ROOTDIR/lib/blast\_bin/.
+LigerCat uses [Blast+](http://www.ncbi.nlm.nih.gov/books/NBK1762/) blastn and tblastn binaries to perform remote BLAST queries. The binary files for Mac OS X and Linux systems are included in ROOTDIR/lib/blast\_bin/.
 
 Note that blastn and tblastn are symlinks to blastn-mac and tblastn-mac which are the binaries required when running LigerCat on Mac OS X. To use the Linux binaries simply update the blastn and tblastn symlinks to point to the Linux binary files.
 
     $ ln -nfs lib/blast_bin/blastn-linux lib/blast_bin/blastn
     $ ln -nfs lib/blast_bin/tblastn-linux lib/blast_bin/tblastn
 
-When deploying to production machines we manage the configuration of the Blast symbolic links using [Capistrano] (https://github.com/capistrano/capistrano), refer to the sample ROOTDIR/Capfile for more information.
+When deploying to production machines we manage the configuration of the Blast symbolic links using [Capistrano](https://github.com/capistrano/capistrano), refer to the sample ROOTDIR/Capfile for more information.
 
 
 Seeding LigerCat database and Redis
@@ -111,13 +111,13 @@ Redis is required by both Resque and by the LigerCat application. Start your Red
 
 ### Start Resque
 
-For more information refer to the [Resque documentation] (https://github.com/defunkt/resque)
+For more information refer to the [Resque documentation](https://github.com/defunkt/resque)
 
 Resque provides a Web interface that you can use to monitor queues and jobs. From the LigerCat ROOTDIR start the Resque Web application:
 
     $ resque-web ./config/initializers/resque.rb
 
-Open a Web browser and navigate to [http://0.0.0.0:5678/] (http://0.0.0.0:5678)
+Open a Web browser and navigate to [http://0.0.0.0:5678/](http://0.0.0.0:5678)
 
 LigerCat uses two queues one for new queries requested by Web users and one for updating existing cached searches. Launch a worker to listen to those two queues in priority order:
 
@@ -129,7 +129,7 @@ From LigerCat ROOTDIR start the Web server:
 
     $ script/server
 
-Open a Web browser and navigate to [http://0.0.0.0:3000] (http://0.0.0.0:3000)
+Open a Web browser and navigate to [http://0.0.0.0:3000](http://0.0.0.0:3000)
 
 
 Production Mode
@@ -149,4 +149,4 @@ TODO Update capfile to tell whenever to install crontab
 Acknowledgements
 ----------------
 
-* [MEDLINE Baseline Repository] (http://mbr.nlm.nih.gov) for providing [frequency counts] (http://mbr.nlm.nih.gov/Download/index.shtml) for each unique MeSH Heading found in MEDLINE for a given baseline year.
+* [MEDLINE Baseline Repository](http://mbr.nlm.nih.gov) for providing [frequency counts](http://mbr.nlm.nih.gov/Download/index.shtml) for each unique MeSH Heading found in MEDLINE for a given baseline year.
