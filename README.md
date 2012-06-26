@@ -70,12 +70,16 @@ LigerCat uses [Redis] (http://redis.io/) key-value store. Rename ROOTDIR/config/
 
 LigerCat relies on environment settings, such as email addresses and private keys that we prefer to keep seperate from the public repository, and so we load them from a YAML file. Rename ROOTDIR/config/private.yml.example to ROOTDIR/config/private.yml and edit settings as required.
 
-### Configure blast binary
+### Configure Blast+
 
-WARNING: blastcl3 is deprecated this configuration requirement is subject to change:
-Create a symbolic link for the Blast Binary (only if required, note that Mac OS X creates the symlink for you automagically):
+LigerCat uses [Blast+] (http://www.ncbi.nlm.nih.gov/books/NBK1762/) blastn and tblastn binaries to perform remote BLAST queries. The binary files for Mac OS X and Linux systems are included in ROOTDIR/lib/blast\_bin/.
 
-    $ ln -nfs lib/blast_bin/blastcl3-linux lib/blast_bin/blastcl3
+Note that blastn and tblastn are symlinks to blastn-mac and tblastn-mac which are the binaries required when running LigerCat on Mac OS X. To use the Linux binaries simply update the blastn and tblastn symlinks to point to the Linux binary files.
+
+    $ ln -nfs lib/blast_bin/blastn-linux lib/blast_bin/blastn
+    $ ln -nfs lib/blast_bin/tblastn-linux lib/blast_bin/tblastn
+
+When deploying to production machines we manage the configuration of the Blast symbolic links using [Capistrano] (https://github.com/capistrano/capistrano), refer to the sample ROOTDIR/Capfile for more information.
 
 
 Seeding LigerCat database and Redis
