@@ -16,5 +16,5 @@ no_reply_address: no-reply@example.edu
 recaptcha_public_key:  'get one of these at recaptcha.net'
 recaptcha_private_key: 'ditto'
 
-eutils_tool: 'ligercat'
+eutils_tool: 'ligercat_example'
 eutils_email: 'you@example.edu'

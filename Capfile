@@ -57,7 +57,8 @@ end
 namespace :blast_binary do
   desc "Make symlink to the correct blast binary"
   task :symlink do
-    run "ln -nfs #{release_path}/lib/blast_bin/blastcl3-linux #{release_path}/lib/blast_bin/blastcl3"
+    run "ln -nfs #{release_path}/lib/blast_bin/blastn-linux #{release_path}/lib/blast_bin/blastn"
+    run "ln -nfs #{release_path}/lib/blast_bin/tblastn-linux #{release_path}/lib/blast_bin/t blastn"
   end
 end
 

@@ -16,24 +16,34 @@ class Blast
   private 
 
   def execute_command(fasta_data)
-    RAILS_DEFAULT_LOGGER.debug("/bin/echo \"#{fasta_data}\" | #{RAILS_ROOT}/lib/blast_bin/blastcl3 -p #{@program} -d #{@database} -e #{@expectation_value} -m 8")
-    `/bin/echo "#{fasta_data}" | #{RAILS_ROOT}/lib/blast_bin/blastcl3 -p #{@program} -d #{@database} -e #{@expectation_value} -m 8`
+    command = %(#{RAILS_ROOT}/lib/blast_bin/#{@program} -db #{@database} -evalue #{@expectation_value} -outfmt "7 sgi sacc evalue" -remote)
+    RAILS_DEFAULT_LOGGER.debug command
+
+    Open3.popen3 command do |stdin, stdout, stderr|
+      stdin.write fasta_data
+      stdin.close
+      output = stdout.read
+      errors = stderr.read
+      
+      if output.any?
+        return output
+      elsif errors.any?
+        raise "Received errors from #{@program}: #{errors}"
+      end
+    end
   end
   
   def parse_tab(results)
     @results = {}
-    blast_indices = {:subject_id => 1, :e_value => 10}
-    id_indices    = {:gi_num => 1, :accession_num => 3}
     
     results.each_line do |line|
-      columns = line.split("\t")
-      subject_id = columns[blast_indices[:subject_id]]
-      e_value    = columns[blast_indices[:e_value]].to_f
+      next if line[0,1] == '#' # Skip comment lines
       
-      subject_cols = subject_id.split('|')
-      gi_number  = subject_cols[id_indices[:gi_num]].to_i
-      acc_number = subject_cols[id_indices[:accession_num]]
-      acc_number = acc_number.split('.').first
+      sgi, sacc, evalue = line.strip.split("\t")
+
+      gi_number  = sgi.to_i
+      acc_number = sacc
+      e_value    = evalue.to_f
       
       unless @results.has_key?(gi_number) && @results[gi_number][:e_value] < e_value
         @results[gi_number] = {:gi_number => gi_number, :accession_number => acc_number, :e_value => e_value}
