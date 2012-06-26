@@ -142,5 +142,11 @@ We at the MBL run LigerCat using Apache + Phusion Passenger, although there's no
 Effectively hosting a Rails application in a production environment is beyond the scope of this document, however we have included a sample Capfile that we use to deploy to Phusion Passenger.
 
 
-TODO make sure the server's timezone is Eastern 
+TODO make sure the server's timezone is Eastern
 TODO Update capfile to tell whenever to install crontab
+
+
+Acknowledgements
+----------------
+
+* [MEDLINE Baseline Repository] (http://mbr.nlm.nih.gov) for providing [frequency counts] (http://mbr.nlm.nih.gov/Download/index.shtml) for each unique MeSH Heading found in MEDLINE for a given baseline year.
