@@ -58,7 +58,7 @@ class Downloader
     
     start.step(stop, length) do |n|
       data = fetch_chunk(n, n + length - 1) # RMS
-      yield((n+length-1)/content_length.to_f) if block_given? # RMS
+      yield( (n+length-1) >= content_length ?  1.0 : (n+length-1)/content_length.to_f ) if block_given? # RMS
       append_content data # RMS
     end
   end
@@ -72,11 +72,9 @@ class Downloader
   end
   
   def fetch_chunk(start, stop)
-    begin
-      @browser.request_get(@url.path, { "Range" => "bytes=#{start}-#{stop}" }).body
-    rescue Exception
-      error "FETCH CHUNK EXCEPTION!"
-    end
+    response = @browser.request_get(@url.path, { "Range" => "bytes=#{start}-#{stop}" })
+    response.value
+    response.body
   end
 end
 
@@ -84,6 +82,8 @@ end
 # Writes each chunk to a File instead of storing it in memory
 #
 class FileDownloader < Downloader
+  attr_accessor :filename
+  
 	def initialize(url)
 		super(url)
 		@filename = @url.path[%r{[^/]+\z}]
@@ -94,6 +94,7 @@ class FileDownloader < Downloader
 		@file = File.open(@filename, 'w')
 		super(start, stop, length, &block)
 		@file.close
+    @file
 	end
 	
 	def append_content(data)

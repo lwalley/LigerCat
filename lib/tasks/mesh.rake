@@ -6,7 +6,7 @@ namespace :mesh do
   end
   
   desc "Seeds MeSH terms from the MeshKeywordLookup module"
-  task :seed_database => [:environment, :purge] do
+  task :seed => [:environment, :purge] do
     # Force-reload MeshKeywordLookup
     Object.class_eval do
       remove_const 'MeshKeywordLookup' if const_defined? 'MeshKeywordLookup'

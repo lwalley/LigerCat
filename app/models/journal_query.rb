@@ -17,8 +17,6 @@ class JournalQuery < AsynchronousQuery
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
     
-    
-    
     def find_by_query(query)
       find_by_query_key create_query_key(query)
     end

@@ -92,14 +92,4 @@ class JournalsController < ApplicationController
     end
   end
   
-  def auto_complete_responder_for_expanded_journal_keywords(value)
-    find_options = { 
-      :conditions => [ "LOWER(name) LIKE ?", '%' + value.downcase + '%' ], 
-      :order => "name ASC",
-      :limit => 10 }
-    
-    @items = ExpandedJournalKeyword.find(:all, find_options)
-
-    render :inline => "<%= auto_complete_result @items, 'name' %>"
-  end
 end
