@@ -98,7 +98,7 @@ Populate the LigerCat database - WARNING: may take more than an hour:
     $ rake db:migrate
 
 
-Running LigerCat in Development mode
+Running LigerCat in development mode
 ------------------------------------
 
 LigerCat requires a Web server, Redis and Resque to be running.
@@ -132,8 +132,8 @@ From LigerCat ROOTDIR start the Web server:
 Open a Web browser and navigate to [http://0.0.0.0:3000](http://0.0.0.0:3000)
 
 
-Production Mode
----------------
+Running LigerCat in production mode
+-----------------------------------
 
 LigerCat cannot be run in a production environment by the method detailed above.
 
@@ -144,6 +144,21 @@ Effectively hosting a Rails application in a production environment is beyond th
 
 TODO make sure the server's timezone is Eastern
 TODO Update capfile to tell whenever to install crontab
+
+### Keeping lookup data up to date
+
+LigerCat tag cloud terms consist of the [National Library of Medicine's (NLM)](http://http://www.nlm.nih.gov) [Medical Subject Headings (MeSH)](http://www.nlm.nih.gov/mesh/MBrowser.html). The relative size of a MeSH term in a tag cloud is based on a score that is calculated using the term's frequency count across MEDLINE. Each year the NLM releases new MeSH terms, and the [MEDLINE Baseline Repository (MBR)](http://mbr.nlm.nih.gov/) provides updated frequncy counts.
+
+For performance reasons LigerCat stores these MeSH terms, their IDs and their scores locally (see ROOTDIR/lib/mesh\_keyword\_lookup.rb and ROOTDIR/lib/mesh\_score\_lookup.rb). And so once a year, this locally stored lookup data needs to be updated. Please note that LigerCat will attempt to send an email notification to feedback recipients when it encounters a new MeSH term. You can configure feedback recipients email addresses in ROOTDIR/config/private.yml.
+
+We have included rake tasks to update the lookup data, first simply download the most recent version of the [MH\_freq\_count](http://mbr.nlm.nih.gov/Download/2012/FreqCounts/MH_freq_count.gz) raw data file from [MBR files](http://mbr.nlm.nih.gov/Download/index.shtml), then with that file run:
+
+    rake mesh:create_indexes[path_to_mh_freq_count]
+
+Once you have updated the lookups, you will need to rebuild the MySQL database MeSH lookup table:
+
+    rake mesh:seed_database
+
 
 
 Acknowledgements
