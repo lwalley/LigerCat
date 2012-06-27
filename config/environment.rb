@@ -46,5 +46,6 @@ LigerEngine::SearchStrategies::PubmedSearchStrategy.email = PRIVATE_CONFIG['euti
 LigerEngine::SearchStrategies::PubmedSearchStrategy.tool = PRIVATE_CONFIG['eutils_tool']
 LigerEngine::PubmedFetcher.email = PRIVATE_CONFIG['eutils_email']
 LigerEngine::PubmedFetcher.tool = PRIVATE_CONFIG['eutils_tool']
-  
 
+# Require some gems after Rails::Initializer so that they bootstrap properly
+require 'will_paginate'

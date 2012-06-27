@@ -76,7 +76,7 @@ GEM
     whenever (0.6.8)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
-    will_paginate (3.0.3)
+    will_paginate (2.3.16)
 
 PLATFORMS
   ruby
@@ -103,4 +103,4 @@ DEPENDENCIES
   system_timer
   treetop
   whenever
-  will_paginate (>= 2.3.1)
+  will_paginate (~> 2.3.16)

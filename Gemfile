@@ -4,7 +4,7 @@ gem 'rails', '2.3.14'
 gem 'i18n'
 gem 'json'
 gem 'haml'
-gem 'will_paginate','>= 2.3.1'
+gem 'will_paginate','~>2.3.16', :require => nil
 gem 'chronic', '0.2.3'
 gem 'pubmed_search'
 gem 'nokogiri'
