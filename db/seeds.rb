@@ -13,7 +13,7 @@ Rake::Task['mesh:seed'].invoke
 # Seed fact tables below
 
 connection = ActiveRecord::Base.connection
-url_base   = "http://localhost/~rschenk/ligerseed/"
+url_base   = SEED_BASE_URL
 dir        = File.join(Rails.root, 'tmp', 'seed_downloads')
 
 [TextKeyword, Journal, JournalMeshFrequency, JournalTextFrequency, PmidGenbank].each do |model|

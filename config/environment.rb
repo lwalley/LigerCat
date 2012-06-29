@@ -10,9 +10,10 @@ RAILS_GEM_VERSION = '2.3.14' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 require "bundler/setup"
-
 PRIVATE_CONFIG = YAML.load_file(RAILS_ROOT + '/config/private.yml')
 
+
+SEED_BASE_URL = 'http://ligercat.org/seeds/'
 
 Rails::Initializer.run do |config|
 
