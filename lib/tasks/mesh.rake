@@ -115,7 +115,7 @@ namespace :mesh do
     end
     
     # Reload the MeshKeyword table given the new data
-    Rake::Task['mesh:seed_database'].invoke
+    Rake::Task['mesh:seed'].invoke
   end
 end
 

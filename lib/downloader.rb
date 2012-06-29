@@ -36,6 +36,7 @@
 
 require 'open-uri'
 require 'net/http'
+require 'fileutils'
 
 class Downloader
   
@@ -82,16 +83,18 @@ end
 # Writes each chunk to a File instead of storing it in memory
 #
 class FileDownloader < Downloader
-  attr_accessor :filename
+  attr_accessor :filename, :path
   
-	def initialize(url)
+	def initialize(url, path='')
 		super(url)
 		@filename = @url.path[%r{[^/]+\z}]
+    @path = path
 		@file = nil
 	end
 	
   def download(start = 0, stop = content_length, length = CHUNK_SIZE, &block)
-		@file = File.open(@filename, 'w')
+    FileUtils.mkdir_p(path)
+		@file = File.open(path_to_file, 'w')
 		super(start, stop, length, &block)
 		@file.close
     @file
@@ -100,4 +103,8 @@ class FileDownloader < Downloader
 	def append_content(data)
 		@file.syswrite(data)
 	end
+  
+  def path_to_file
+    @path_to_file ||= File.join(path,filename)
+  end
 end

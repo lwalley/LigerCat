@@ -13,14 +13,16 @@ require 'progressbar'
 #
 #
 
-puts "Redis date_published database"
+puts "\ndate_published"
 
-date_published_redis = RedisFactory.gimme('date_published')
-date_published_url = 'http://dl.dropbox.com/u/635519/date_published_head.csv.gz'
+redis = RedisFactory.gimme('date_published')
+redis.info # attempt to connect to redis before doing anything else
+
+url = 'http://localhost/~rschenk/ligerseed/date_published_head.csv.gz'
 
 begin
-  downloader = FileDownloader.new(date_published_url)
-  date_published_filename = downloader.filename
+  downloader = FileDownloader.new(url, File.join(Rails.root, 'tmp', 'seed_downloads'))
+  date_published_filename = downloader.path_to_file
   
   unless File.exists? date_published_filename
     download_progress = ProgressBar.new("Downloading", 100)
@@ -40,22 +42,21 @@ File.open date_published_filename do |f|
   begin
     gz = Zlib::GzipReader.new(f)
     
+    comment = gz.readline
+    header  = gz.readline
+      
+    if comment =~ /count:.*?(\d+)/
+      seeding_progress = ProgressBar.new("Seeding", $1.to_i)
+    end
     
-    seeding_progress = nil #put seeding_progress into scope
     
     gz.each_line do |line|
-      if line[0,1] == '#'
-        if line =~ /count:.*?(\d+)/
-          seeding_progress = ProgressBar.new("Seeding", $1.to_i)
-        end
-      else
-        seeding_progress.inc rescue nil
+      seeding_progress.inc rescue nil
         
-        pubmed_id, date_published = line.strip.split(',')
-        pubmed_id = pubmed_id.to_i
+      pubmed_id, date_published = line.strip.split(',')
+      pubmed_id = pubmed_id.to_i
       
-        # date_published_redis.set(pubmed_id, date_published)
-      end
+      redis.set(pubmed_id, date_published)
     end
     
     seeding_progress.finish rescue nil
