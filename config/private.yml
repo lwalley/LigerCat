@@ -1,0 +1,20 @@
+host: 'localhost:3000'
+
+session_key: '_ligercat_session'
+session_secret: '3b759307cb916987b1fe3fffdaeccd6c66bb146a967aac12881d7ad8be32e2d6319ea4854484bf3cee7f746accc12284cce0bdc5283501219b1c91e609786f93'
+
+exception_recipients:
+  - recipient1@example.com
+  - recipient2@example.com
+  
+feedback_recipients:
+  - recipient1@example.com
+  - recipient2@example.com
+
+no_reply_address: no-reply@example.com
+
+recaptcha_public_key: '6LfYQwcAAAAAADEL1aBd2qTA1bGJaie9DijCQEPE'
+recaptcha_private_key: '6LfYQwcAAAAAAP-wG3o2KdsVrsHpSaB3Frq2HfI6'
+
+eutils_tool: 'ligercat'
+eutils_email: 'hmiller@mbl.edu'

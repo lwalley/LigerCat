@@ -1,11 +1,10 @@
-require 'after_commit'
 require 'rest_client'
 
 class AsynchronousQuery < ActiveRecord::Base
-  include ActionController::UrlWriter
+  include ActionController::UrlFor
   
   self.abstract_class = true
-  after_commit_on_create :launch_worker
+  after_commit :launch_worker, :on => :create
 
   # Maps the state integer codes stored in the database to programmer-friendly
   # symbols. If you create or rename a new state, please for heaven's sake do 
@@ -128,11 +127,11 @@ class AsynchronousQuery < ActiveRecord::Base
   #
   def liger_engine_update(event_name, *args)
     case event_name
-    when :before_search               : update_state(:searching)
-    when :before_processing           : update_state(:processing)
-    when :before_tag_cloud_processing : update_state(:processing_tag_cloud)
-    when :before_histogram_processing : update_state(:processing_histogram)
-    when :log                         : log_liger_engine("#{args[1]} #{args[0]}")
+    when :before_search               then update_state(:searching)
+    when :before_processing           then update_state(:processing)
+    when :before_tag_cloud_processing then update_state(:processing_tag_cloud)
+    when :before_histogram_processing then update_state(:processing_histogram)
+    when :log                         then log_liger_engine("#{args[1]} #{args[0]}")
     end
   end
   

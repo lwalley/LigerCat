@@ -1,0 +1,63 @@
+# Shared host and port configuration to keep things DRY below
+dev_common: &dev_common
+  host: 'localhost'
+  port: 6379
+
+test_common: &test_common
+  host: 'localhost'
+  port: 6379
+
+prod_common: &prod_common
+  hosts:
+    - 'prodhost1:6379'
+    - 'prodhost2:6379'
+
+# Shared database configuration to keep things DRY below
+mesh_database: &mesh_database
+  database: 0
+date_database: &date_database
+  database: 1
+resque_database: &resque_database
+  database: 2
+
+
+
+# This Redis DB contains pmid -> mesh_id mappings
+mesh_development:
+  <<: *dev_common
+  <<: *mesh_database
+
+mesh_test:
+  <<: *test_common
+  <<: *mesh_database
+
+mesh_production:
+  <<: *prod_common
+  <<: *mesh_database
+  
+# This Redis DB contains pmid -> date_published mappings
+date_published_development:
+  <<: *dev_common
+  <<: *date_database
+
+date_published_test:
+  <<: *test_common
+  <<: *date_database
+
+date_published_production:
+  <<: *prod_common
+  <<: *date_database
+
+
+# This Redis DB contains the Resque queues
+resque_development:
+  <<: *dev_common
+  <<: *resque_database
+
+resque_test:
+  <<: *test_common
+  <<: *resque_database
+
+resque_production:
+  <<: *prod_common
+  <<: *resque_database

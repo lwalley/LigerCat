@@ -2,7 +2,6 @@ require 'fileutils'
 require 'downloader'
 require 'progressbar'
 require 'nokogiri'
-require 'pry'
 
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
@@ -77,8 +76,6 @@ namespace :eol do
         # Check if rank is species
         # Check if taxon_id is already in database
         # barring that, insert new record
-        
-        
       end
     end
     

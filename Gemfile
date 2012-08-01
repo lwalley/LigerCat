@@ -1,32 +1,56 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'rails', '2.3.14'
-gem 'i18n'
-gem 'json'
-gem 'haml'
-gem 'will_paginate','~>2.3.16', :require => nil
-gem 'chronic', '0.2.3'
+gem 'rails', '3.2.7'
+
+# Bundle edge Rails instead:
+# gem 'rails', :git => 'git://github.com/rails/rails.git'
+
+gem 'mysql2'
+
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platforms => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+end
+
+gem 'jquery-rails'
+
+
+gem 'haml-rails'
+gem 'chronic'
 gem 'pubmed_search'
 gem 'nokogiri'
 gem 'treetop'
 gem 'bio'
-gem 'mysql'
-gem 'system_timer'
-gem 'redis','2.2.2'
-gem 'resque', "~> 1.20.0"
-gem 'after_commit'
+gem 'redis'
+gem 'resque'
 gem 'whenever', :require => false
 gem 'rest-client'
+gem 'exception_notification', :require => 'exception_notifier'
+gem "recaptcha", :require => "recaptcha/rails"
 
 # This is used in seeds.rb, not totally sure if it should be here
 gem 'progressbar'
 gem 'fastercsv'
 
+# To use ActiveModel has_secure_password
+# gem 'bcrypt-ruby', '~> 3.0.0'
 
-group :development, :test do
-  gem 'ruby-debug'
-  gem 'fakeweb'
-  gem 'rspec', '1.3.2'
-  gem 'rspec-rails', '1.3.4'
-  gem 'capistrano'
-end
+# To use Jbuilder templates for JSON
+# gem 'jbuilder'
+
+# Use unicorn as the app server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
+
+# To use debugger
+# gem 'debugger'
