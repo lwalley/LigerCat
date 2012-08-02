@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/../spec_helper'
-require File.expand_path(File.dirname(__FILE__) + "/../shared/keyword_frequency_spec")
+require 'spec_helper'
+require 'shared/keyword_frequency'
 
 describe JournalMeshFrequency do
   before(:each) do

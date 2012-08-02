@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe JournalQueriesController, '#show' do
-  integrate_views
+  render_views
   
   before(:each) do
     @journal_query = mock_model(JournalQuery)

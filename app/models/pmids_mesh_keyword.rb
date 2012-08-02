@@ -4,7 +4,9 @@
 class PmidsMeshKeyword < ActiveRecord::Base
 
   belongs_to :mesh_keyword
-  
+
+  attr_accessible :pmid, :mesh_keyword_id
+
   class << self
     def bulk_insert(pmid, mesh_keyword_ids)
       mesh_keyword_ids = [mesh_keyword_ids] unless mesh_keyword_ids.is_a? Array

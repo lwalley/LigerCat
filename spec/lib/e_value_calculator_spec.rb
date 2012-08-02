@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 require "e_value_calculator"
 
 describe EValueCalculator do

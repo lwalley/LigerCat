@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe JournalsController, "#index without any arguments" do
-  integrate_views
+  render_views
   after(:each) do
     get :index
   end

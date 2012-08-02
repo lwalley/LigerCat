@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe PmidsMeshKeyword do
   fixtures :pmids_mesh_keywords, :mesh_keywords

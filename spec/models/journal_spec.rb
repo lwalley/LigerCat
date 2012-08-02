@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Journal, '#mesh_frequencies' do
   fixtures :journals, :journal_mesh_frequencies, :mesh_keywords
