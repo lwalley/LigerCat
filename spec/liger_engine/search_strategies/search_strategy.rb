@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 shared_examples_for 'A Search Strategy' do
   it "should respond to #search" do
@@ -13,7 +13,7 @@ shared_examples_for 'A Search Strategy' do
       results = @strategy.search(@query)
       results.should be_a Array
       results.should_not be_empty
-      results.all?{|r| r.is_a? Integer}.should be_true("Expected an array of Integers")
+      results.all?{|r| r.is_a? Integer}.should be_true, "Expected an array of Integers"
     end
   end
 end

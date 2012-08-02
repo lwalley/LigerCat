@@ -1,5 +1,3 @@
-# -*- Mode: RSpec; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
-
 require File.dirname(__FILE__) + '/../spec_helper'
 require "e_value_calculator"
 
@@ -58,15 +56,15 @@ describe EValueCalculator do
   
   describe '#lammy' do
     it "should be sum_freq_occ / sum_occ" do
-      @c.lammy.should be_close(1.4375, 0.0001)
+      @c.lammy.should be_within(0.0001).of(1.4375)
     end
   end
   
   describe '#e_value' do
     it "should be computed correctly" do
-      @c.e_value(10,1).should be_close(0.000000572, 0.000000001)
-      @c.e_value(1,3).should  be_close(0.7126, 0.0001)
-      @c.e_value(5,2).should  be_close(0.0015, 0.0001)
+      @c.e_value(10,1).should be_within(0.000000001).of(0.000000572)
+      @c.e_value(1,3).should  be_within(0.0001).of(0.7126)
+      @c.e_value(5,2).should  be_within(0.0001).of(0.0015)
     end
   end
   

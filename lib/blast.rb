@@ -25,9 +25,9 @@ class Blast
       output = stdout.read
       errors = stderr.read
       
-      if output.any?
+      if !output.blank?
         return output
-      elsif errors.any?
+      elsif !output.blank?
         raise "Received errors from #{@program}: #{errors}"
       end
     end

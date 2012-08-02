@@ -1,5 +1,5 @@
 class Feedback < ActionMailer::Base
-  default :recipients => Ligercat::Application.config.secret_stuff['feedback_recipients']
+  default :to => Ligercat::Application.config.secret_stuff['feedback_recipients']
   
   
    def contact(sender, message)

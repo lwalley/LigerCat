@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 # Warning! This spec relies entirely on fixture data,
 # and the spec will break if the fixtures go out of whack.
@@ -10,7 +10,7 @@ describe 'HistogramProcessor' do
     # This faked was snagged from the actual pubmed efetch. It contains medline records for the three @non_local_pmids
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:post, "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
-                         :body => Rails.root.join(*%w(spec mocked_eutils_responses histogram_processor_spec_efetch.xml))
+                         :body => Rails.root.join('spec', 'mocked_eutils_responses', 'histogram_processor_spec_efetch.xml'))
                          
     # These PMIDs exist in the database, courtesy of the fixture above
     @local_pmids     = [3029810, 3029811, 3029812, 3029813, 3029814, 3029815, 3029816, 3029817, 3029818, 3029819, 3029820, 3029821] 
@@ -42,8 +42,9 @@ describe 'HistogramProcessor' do
   end
 end
 
-def be_between(n1, n2)
-  bounds = [n1,n2].sort
-  simple_matcher("between"){|given| given >= bounds.first and given <= bounds.last }
+RSpec::Matchers.define :be_between do |n1,n2|
+  match do |given|
+    bounds = [n1, n2].sort
+    given >= bounds.first and given <= bounds.last
+  end
 end
-

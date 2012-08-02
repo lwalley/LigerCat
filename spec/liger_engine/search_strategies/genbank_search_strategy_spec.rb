@@ -1,6 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-require File.expand_path(File.dirname(__FILE__) + '/search_strategy_spec')
-
+require 'spec_helper'
+require 'liger_engine/search_strategies/search_strategy'
 
 describe LigerEngine::SearchStrategies::GenbankSearchStrategy do
   fixtures :gi_numbers_pmids

@@ -39,9 +39,15 @@ gem "recaptcha", :require => "recaptcha/rails"
 # This is used in seeds.rb, not totally sure if it should be here
 gem 'progressbar'
 gem 'fastercsv'
+gem 'rails-csv-fixtures'
 
 group :development do 
   gem 'pry'
+end
+
+group :development, :test do 
+  gem 'rspec-rails'
+  gem 'fakeweb'
 end
 
 # To use ActiveModel has_secure_password
