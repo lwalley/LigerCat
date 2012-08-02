@@ -17,6 +17,7 @@ class BlastQuery < AsynchronousQuery
   has_one :sequence, :dependent => :destroy
   
   attr_accessor :fasta_data
+  attr_accessible :fasta_data
   
   validates_presence_of :fasta_data
     

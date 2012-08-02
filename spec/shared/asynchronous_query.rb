@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
-describe "An Asynchronous Query", :shared => true do
+shared_examples_for "An Asynchronous Query" do
   before :each do
     Resque.stub!(:enqueue)
     Resque.stub!(:enqueue_to)

@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
-describe "A KeywordFrequency", :shared => true do
+shared_examples_for "A KeywordFrequency" do
   it "should respond to weighted_frequency" do
     @freq.should be_respond_to :weighted_frequency
   end

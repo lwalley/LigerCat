@@ -1,5 +1,6 @@
-require File.dirname(__FILE__) + '/../spec_helper'
-require "blast"
+require 'spec_helper'
+require 'shared/asynchronous_query'
+require 'blast'
 
 describe "A BlastQuery" do
   it_should_behave_like "An Asynchronous Query"
