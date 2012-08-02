@@ -27,20 +27,20 @@ describe RedisFactory do
                                                 "  database: 2       \n" )
       end
       it '#gimme should return a Redis instance for each environment' do
-        ENV['RAILS_ENV'] = 'development'
+        Rails.env = 'development'
         r = RedisFactory.gimme
         r.should be_a Redis
         r.client.host.should == 'dev_host'
         r.client.port.should == 6379
         r.client.db.should   == 0
         
-        ENV['RAILS_ENV'] = 'production'
+        Rails.env = 'production'
         r = RedisFactory.gimme
         r.client.host.should == 'prod_host'
         r.client.port.should == 6381
         r.client.db.should   == 2
         
-        ENV['RAILS_ENV'] = 'test'
+        Rails.env = 'test'
         r = RedisFactory.gimme
         r.client.host.should == 'test_host'
         r.client.port.should == 6380
@@ -76,7 +76,7 @@ describe RedisFactory do
                                                 "  database: 5         \n")                                       
       end
       it '#gimme should return a Redis instance for each prefix and environment' do
-        ENV['RAILS_ENV'] = 'development'
+        Rails.env = 'development'
         a = RedisFactory.gimme(:a)
         a.should be_a Redis
         a.client.host.should == 'a.dev.host'
@@ -88,7 +88,7 @@ describe RedisFactory do
         b.client.port.should == 6382
         b.client.db.should   == 3
         
-        ENV['RAILS_ENV'] =  'production'
+        Rails.env =  'production'
         a = RedisFactory.gimme('a')
         a.client.host.should == 'a.prod.host'
         a.client.port.should == 6381
@@ -100,7 +100,7 @@ describe RedisFactory do
         b.client.port.should == 6384
         b.client.db.should   == 5
         
-        ENV['RAILS_ENV'] =  'test'
+        Rails.env =  'test'
         a = RedisFactory.gimme('a')
         a.client.host.should == 'a.test.host'
         a.client.port.should == 6380
@@ -133,7 +133,7 @@ describe RedisFactory do
                                                 "  database: 2            \n" )
       end
       it '#gimme should return a Redis::Distributed instance for each environment with multiple hosts' do
-        ENV['RAILS_ENV'] =  'development'
+        Rails.env =  'development'
         r = RedisFactory.gimme
         r.should be_a Redis::Distributed
         r.nodes[0].client.host.should == 'dev.host1'
@@ -144,7 +144,7 @@ describe RedisFactory do
         r.nodes[1].client.port.should == 6379
         r.nodes[1].client.db.should   == 0
         
-        ENV['RAILS_ENV'] =  'production'
+        Rails.env =  'production'
         r = RedisFactory.gimme
         r.should be_a Redis::Distributed
         r.nodes[0].client.host.should == 'prod.host1'
@@ -155,7 +155,7 @@ describe RedisFactory do
         r.nodes[1].client.port.should == 6381
         r.nodes[1].client.db.should   == 2
         
-        ENV['RAILS_ENV'] =  'test'
+        Rails.env =  'test'
         r = RedisFactory.gimme
         r.should be_a Redis
         r.client.host.should == 'test_host'
@@ -196,7 +196,7 @@ describe RedisFactory do
                                                 "  database: 5              \n")                                       
       end
       it '#gimme should return a Redis::Distributed instance for each prefix and environment with multiple hosts' do
-        ENV['RAILS_ENV'] =  'development'
+        Rails.env =  'development'
         a = RedisFactory.gimme('a')
         a.should be_a Redis::Distributed
         a.nodes[0].client.host.should == 'a.dev.host1'
@@ -215,7 +215,7 @@ describe RedisFactory do
         b.nodes[1].client.port.should == 6382
         b.nodes[1].client.db.should   == 3
         
-        ENV['RAILS_ENV'] =  'production'
+        Rails.env =  'production'
         a = RedisFactory.gimme('a')
         a.should be_a Redis::Distributed
         a.nodes[0].client.host.should == 'a.prod.host1'
@@ -234,7 +234,7 @@ describe RedisFactory do
         b.nodes[1].client.port.should == 6384
         b.nodes[1].client.db.should   == 5
         
-        ENV['RAILS_ENV'] =  'test'
+        Rails.env =  'test'
         a = RedisFactory.gimme('a')
         a.should be_a Redis
         a.client.host.should == 'a.test.host'

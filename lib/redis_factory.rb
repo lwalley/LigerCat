@@ -27,7 +27,7 @@ class RedisFactory
     
     def current_config(prefix)
       prefix = prefix.to_s
-      rails_env = ENV['RAILS_ENV'] || 'development'
+      rails_env = Rails.env || 'development'
       
       config_key = if prefix.empty?
                     rails_env
@@ -54,9 +54,9 @@ class RedisFactory
     end
     
     def configurations
-      rails_root = ENV['RAILS_ROOT'] || File.dirname(__FILE__) + '/..'
+      root = Rails.root rescue File.join( File.dirname(__FILE__), '..' ) # Allows RedisFactory to be used outside a Rails project
       
-      @@configurations ||= YAML.load_file(rails_root + '/config/redis.yml')
+      @@configurations ||= YAML.load_file( File.join(root, 'config', 'redis.yml') )
     end
     
     # This is only used in testing. Don't use it for real

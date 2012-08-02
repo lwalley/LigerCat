@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require "#{RAILS_ROOT}/lib/blast"
+require "blast"
 
 describe "A BlastQuery" do
   it_should_behave_like "An Asynchronous Query"

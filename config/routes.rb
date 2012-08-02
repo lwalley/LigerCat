@@ -59,12 +59,33 @@ Ligercat::Application.routes.draw do
   
   
   resources :journals, :only => [:index, :show]
-  resources :eol, :only => :show
-  resources :selections, :only => [:create, :destroy], :collection => {:destroy_all => :delete, :destroy_some => :delete}
+  resources :journal_queries, :only => [:show]  
+  resources :selections, :only => [:create, :destroy] do
+    collection do
+      delete 'destroy_all'
+      delete 'destroy_some'
+    end
+  end
+  
   resource  :pubmed_count, :only => [:show]
-  resources :journal_queries, :only => [:show]
-  resources :pubmed_queries, :as => :articles, :only => [:index, :show], :member => {:status => :get, :cache => :delete}, :collection => {:search => :get}
-  resources :blast_queries, :as => :genes, :only => [:index, :create, :show], :member => {:status => :get, :cache => :delete}
+  resources :eol, :only => :show
+  resources :pubmed_queries, :path => 'articles', :only => [:index, :show] do
+    collection do
+      get 'search'
+    end
+    
+    member do 
+      get 'status'
+      delete 'cache'
+    end
+  end
+         
+  resources :blast_queries, :path => 'genes', :only => [:index, :create, :show] do
+    member do 
+      get 'status'
+      delete 'cache'
+    end
+  end
   
   match '/articles/:id/:slug' => 'pubmed_queries#show', :as => :slug_pubmed_query
   match '/about' => 'static#about', :as => :about

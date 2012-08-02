@@ -6,7 +6,7 @@
 /* @group Basic Global Styles */
 
 body {
-	background: #f7f7ff url(../images/content-bg.gif) repeat-x scroll left 6em;
+	background: #f7f7ff url(<%= image_path 'content-bg.gif' %>) repeat-x scroll left 6em;
 }
 
 .container {
@@ -34,7 +34,7 @@ a:focus, a:hover {
 
 a.external_link {
 	padding-right: 13px;
-	background: url(/images/external_link.gif) no-repeat scroll right center;
+	background: url(<%= image_path 'external_link.gif' %>) no-repeat scroll right center;
 }
 
 a.external_link.img_link {
@@ -88,7 +88,7 @@ a.external_link.img_link {
 	display: block;
 	position: relative;
 	z-index: 100;
-	background: #fff url(../images/tagline-bg.gif) repeat-x scroll left top;
+	background: #fff url(<%= image_path 'tagline-bg.gif' %>) repeat-x scroll left top;
 	border-bottom: 2px solid #99D9EB;
 	border-right: 2px solid #99D9EB;
 }
@@ -104,7 +104,7 @@ a.external_link.img_link {
 	height: 4em;
 	font-size: 1.5em;
 	line-height: 1em;
-	background: url(../images/ligercat.gif) no-repeat scroll 10px center;
+	background: url(<%= image_path "ligercat.gif" %>) no-repeat scroll 10px center;
 }
 
 .tagline {
@@ -113,7 +113,7 @@ a.external_link.img_link {
 	left: 11px;
 	height: 12px;
 	width: 228px;
-	background: url(../images/tagline.gif) no-repeat;
+	background: url(<%= image_path "tagline.gif" %>) no-repeat;
 	font-size: 1.2em;
 	line-height: 1.25em;
 }
@@ -164,17 +164,17 @@ a.external_link.img_link {
 
 .navigation li.journals *{
 	border-color: #99D9EB;
-	background-image: url(../images/journals.gif);
+	background-image: url(<%= image_path 'journals.gif' %>);
 }
 
 .navigation li.pubmed_queries *{
 	border-color: #A7D77C;
-	background-image: url(../images/articles.gif);
+	background-image: url(<%= image_path 'articles.gif' %>);
 }
 
 .navigation li.blast_queries *{
 	border-color: #FFE170;
-	background-image: url(../images/genes.gif);
+	background-image: url(<%= image_path 'genes.gif' %>);
 }
 
 /* @end */
@@ -335,12 +335,12 @@ h1 span.amp {
 
 #journals_index #contextualized_copy {
 	border-top-color: #99D9EB;
-	background: url(/images/journals_home_bg.gif) repeat-x left top;
+	background: url(<%= image_path 'journals_home_bg.gif' %>) repeat-x left top;
 }
 
 #pubmed_queries_index #contextualized_copy {
 	border-top-color: #A7D77C;
-	background: url(/images/articles_home_bg.gif) repeat-x left top;
+	background: url(<%= image_path 'articles_home_bg.gif' %>) repeat-x left top;
 }
 
 #pubmed_queries_index .text_wrapper {
@@ -353,7 +353,7 @@ h1 span.amp {
 
 #blast_queries_index #contextualized_copy {
 	border-top-color: #FFE170;
-	background: url(/images/genes_home_bg.gif) repeat-x left top;
+	background: url(<%= image_path 'genes_home_bg.gif' %>) repeat-x left top;
 }
 
 #blast_queries_index #contextualized_copy p{
@@ -404,13 +404,13 @@ ol.search_results {
 }
 
 #results .pagination .next_page  {
-	background-image: url(/images/pagination-corner-right.gif);
+	background-image: url(<%= image_path 'pagination-corner-right.gif' %>);
 	background-repeat: no-repeat;
 	background-position: right top;
 }
 
 #results .pagination .prev_page  {
-	background-image: url(/images/pagination-corner-left.gif);
+	background-image: url(<%= image_path 'pagination-corner-left.gif' %>);
 	background-repeat: no-repeat;
 	background-position: left top;
 }
@@ -538,7 +538,7 @@ h2.publication_history {
 	width: 100%;
 	height: 0;
 	min-height: 1px;
-	background: #ccc url(/images/one_white_pixel.gif) repeat-y right;
+	background: #ccc url(<%= image_path 'one_white_pixel.gif' %>) repeat-y right;
 }
 
 .timeline li.z .bar {
@@ -665,13 +665,13 @@ ul.sidebar_tabs li.tab.active a.active {
 
 .selected_journals_toolbar li.remove_all a {
 	padding-left: 14px;
-	background: url(../images/trash.gif) no-repeat scroll 3px center;
+	background: url(<%= image_path 'trash.gif' %>) no-repeat scroll 3px center;
 }
 
 
 .selected_journals_toolbar li.explore_selected a {
 	padding-left: 15px;
-	background: url(../images/magnifying-glass.gif) no-repeat scroll 3px center;
+	background: url(<%= image_path 'magnifying-glass.gif' %>) no-repeat scroll 3px center;
 }
 
 #sidebar_panels {
@@ -708,7 +708,7 @@ ul.sidebar_tabs li.tab.active a.active {
 }
 
 .pubmed_count .external_link {
-	background-image: url(/images/external_link_light.gif);
+	background-image: url(<%= image_path 'external_link_light.gif' %>);
 }
 
 .pubmed_count a {
@@ -726,7 +726,7 @@ ul.sidebar_tabs li.tab.active a.active {
 }
 
 .pubmed_count.loading, .pubmed_count .loading {
-	background-image: url(/images/loading.gif);
+	background-image: url(<%= image_path 'loading.gif' %>);
 	background-repeat: no-repeat;
 	background-position: 3px center;
 	padding-left: 22px;
@@ -794,17 +794,17 @@ ul.toolbar li a span {
 }
 
 ul.toolbar li.remove_all a span {
-	background-image: url(/images/trash.gif);
+	background-image: url(<%= image_path 'trash.gif' %>);
 	padding-left: 14px;
 }
 
 ul.toolbar li.go_to_pubmed a span {
-	background-image: url(/images/pubmed-logo.gif);
+	background-image: url(<%= image_path 'pubmed-logo.gif' %>);
 	padding-left: 17px;
 }
 
 ul.toolbar li.go_to_pubmed a {
-	background-image: url(/images/pubmed-nubbin.gif);
+	background-image: url(<%= image_path 'pubmed-nubbin.gif' %>);
 	background-repeat: no-repeat;
 	background-position: center bottom;
 }
@@ -814,12 +814,12 @@ ul.toolbar.disabled li.go_to_pubmed a {
 }
 
 ul.toolbar li.explore_selected a span {
-	background-image: url(/images/magnifying-glass-dark.gif);
+	background-image: url(<%= image_path 'magnifying-glass-dark.gif' %>);
 	padding-left: 13px;
 }
 
 ul.toolbar.disabled li.explore_selected a span {
-	background-image: url(/images/magnifying-glass-light.gif);
+	background-image: url(<%= image_path 'magnifying-glass-light.gif' %>);
 }
 
 /* @end */
@@ -877,7 +877,7 @@ ul.toolbar.disabled li.explore_selected a span {
 }
 
 #footer.pubmed_queries {
-	background-image: url(/images/articles_home_bg.gif);
+	background-image: url(<%= image_path 'articles_home_bg.gif' %>);
 	border-top-color: #A7D77C;
 }
 
@@ -886,12 +886,12 @@ ul.toolbar.disabled li.explore_selected a span {
 }
 
 #footer.journals {
-		background-image: url(/images/journals_home_bg.gif);
+		background-image: url(<%= image_path 'journals_home_bg.gif' %>);
 		border-top-color: #99D9EB;
 }
 
 #footer.blast_queries {
-		background-image: url(/images/genes_home_bg.gif);
+		background-image: url(<%= image_path 'genes_home_bg.gif' %>);
 		border-top-color: #FFE170;
 }
 

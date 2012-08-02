@@ -1,4 +1,4 @@
-require 'liger_engine'
+require 'liger_engine/engine'
 
 AsynchronousQuery.default_url_options[:host] = Ligercat::Application.config.secret_stuff['host']
 LigerEngine::SearchStrategies::PubmedSearchStrategy.email = Ligercat::Application.config.secret_stuff['eutils_email']

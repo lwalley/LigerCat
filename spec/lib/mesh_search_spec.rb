@@ -1,8 +1,8 @@
 # -*- Mode: RSpec; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
 
 require File.dirname(__FILE__) + '/../spec_helper'
-require "#{RAILS_ROOT}/lib/nlm_eutil_search"
-require "#{RAILS_ROOT}/lib/mesh_search"
+require "nlm_eutil_search"
+require "mesh_search"
 require File.dirname(__FILE__) + '/../mocked_eutils_responses'
 
 describe 'MeshSearch' do

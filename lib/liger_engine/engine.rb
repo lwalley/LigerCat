@@ -1,3 +1,5 @@
+require 'observer'
+
 module LigerEngine
   class Engine
     include Observable

@@ -32,10 +32,8 @@ class AsynchronousQuery < ActiveRecord::Base
     end
     
     def enqueue_refresh_candidates(limit = 1000)
-      candidates = self.find(:all, :conditions => ["state=? AND updated_at<?", STATES[:cached], 1.minute.ago], 
-                                   :order => 'updated_at ASC',
-                                   :limit => limit )
-
+      candidates = self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+      
       logger.info( candidates.empty? ? "#{Time.now} No #{self.name.pluralize} are candidates for refresh. Skipping" : "#{Time.now} Enqueing #{candidates.length} #{self.name.pluralize}" )
       
       candidates.each{|c| c.enqueue_for_refresh }
@@ -143,7 +141,7 @@ class AsynchronousQuery < ActiveRecord::Base
   # For example, the log messages from a PubmedQuery#id-12 would look like:
   #    LigerEngine: PubmedQuery id:12 Changed state to cached
   def log_liger_engine(msg)
-    RAILS_DEFAULT_LOGGER.info("#{Time.now} LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
+    Rails.logger.info("#{Time.now} LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
   end
     
 end

@@ -10,7 +10,7 @@ describe 'HistogramProcessor' do
     # This faked was snagged from the actual pubmed efetch. It contains medline records for the three @non_local_pmids
     FakeWeb.allow_net_connect = false
     FakeWeb.register_uri(:post, "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi",
-                         :body => RAILS_ROOT + "/spec/mocked_eutils_responses/histogram_processor_spec_efetch.xml")
+                         :body => Rails.root.join(*%w(spec mocked_eutils_responses histogram_processor_spec_efetch.xml))
                          
     # These PMIDs exist in the database, courtesy of the fixture above
     @local_pmids     = [3029810, 3029811, 3029812, 3029813, 3029814, 3029815, 3029816, 3029817, 3029818, 3029819, 3029820, 3029821] 

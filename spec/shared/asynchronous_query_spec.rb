@@ -168,7 +168,7 @@ describe "An Asynchronous Query", :shared => true do
     end
 
     it "should log the state change" do
-      RAILS_DEFAULT_LOGGER.should_receive(:info).at_least(:once).with(/queued/)
+      Rails.logger.should_receive(:info).at_least(:once).with(/queued/)
       @query.update_state(:queued)
     end
     

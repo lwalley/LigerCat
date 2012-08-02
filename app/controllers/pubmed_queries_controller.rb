@@ -20,7 +20,7 @@ class PubmedQueriesController < ApplicationController
   def show
     @query = PubmedQuery.find(params[:id])
     if @query.done?
-      @mesh_frequencies = @query.pubmed_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')      
+      @mesh_frequencies = @query.pubmed_mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
       respond_to do |format|
         format.html do
           @publication_histogram = @query.publication_dates.to_histohash # Keeps histogram out of the cloud iframe thingy. TODO refactor the views so this hack isn't needed

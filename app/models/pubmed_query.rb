@@ -7,8 +7,8 @@ class PubmedQuery < AsynchronousQuery
   has_many :mesh_keywords, :through => :pubmed_mesh_frequencies
   has_many :publication_dates, :as => :query, :dependent => :delete_all do
     def to_histohash
-      returning Hash.new(0) do |histohash|
-        find(:all).each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
+      Hash.new(0).tap do |histohash|
+        self.all.each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
       end
     end
   end  

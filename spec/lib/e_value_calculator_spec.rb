@@ -1,7 +1,7 @@
 # -*- Mode: RSpec; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
 
 require File.dirname(__FILE__) + '/../spec_helper'
-require "#{RAILS_ROOT}/lib/e_value_calculator"
+require "e_value_calculator"
 
 describe EValueCalculator do
   before(:each) do

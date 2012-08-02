@@ -1,7 +1,7 @@
 # -*- Mode: RSpec; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
 
 require File.dirname(__FILE__) + '/../spec_helper'
-require "#{RAILS_ROOT}/lib/mesh_frequency_calculator"
+require "mesh_frequency_calculator"
 require File.dirname(__FILE__) + '/../mocked_eutils_responses'
 
 class MeshFrequencyCalculator

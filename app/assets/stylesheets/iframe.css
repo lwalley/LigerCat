@@ -1,3 +1,7 @@
+/*
+ * require ./screen/reset
+ * require ./screen/typography
+ */
 a {
 	color: #494949;
 	text-decoration: none;

@@ -16,8 +16,8 @@ class Blast
   private 
 
   def execute_command(fasta_data)
-    command = %(#{RAILS_ROOT}/lib/blast_bin/#{@program} -db #{@database} -evalue #{@expectation_value} -outfmt "7 sgi sacc evalue" -remote)
-    RAILS_DEFAULT_LOGGER.debug command
+    command = %(#{Rails.root.join('lib', 'blast_bin', @program)} -db #{@database} -evalue #{@expectation_value} -outfmt "7 sgi sacc evalue" -remote)
+    Rails.logger.debug command
 
     Open3.popen3 command do |stdin, stdout, stderr|
       stdin.write fasta_data
