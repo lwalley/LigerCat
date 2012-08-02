@@ -22,6 +22,8 @@ gem 'rest-client'
 gem 'progressbar'
 gem 'fastercsv'
 
+# unicorn for production
+gem 'unicorn'
 
 group :development, :test do
   gem 'ruby-debug'
@@ -29,4 +31,6 @@ group :development, :test do
   gem 'rspec', '1.3.2'
   gem 'rspec-rails', '1.3.4'
   gem 'capistrano'
+  gem 'rvm-capistrano'
+  gem 'capistrano-unicorn'
 end
