@@ -10,9 +10,17 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-// * = require jquery
-// * = require jquery_ujs
+// equire jquery
+// equire jquery_ujs
 //= require mootools
 //= require mootools-1.2-more
+//= require tabs
 //= require ligercat
-//= require_tree .
+//= require toolbar
+//= require medline_search
+//= require selection_panel
+//= require journal_selection_panel
+//= require mesh_selection_panel
+//= require mesh_and_text_selection_panel
+//= require text_box_hint
+

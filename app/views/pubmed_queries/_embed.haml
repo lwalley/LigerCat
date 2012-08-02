@@ -8,4 +8,4 @@
 	%label{ :for => 'site'} Embed
 	#small
 		= auto_select_text_field_tag 'site', embed_code, :size => '30'
-		=clippy(embed_code,'EDEDFF')
+		= clippy(embed_code,'EDEDFF').html_safe

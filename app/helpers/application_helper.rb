@@ -89,7 +89,7 @@ module ApplicationHelper
     
     divisor = (max - min) / classes.size.to_f
     
-    String.new.tap do |keyword_list|
+    String.new.html_safe.tap do |keyword_list|
       keywords.each do |t|
         next if t.name == 'Animals'
         
@@ -136,7 +136,7 @@ module ApplicationHelper
   def little_spinner(options={})
     options = {:text => 'Loading...', :show_text => true, :display => 'none'}.merge(options)
     loading = (options[:show_text]) ? options[:text] : ''
-    "<span class=\"little_spinner\" style=\"display:#{options[:display]}\">#{loading}</span>"
+    "<span class=\"little_spinner\" style=\"display:#{options[:display]}\">#{loading}</span>".html_safe
   end
   
   def token_tag_with_id
@@ -251,7 +251,7 @@ module ApplicationHelper
     environments  = ['production']
     
     if environments.include?(Rails.env)
-      returning String.new do |html|
+      String.new.html_safe.tap do |html|
         html << "<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>"
         html << "<script type='text/javascript'>try{var pageTracker = _gat._getTracker('#{tracking_code}'); pageTracker._trackPageview();} catch(err) {}</script>"
       end

@@ -47,7 +47,7 @@ Ligercat.SelectionPanelItem = new Class({
     var item_li = new Element('li',{ 'text': ' ' + this._getTriggerText() });
     var remove_button = new Element('a', { 
       'href':'#',
-      'html':'<img src="/images/trash.gif" alt="Trash"/>',
+      'html':'<img src="<%= image_path 'trash.gif' %>" alt="Trash"/>',
       'events':{ 'click': function(){this.remove(); return false;}.bind(this) }
     });
     remove_button.inject(item_li, 'top');
