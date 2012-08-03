@@ -59,3 +59,12 @@ def redis_fixture(prefix)
     end
   end
 end
+
+# Helpers for testing page caching
+def cached?(path)
+  File.exists? ActionController::Base.send(:page_cache_path, path)
+end
+
+def clear_cache(path)
+  File.delete ActionController::Base.send(:page_cache_path, path) if cached?(path)
+end

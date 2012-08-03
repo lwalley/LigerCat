@@ -65,16 +65,14 @@ describe BlastQueriesController do
 
       before(:each) do
         @blast_query  = blast_queries(:amino_acid_query)
-      end
-  
+      end      
       it "should look up the record by ID in the database" do
         BlastQuery.should_receive(:find).with(@blast_query.id.to_s).and_return(@blast_query)
         get :show, :id => @blast_query.id
       end
-    
-      it "should render the show template" do
+      it "should render show template" do
         get :show, :id => @blast_query.id
-        response.rendered[:template].should == 'blast_queries/show.haml'
+        controller.should render_template :show
       end
     end
   
@@ -115,7 +113,7 @@ describe BlastQueriesController do
 
       it "should render the status template" do
         get :status, :id => @blast_query.id
-        response.rendered[:template].should == 'blast_queries/status.haml'
+        controller.should render_template :status
       end
   
       it "should render the text 'done' if it's an XHR" do
@@ -171,7 +169,7 @@ describe BlastQueriesController do
     
     it "should return HTTP 204" do
       delete :cache, :id => @query.id
-      response.status.should == '204 No Content'
+      response.status.should == 204
     end
   end
   
