@@ -10,7 +10,7 @@ module DataInstallationHelper
 			end
 			
 			def data_directory
-				@data_directory ||=  File.join(RAILS_ROOT, 'db', 'data')
+				@data_directory ||=  Rails.root.join('db', 'data')
 			end
 			
 			def datafile

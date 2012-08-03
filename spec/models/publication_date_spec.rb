@@ -10,18 +10,18 @@ describe PublicationDate do
     @date = PublicationDate.new(@invalid_attributes)
     @date.should_not be_valid
     @valid_attributes.keys.each do |k|
-      @date.errors.on(k).should_not be_blank
+      @date.errors.should have_key(k)
     end
     @date.update_attributes(@valid_attributes)
     @date.should be_valid
 
     @date.year = 'A year'
     @date.should_not be_valid
-    @date.errors.on(:year).should_not be_blank
+    @date.errors.should have_key(:year)
 
     @date.publication_count = 'A count'
     @date.should_not be_valid
-    @date.errors.on(:publication_count).should_not be_blank
+    @date.errors.should have_key(:publication_count)
 
   end
 end

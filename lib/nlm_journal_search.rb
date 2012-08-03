@@ -5,7 +5,7 @@ class NLMJournalSearch
   def self.getValidSubjectTerms
     # puts "----READING AND LOADING JOURNAL SUBJECT TERMS----"
     validSubjectTermHash ={}
-    File.open(RAILS_ROOT + "/lib/journalSubjectTerms.txt").each do |journalSubjectLine|
+    File.open(Rails.root.join('lib', 'journalSubjectTerms.txt')).each do |journalSubjectLine|
       journalSubjectLine.chomp!
       entryTerm,journalSubject = journalSubjectLine.split(/\|/)
       if validSubjectTermHash.has_key? entryTerm
@@ -19,7 +19,7 @@ class NLMJournalSearch
   def self.getStopWords
     # puts "----READING AND LOADING STOP WORDS----"
     stopWordHash= {}
-    File.open(RAILS_ROOT + "/lib/journalStopWords.txt").each do |stopWord|
+    File.open(Rails.root.join('lib', 'journalStopWords.txt').each do |stopWord|
       stopWord.chomp!
       stopWordHash[stopWord.downcase] = 1
     end

@@ -4,7 +4,7 @@ class EolController < ApplicationController
   # GET /eol/:id
   def show
     if @query = PubmedQuery.find_by_eol_taxa_id(params[:id])
-      @mesh_frequencies = @query.pubmed_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')
+      @mesh_frequencies = @query.pubmed_mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
       respond_to do |format|
         format.html  do
           # TODO: this is a bit of a hack, to prevent the histograms from showing in eol clouds we need to rethink this later
@@ -16,7 +16,7 @@ class EolController < ApplicationController
     else
       # 404 rendering. We want a really clean 404 for the eol clouds
       respond_to do |format|
-        format.html  { render :file => "#{RAILS_ROOT}/public/404.html", :status => 404 }
+        format.html  { render :file => "#{Rails.root}/public/404.html", :status => 404 }
         format.cloud { render :text => "", :status => 404 }
       end
     end

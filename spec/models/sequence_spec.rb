@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Sequence do
   it "should add a genbank comment to the beginning of the fasta data if it's missing" do

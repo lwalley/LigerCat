@@ -11,7 +11,7 @@ class JournalQuery < AsynchronousQuery
     def perform(query_id)
       query = JournalQuery.find(query_id)
       query.perform_query!
-      query.update_attribute(:done, true)
+      query.update_column(:done, true)
     rescue Exception => e
       # TODO: make an error flag in the database to alert user to an error
       raise e # Resque handles this and puts it in the Failed Jobs list

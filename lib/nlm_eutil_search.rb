@@ -140,6 +140,6 @@ class NLMEutilSearch
   end
   
   def do_sleep
-    sleep(3) unless @skip_sleep || ENV["RAILS_ENV"] == 'test' 
+    sleep(3) unless @skip_sleep || Rails.env.test?
   end
 end

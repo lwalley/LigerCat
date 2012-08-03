@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 
 describe 'TagCloudAndHistogramProcessor' do
   before(:each) do
@@ -21,7 +21,7 @@ describe 'TagCloudAndHistogramProcessor' do
       results.tag_cloud.first.should be_a Hash
       results.tag_cloud.first.should have_key :mesh_keyword_id
       results.tag_cloud.first.should have_key :frequency
-      results.tag_cloud.first.should have_key :e_value
+      results.tag_cloud.first.should have_key :weighted_frequency
       
       # Check a couple values of the histogram for sanity
       # This will fail if the fixture data changes

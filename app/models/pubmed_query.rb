@@ -1,26 +1,30 @@
 require 'rubygems'
 require 'pubmed_search'
 
-class PubmedQuery < AsynchronousQuery   
+class PubmedQuery < AsynchronousQuery
+  # Callbacks
+  before_create :set_query_key
+  
   # Associations
   has_many :pubmed_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_keywords, :through => :pubmed_mesh_frequencies
   has_many :publication_dates, :as => :query, :dependent => :delete_all do
     def to_histohash
-      returning Hash.new(0) do |histohash|
-        find(:all).each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
+      Hash.new(0).tap do |histohash|
+        self.all.each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
       end
     end
-  end  
-  
+  end 
+
   # Validators
   validates_presence_of :query
-    
+  attr_accessible :query, :eol_taxa_id, :state
+
   class << self
     def find_or_create_by_query(query)
-      find_by_query(query) || create(:query => query)      
+      find_by_query(query) || create(:query => query)
     end
-    
+
     # The query string could possibly be very long. It's unfeasible to index such a long field,
     # so we create a MD5 hash of the query, called query_key, and store it in an indexed field.
     #
@@ -30,17 +34,17 @@ class PubmedQuery < AsynchronousQuery
     def find_by_query(query)
       find_by_query_key create_query_key(query)
     end
-    
+
     def create_query_key(query)
       Digest::MD5.hexdigest(query.strip.downcase)
     end
   end
-  
+
   # full_species_name is a special case introduced by putting ligercat clouds in EoL. In normal use,
   # full_species_name will be nil, and we'll use the query to generate the query key. 
   #
   # See the comment above display_query for a discussion into this vagary.
-  def before_create
+  def set_query_key
     self.query_key = self.class.create_query_key(full_species_name || query)
   end
 
@@ -65,7 +69,7 @@ class PubmedQuery < AsynchronousQuery
     results.histogram.each do |year, publication_count|
       self.publication_dates.build(:year => year, :publication_count => publication_count)
     end
-    
+
     self.num_articles = engine.count
 
     self.save
@@ -75,12 +79,11 @@ class PubmedQuery < AsynchronousQuery
   def eol?
     not eol_taxa_id.nil?
   end
-  
+
   def slug
     query[0,100].parameterize
   end
-  
-  
+
   # This is the verbatim string that gets sent out to PubMed in the Search Strategy. We
   # need this accessor method, because the "Selected Terms" panel and the Publication
   # Histogram both need this information to perform their respective AJAX calls.
@@ -91,8 +94,7 @@ class PubmedQuery < AsynchronousQuery
       query
     end
   end
-  
-  
+
   # When we're dealing with an EoL species, the "query" field and the "full species name"
   # are two different things. The query field contains the binomial, while the full species name
   # contains the binomial (or trinomial) plus authorship.

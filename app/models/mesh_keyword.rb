@@ -7,7 +7,7 @@ class MeshKeyword < ActiveRecord::Base
   
   has_many :blast_mesh_frequencies
   has_many :blast_queries, :through => :blast_mesh_frequencies
-  
+
   class << self
     # Selects all the MeshKeywords in the local database given a 
     # a pubmed id by joining the pmids_mesh_keywords table

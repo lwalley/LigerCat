@@ -3,8 +3,8 @@
   %head
     %meta{ 'http-equiv' => 'Content-Type', :content => "application/xhtml+xml; charset=utf-8" }
     %title= title
-    = javascript_include_tag %w(mootools mootools-1.2-more tabs application toolbar medline_search selection_panel journal_selection_panel mesh_selection_panel mesh_and_text_selection_panel text_box_hint), :cache => true
-    = stylesheet_link_tag    %w(reset typography tabs application), :cache => true
+    = javascript_include_tag 'application'
+    = stylesheet_link_tag 'application'
     
     :javascript
       window.addEvent('domready', init);

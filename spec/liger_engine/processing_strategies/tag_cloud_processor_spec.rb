@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
+require 'spec_helper'
 require 'bio'
 require 'nokogiri'
 
@@ -73,7 +73,7 @@ describe 'TagCloudProcessor' do
         pmid = medline_record_with_unknown_mesh_term.xpath('./MedlineCitation/PMID').first.text # Same PMID as in medline_record below
         mesh_descriptor = "An Unknown MeSH Descriptor"
         
-        Feedback.should_receive(:deliver_update_mesh).with(mesh_descriptor, pmid)
+        Feedback.should_receive(:update_mesh).with(mesh_descriptor, pmid).and_return(mock(:deliver => true))
         
         @processor.each_nonlocal(medline_record_with_unknown_mesh_term)
       end

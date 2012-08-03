@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe LigerEngine::PubmedFetcher do
   it "should accept a list of PMIDs and yield that many Bio::MEDLINEs" do

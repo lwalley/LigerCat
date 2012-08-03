@@ -22,7 +22,7 @@ class StaticController < ApplicationController
     @message = params["email_message"]
     @errors[:message] = "Please enter a message to send." if @message.blank?
     if verify_recaptcha() && @errors.blank?     
-      Feedback.deliver_contact(@sender, @message)
+      Feedback.contact(@sender, @message).deliver
       return if request.xhr?
       flash[:notice] = "Thank you for your feedback"
       render :action => "about",  :layout => 'static'

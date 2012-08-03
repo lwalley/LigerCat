@@ -1,12 +1,10 @@
-require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'spec_helper'
 
 describe PubmedQueriesController do
 
   describe 'GET /articles' do
-    it "should render the index template" do
-      get :index
-      response.rendered[:template].should == 'pubmed_queries/index.haml'
-    end
+    before{ get :index }
+    it{ controller.should render_template :index }
   end
 
   describe 'GET /articles/search?q={pubmed_query} GIVEN a pubmed_query that does not exist in the database' do
@@ -122,7 +120,7 @@ describe PubmedQueriesController do
   
       it "should render the status template" do
         get :status, :id => @query.id
-        response.rendered[:template].should == 'pubmed_queries/status.haml'
+        controller.should render_template :status
       end
   
       it "should render the text 'done' if it's an XHR" do
@@ -167,7 +165,7 @@ describe PubmedQueriesController do
     
     it "should return HTTP 204" do
       delete :cache, :id => @query.id
-      response.status.should == '204 No Content'
+      response.status.should == 204
     end
   end
 end

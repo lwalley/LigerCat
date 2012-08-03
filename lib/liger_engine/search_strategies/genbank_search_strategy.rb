@@ -22,8 +22,8 @@ module LigerEngine
       # * _type_ - a Symbol that can be either :amino_acid or :nucleotide. This determines which BLAST algorithm to use
       def initialize(type)
         case type
-        when :amino_acid : @blast_algorithm = TBlastN.new
-        when :nucleotide : @blast_algorithm = BlastN.new
+        when :amino_acid then @blast_algorithm = TBlastN.new
+        when :nucleotide then @blast_algorithm = BlastN.new
         else raise ArgumentError, "The type parameter must be either :amino_acid or :nucleotide"
         end
       end

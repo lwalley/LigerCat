@@ -1,10 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   
-  def context
+  def context    
     context ||=    case controller_name
-                    when "pubmed_queries", "eol", "static": "pubmed_queries"
-                    when "journal_queries", "journals"    : "journals"
+                    when "pubmed_queries", "eol", "static" then "pubmed_queries"
+                    when "journal_queries", "journals"     then "journals"
                     else  controller_name
                     end
   end
@@ -29,19 +29,20 @@ module ApplicationHelper
 	def nav_tab(name, url)
     active_class = (context == name) ? ' active' : ''
 
-    String.new.tap do |html|
-      html << "<li class='#{name + active_class}'>"
-      html << link_to_unless(context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>" }
-      html << '</li>'
-    end
+    
+    html =  "<li class='#{name + active_class}'>"
+    html << link_to_unless(context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>".html_safe }
+    html << '</li>'
+    
+    html.html_safe
 	end
 	
 	# This adds the "hint" text to the search fields.
 	def searchbox_hint_javascript
 	  case context
-	  when 'journals' : "TextBoxHint.add('journals_q', 'Enter One or More Terms to Search NLM Journals');"
-    when 'articles' : "TextBoxHint.add('articles_q', 'Enter One or More Terms to Search PubMed');"
-    when 'genes'    : "TextBoxHint.add('genes_q',    '> Paste in one FASTA-formatted sequence to BLAST');"
+	  when 'journals' then "TextBoxHint.add('journals_q', 'Enter One or More Terms to Search NLM Journals');"
+    when 'articles' then "TextBoxHint.add('articles_q', 'Enter One or More Terms to Search PubMed');"
+    when 'genes'    then "TextBoxHint.add('genes_q',    '> Paste in one FASTA-formatted sequence to BLAST');"
     end
 	end
 
@@ -88,7 +89,7 @@ module ApplicationHelper
     
     divisor = (max - min) / classes.size.to_f
     
-    String.new.tap do |keyword_list|
+    String.new.html_safe.tap do |keyword_list|
       keywords.each do |t|
         next if t.name == 'Animals'
         
@@ -135,7 +136,7 @@ module ApplicationHelper
   def little_spinner(options={})
     options = {:text => 'Loading...', :show_text => true, :display => 'none'}.merge(options)
     loading = (options[:show_text]) ? options[:text] : ''
-    "<span class=\"little_spinner\" style=\"display:#{options[:display]}\">#{loading}</span>"
+    "<span class=\"little_spinner\" style=\"display:#{options[:display]}\">#{loading}</span>".html_safe
   end
   
   def token_tag_with_id
@@ -249,8 +250,8 @@ module ApplicationHelper
     tracking_code = 'UA-9666905-1'
     environments  = ['production']
     
-    if environments.include?(RAILS_ENV)
-      returning String.new do |html|
+    if environments.include?(Rails.env)
+      String.new.html_safe.tap do |html|
         html << "<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>"
         html << "<script type='text/javascript'>try{var pageTracker = _gat._getTracker('#{tracking_code}'); pageTracker._trackPageview();} catch(err) {}</script>"
       end

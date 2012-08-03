@@ -20,7 +20,7 @@ class BlastQueriesController < ApplicationController
   def show
     @query ||= BlastQuery.find(params[:id])
     if @query.done?
-      @mesh_frequencies = @query.blast_mesh_frequencies.find(:all, :include => :mesh_keyword, :order => 'mesh_keywords.name asc')
+      @mesh_frequencies = @query.blast_mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
       @publication_histogram = @query.publication_dates.to_histohash
       render :action => 'show'
 			cache_page 

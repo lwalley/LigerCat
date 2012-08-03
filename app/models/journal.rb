@@ -12,7 +12,8 @@ class Journal < ActiveRecord::Base
   
   attr_accessor :nlm_search_subject_terms # Virtual attribute used on the NLM search algorithm
   attr_accessor :rank
-  
+  attr_accessible :query, :title, :title_abbreviation, :state
+
   def title_abbreviation
     read_attribute(:title_abbreviation) || read_attribute(:title)
   end

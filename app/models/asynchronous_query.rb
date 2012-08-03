@@ -1,11 +1,12 @@
-require 'after_commit'
 require 'rest_client'
+require 'jazz_hands'
 
 class AsynchronousQuery < ActiveRecord::Base
-  include ActionController::UrlWriter
-  
+  #include ActionController::UrlFor
+  include Rails.application.routes.url_helpers
+
   self.abstract_class = true
-  after_commit_on_create :launch_worker
+  after_commit :launch_worker, :on => :create
 
   # Maps the state integer codes stored in the database to programmer-friendly
   # symbols. If you create or rename a new state, please for heaven's sake do 
@@ -21,27 +22,29 @@ class AsynchronousQuery < ActiveRecord::Base
     :processing_tag_cloud => 7,
     :processing_histogram => 8
   }
-  
+
   class << self
     # Sets the queue that Resque should use
     def queue
       :new_queries
     end
-    
+
     def refresh_queue
       :refresh_cached_queries
     end
     
+    def find_refresh_candidates(limit=1000)
+      self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+    end
+
     def enqueue_refresh_candidates(limit = 1000)
-      candidates = self.find(:all, :conditions => ["state=? AND updated_at<?", STATES[:cached], 1.minute.ago], 
-                                   :order => 'updated_at ASC',
-                                   :limit => limit )
+      candidates = find_refresh_candidates(limit)
 
       logger.info( candidates.empty? ? "#{Time.now} No #{self.name.pluralize} are candidates for refresh. Skipping" : "#{Time.now} Enqueing #{candidates.length} #{self.name.pluralize}" )
-      
+
       candidates.each{|c| c.enqueue_for_refresh }
     end
-    
+
     # Command-patternt type interface called by a Resque worker.
     # This does the leg-work of finding the respective query AR object
     # and calls the perform_query method.
@@ -51,7 +54,7 @@ class AsynchronousQuery < ActiveRecord::Base
       query.update_state(:searching)
       query.perform_query!
       query.update_state(:cached)
-      
+
       RestClient.delete(cache_webhook) rescue nil
       query.log_liger_engine("Received webhook: #{cache_webhook.inspect}")
     rescue Exception => e
@@ -59,27 +62,27 @@ class AsynchronousQuery < ActiveRecord::Base
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
   end
-  
+
   def done?
     [:cached, :queued_for_refresh].include? self.state
   end
-  
+
   def perform_query!
     # Implement this in each included class
     raise "Must Implement perform_query!"
   end
-  
-  # Called by after_commit_on_create to put a newly created Query into the queue to be processed
-  def launch_worker    
+
+  # Called by after_commit :on => :create to put a newly created Query into the queue to be processed
+  def launch_worker
     Resque.enqueue(self.class, self.id)
     update_state(:queued)
-  end 
-  
+  end
+
   def enqueue_for_refresh
     Resque.enqueue_to(self.class.refresh_queue, self.class, self.id, cache_webhook_uri)
     update_state(:queued_for_refresh)
   end
-  
+
   # The HTML pages for these queries are page-cached on the webserver.
   # After a worker is finished refreshing a Query's tag cloud and histogram,
   # it needs to inform the webserver to delete the page cache.
@@ -92,31 +95,29 @@ class AsynchronousQuery < ActiveRecord::Base
             :action     => :cache,
             :id         => self.id)
   end
-  
+
   # Returns the symbol version of the state integer code stored in the database
   def state
     STATES.invert[read_attribute(:state)]
   end
-  
+
   # Provides a user-friendly version of the current state for use in views. Can (and should?) be overridden in subclasses
   def humanized_state
     state.to_s.humanize
   end
-  
+
   # Accepts the symbol version of our states, and writes the corresponding integer code to the database
   def state=(state_sym)
     raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
-    write_attribute(:state, STATES[state_sym])
+    update_column(:state, STATES[state_sym])
   end
-  
-  
-  # Updates the state attribute with the correct integer-code, and provides a handy log message of the state change
+
+  # This wraps #state= with a log message
   def update_state(state_sym)
-    raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
+    self.state = state_sym
     log_liger_engine "Changed state to #{state_sym}"
-    update_attribute(:state, state_sym)
   end
-  
+
   # This method handles notifications from LigerEngine and handles them appropriately.
   # Sub-classes can optionally override this to add more behavior if they wish.
   #
@@ -128,14 +129,14 @@ class AsynchronousQuery < ActiveRecord::Base
   #
   def liger_engine_update(event_name, *args)
     case event_name
-    when :before_search               : update_state(:searching)
-    when :before_processing           : update_state(:processing)
-    when :before_tag_cloud_processing : update_state(:processing_tag_cloud)
-    when :before_histogram_processing : update_state(:processing_histogram)
-    when :log                         : log_liger_engine("#{args[1]} #{args[0]}")
+    when :before_search               then update_state(:searching)
+    when :before_processing           then update_state(:processing)
+    when :before_tag_cloud_processing then update_state(:processing_tag_cloud)
+    when :before_histogram_processing then update_state(:processing_histogram)
+    when :log                         then log_liger_engine("#{args[1]} #{args[0]}")
     end
   end
-  
+
   # Provides a common logging header for LigerEngine messages.
   # Because LigerEngine can (and should) be run with multiple workers, the log messages of
   # simultaneously-running workers will be interspersed with each other. This method
@@ -144,7 +145,7 @@ class AsynchronousQuery < ActiveRecord::Base
   # For example, the log messages from a PubmedQuery#id-12 would look like:
   #    LigerEngine: PubmedQuery id:12 Changed state to cached
   def log_liger_engine(msg)
-    RAILS_DEFAULT_LOGGER.info("#{Time.now} LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
+    Rails.logger.info("#{Time.now} LigerEngine: #{self.class.name} id:#{self.id} #{msg}")
   end
-    
+
 end
