@@ -41,14 +41,12 @@ gem 'progressbar'
 gem 'fastercsv'
 gem 'rails-csv-fixtures'
 
-group :development do 
-  gem 'pry'
-end
 
 group :development, :test do 
   gem 'rspec-rails'
   gem 'fakeweb'
-  gem 'debugger'
+  gem 'jazz_hands'
+  gem 'test_after_commit' # Fuck rspec
 end
 
 # To use ActiveModel has_secure_password

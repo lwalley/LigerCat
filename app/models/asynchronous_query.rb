@@ -1,4 +1,5 @@
 require 'rest_client'
+require 'jazz_hands'
 
 class AsynchronousQuery < ActiveRecord::Base
   #include ActionController::UrlFor
@@ -31,9 +32,13 @@ class AsynchronousQuery < ActiveRecord::Base
     def refresh_queue
       :refresh_cached_queries
     end
+    
+    def find_refresh_candidates(limit=1000)
+      self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+    end
 
     def enqueue_refresh_candidates(limit = 1000)
-      candidates = self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+      candidates = find_refresh_candidates(limit)
 
       logger.info( candidates.empty? ? "#{Time.now} No #{self.name.pluralize} are candidates for refresh. Skipping" : "#{Time.now} Enqueing #{candidates.length} #{self.name.pluralize}" )
 
@@ -67,7 +72,7 @@ class AsynchronousQuery < ActiveRecord::Base
     raise "Must Implement perform_query!"
   end
 
-  # Called by after_commit_on_create to put a newly created Query into the queue to be processed
+  # Called by after_commit :on => :create to put a newly created Query into the queue to be processed
   def launch_worker
     Resque.enqueue(self.class, self.id)
     update_state(:queued)
@@ -104,14 +109,13 @@ class AsynchronousQuery < ActiveRecord::Base
   # Accepts the symbol version of our states, and writes the corresponding integer code to the database
   def state=(state_sym)
     raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
-    write_attribute(:state, STATES[state_sym])
+    update_column(:state, STATES[state_sym])
   end
 
-  # Updates the state attribute with the correct integer-code, and provides a handy log message of the state change
+  # This wraps #state= with a log message
   def update_state(state_sym)
-    raise ArgumentError, "Invalid state #{state_sym}, valid states are #{STATES.keys.inspect}" unless STATES.keys.include? state_sym
+    self.state = state_sym
     log_liger_engine "Changed state to #{state_sym}"
-    update_column(:state, state_sym)
   end
 
   # This method handles notifications from LigerEngine and handles them appropriately.

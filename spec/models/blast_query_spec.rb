@@ -18,7 +18,7 @@ describe "A BlastQuery" do
     end
   
     it "should create a new Sequence with the fasta data" do
-      Sequence.should_receive(:new).with(:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg").and_return(mocked_sequence = mock_model(Sequence, :[]= => 'attrs', :[] => 'attrs', :save => true))
+      Sequence.should_receive(:new).with({:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg"}, {}).and_return(mocked_sequence = mock_model(Sequence, :[]= => 'attrs', :[] => 'attrs', :save => true))
       bq = BlastQuery.create(:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg")
     
       bq.sequence.should == mocked_sequence

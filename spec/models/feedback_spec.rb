@@ -5,10 +5,13 @@ describe Feedback do
     it "should send an email from the desired sender" do
       sender  = 'bub@hub.com'
       message = 'my happy message'
-      email   = Feedback.create_contact(sender, message)
+      email   = Feedback.contact(sender, message).deliver
+      
+      ActionMailer::Base.deliveries.should_not be_empty
+      
       
       email.from.should be_include sender
-      email.should have_text(/#{message}/)
+      email.body.encoded.should match message
     end
   end
   
@@ -17,10 +20,12 @@ describe Feedback do
     it "puts the offending PMID and MeSH Descriptor in the email" do
       pmid = 1234
       mesh_term = "Slap a Ham"
-      email = Feedback.create_update_mesh(pmid, mesh_term)
+      email = Feedback.update_mesh(pmid, mesh_term).deliver
       
-      email.should have_text(/#{pmid}/)
-      email.should have_text(/#{mesh_term}/)
+      ActionMailer::Base.deliveries.should_not be_empty
+      
+      email.body.encoded.should match pmid.to_s
+      email.body.encoded.should match mesh_term
     end
   end
 end

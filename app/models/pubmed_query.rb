@@ -1,7 +1,10 @@
 require 'rubygems'
 require 'pubmed_search'
 
-class PubmedQuery < AsynchronousQuery   
+class PubmedQuery < AsynchronousQuery
+  # Callbacks
+  before_create :set_query_key
+  
   # Associations
   has_many :pubmed_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_keywords, :through => :pubmed_mesh_frequencies
@@ -15,7 +18,6 @@ class PubmedQuery < AsynchronousQuery
 
   # Validators
   validates_presence_of :query
-
   attr_accessible :query, :eol_taxa_id, :state
 
   class << self
@@ -42,7 +44,7 @@ class PubmedQuery < AsynchronousQuery
   # full_species_name will be nil, and we'll use the query to generate the query key. 
   #
   # See the comment above display_query for a discussion into this vagary.
-  def before_create
+  def set_query_key
     self.query_key = self.class.create_query_key(full_species_name || query)
   end
 

@@ -2,6 +2,7 @@ require "blast"
 require 'digest/md5'
 
 class BlastQuery < AsynchronousQuery
+  before_create :set_query_key
   
   has_many :blast_mesh_frequencies, :dependent => :delete_all
   has_many :mesh_frequencies, :class_name => 'BlastMeshFrequency'
@@ -20,6 +21,7 @@ class BlastQuery < AsynchronousQuery
   attr_accessible :fasta_data, :state
   
   validates_presence_of :fasta_data
+  
     
   class << self
     def find_by_sequence(fasta_data)
@@ -31,7 +33,7 @@ class BlastQuery < AsynchronousQuery
     end
   end
   
-  def before_create
+  def set_query_key
     self.query_key = self.class.create_query_key(fasta_data)
     build_sequence(:fasta_data => fasta_data)
   end

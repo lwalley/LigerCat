@@ -1,17 +1,14 @@
-# -*- Mode: RSpec; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*-
-
 require 'spec_helper'
 require 'shared/asynchronous_query'
-Dir.glob('/mocked_eutils_responses/*', &method(:require))
+
 
 describe "A PubmedQuery" do
   fixtures :pubmed_queries, :pubmed_mesh_frequencies, :mesh_keywords
-
-  it_should_behave_like "An Asynchronous Query"
-
   before(:each) do
     @query = PubmedQuery.new :query => "some_query"
   end
+  
+  it_should_behave_like "An Asynchronous Query"
 
   it "should validate presence of 'query' attribute" do
     @query.query = ''
@@ -20,19 +17,26 @@ describe "A PubmedQuery" do
     @query.should be_valid
   end
 
-  it "should call launch_worker after create" do
-    @query.should_receive(:launch_worker)
-    @query.query = 'biodiversity informatics'
-    @query.stub!(:valid?).and_return(true)
-    @query.save
+  describe "Fuck rspec x1000000" do
+    it "should call launch_worker after create" do
+      @brand_new_query = PubmedQuery.new(:query => 'shiny new query')
+      @brand_new_query.should_receive(:launch_worker)
+      @brand_new_query.save!
+    end
   end
-
+  
   it "should have pubmed_mesh_frequencies" do
     pubmed_queries(:biodiversity_informatics).pubmed_mesh_frequencies.should_not be_blank
   end
 
   it "should have mesh_keywords" do
     pubmed_queries(:biodiversity_informatics).mesh_keywords.should_not be_blank
+  end
+  
+  it "should set the query key before commit" do
+    @query.query_key.should be_blank #sanity check
+    @query.save
+    @query.query_key.should_not be_blank
   end
 end
 

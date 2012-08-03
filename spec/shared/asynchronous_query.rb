@@ -5,6 +5,9 @@ shared_examples_for "An Asynchronous Query" do
     Resque.stub!(:enqueue)
     Resque.stub!(:enqueue_to)
     RestClient.stub!(:delete)
+    
+    @query.save! # Make sure @query exists in the database, as all of these methods operate on an existing record
+    
   end
 
   it "should define self.queue" do
@@ -21,8 +24,8 @@ shared_examples_for "An Asynchronous Query" do
 
   describe '.perform' do
     before(:each) do
-      @query.class.stub!(:find).and_return(@query)
       @query.stub!(:perform_query!)
+      @query.class.stub!(:find).and_return(@query)
     end
     it "should find the query with the given id" do
       @query.class.should_receive(:find).and_return(@query)
@@ -30,7 +33,6 @@ shared_examples_for "An Asynchronous Query" do
     end
 
     it "should call perform_query! on the query" do
-      #FIXME: @query.id is nil causing update_column to fail, why is @query a new record sometimes and not others?
       @query.should_receive(:perform_query!)
       @query.class.perform(@query.id)
     end
@@ -47,7 +49,7 @@ shared_examples_for "An Asynchronous Query" do
       @query.should_receive(:update_state).with(:searching).once.ordered
       @query.should_receive(:update_state).with(:error).once.ordered
 
-      expect { @query.class.perform(@query.id) }.should raise_error(RuntimeError)
+      expect { @query.class.perform(@query.id) }.to raise_error(RuntimeError)
     end
 
     it "should fire off a webhook to clear the cache of the given query, if provided" do
@@ -70,9 +72,8 @@ shared_examples_for "An Asynchronous Query" do
     #
     # We have to jump through a couple hoops below in order to test this class method
     it "should retrieve the oldest queries in the database, and call #enqueue_for_refresh on each one" do
-      @query.class.should_receive(:find).with(:all, {:conditions => an_instance_of(Array),
-                                                     :order => 'updated_at ASC',
-                                                     :limit => an_instance_of(Fixnum)}).and_return([@query])
+      @query.class.should_receive(:find_refresh_candidates).and_return([@query])
+      
       @query.should_receive :enqueue_for_refresh
 
       @query.class.enqueue_refresh_candidates
@@ -101,7 +102,8 @@ shared_examples_for "An Asynchronous Query" do
     end
 
     it "should update state to queued" do
-      @query.state.should_not == :queued
+      @query.update_column(:state, nil)  #sanity check
+      @query.state.should_not == :queued #sanity check
       @query.launch_worker
       @query.state.should == :queued
     end
@@ -135,7 +137,7 @@ shared_examples_for "An Asynchronous Query" do
 
       AsynchronousQuery::STATES.each do |state_sym, state_int|
 
-        @query.write_attribute(:state, state_int)
+        @query.update_column(:state, state_int)
         @query.state.should == state_sym
 
       end
@@ -174,7 +176,6 @@ shared_examples_for "An Asynchronous Query" do
 
     it "should update the state attribute with the appropriate integer code" do
       AsynchronousQuery::STATES.each do |state_sym, state_int|
-
         @query.update_state state_sym
         @query.read_attribute(:state).should == state_int
       end
