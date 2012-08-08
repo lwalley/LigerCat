@@ -55,38 +55,27 @@ Ligercat::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
-  
-  
-  
-  resources :journals, :only => [:index, :show]
-  resources :journal_queries, :only => [:show]  
-  resources :selections, :only => [:create, :destroy] do
-    collection do
-      delete 'destroy_all'
-      delete 'destroy_some'
-    end
-  end
-  
+
   resource  :pubmed_count, :only => [:show]
   resources :eol, :only => :show
   resources :pubmed_queries, :path => 'articles', :only => [:index, :show] do
     collection do
       get 'search'
     end
-    
+
     member do 
       get 'status'
       delete 'cache'
     end
   end
-         
+
   resources :blast_queries, :path => 'genes', :only => [:index, :create, :show] do
     member do 
       get 'status'
       delete 'cache'
     end
   end
-  
+
   match '/articles/:id/:slug' => 'pubmed_queries#show', :as => :slug_pubmed_query
   match '/about' => 'static#about', :as => :about
 

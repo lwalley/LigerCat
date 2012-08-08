@@ -5,14 +5,14 @@
     %title= title
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'application'
-    
+
     :javascript
       window.addEvent('domready', init);
       function init() {
         #{searchbox_hint_javascript}
         #{yield :domready}
       }
-    
+
   %body{ :id => body_id, :class=>'static' }
     #header_and_tabs
       #header.container
@@ -21,13 +21,12 @@
             %span.logo LigerCat
             %span.tagline Literature and Genomics Resource Catalogue
         %ul.navigation
-          = nav_tab 'journals', journals_url
           = nav_tab 'pubmed_queries', pubmed_queries_url
           = nav_tab 'blast_queries',    blast_queries_url
-    
+
     .search_panel{ :class => context }= render :partial => "#{context}/search_form", :locals => {:height => '12' }
-    
+
     #content.container
       .copy= yield :layout
-    
+
     =google_analytics

@@ -1,5 +1,0 @@
-= form_tag(journals_path, :method => 'get', :class => 'search_form container') do
-  %fieldset
-    - query_string = @query.query rescue nil
-    = journals_text_field_tag(query_string)
-    = submit_tag 'Search', :name => nil
