@@ -19,15 +19,6 @@ namespace :purge do
     end
   end
   
-  desc "Purges all JournalQueries (and friends) from the database"
-  task :journal_queries => :environment do
-    JournalQuery.transaction do 
-      JournalQuery.delete_all
-      JournalResult.delete_all
-      clear_caches('journals')
-    end
-  end
-  
   def clear_caches(dir)
     FileUtils.rm_rf("#{RAILS_ROOT}/public/#{dir}")
     Rake::Task[ "tmp:cache:clear" ].execute
