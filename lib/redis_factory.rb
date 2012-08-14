@@ -27,7 +27,7 @@ class RedisFactory
     
     def current_config(prefix)
       prefix = prefix.to_s
-      rails_env = Rails.env || 'development'
+      rails_env = Rails.env rescue 'development'
       
       config_key = if prefix.empty?
                     rails_env
