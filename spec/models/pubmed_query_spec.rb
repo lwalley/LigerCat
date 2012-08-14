@@ -3,6 +3,7 @@ require 'shared/asynchronous_query'
 
 
 describe "A PubmedQuery" do
+  #TODO fix fixture issues
   fixtures :pubmed_queries, :pubmed_mesh_frequencies, :mesh_keywords
   before(:each) do
     @query = PubmedQuery.new :query => "some_query"
@@ -34,19 +35,19 @@ describe "A PubmedQuery" do
   end
   
   it "should set the query key before commit" do
-    @query.query_key.should be_blank #sanity check
+    @query.key.should be_blank #sanity check
     @query.save
-    @query.query_key.should_not be_blank
+    @query.key.should_not be_blank
   end
 end
 
-describe PubmedQuery, '.create_query_key' do
+describe PubmedQuery, '.create_key' do
   before(:each) do
     @query = "    Biodiversity Informatics    "
   end
 
   it "should strip, downcase, and run the query through MD5" do
-    PubmedQuery.create_query_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
+    PubmedQuery.create_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
   end
 end
 
@@ -55,8 +56,8 @@ describe PubmedQuery, '.find_by_query' do
     @query = "biodiversity informatics"
   end
 
-  it "should call find_by_query_key with the MD5'd query" do
-    PubmedQuery.should_receive(:find_by_query_key).with( PubmedQuery.create_query_key @query )
+  it "should call find_by_key with the MD5'd query" do
+    PubmedQuery.should_receive(:find_by_key).with( PubmedQuery.create_key @query )
     PubmedQuery.find_by_query(@query)
   end
 end
@@ -67,7 +68,7 @@ describe PubmedQuery, '.find_or_create_by_query' do
     Resque.stub!(:enqueue)
   end
 
-  it "should call find_by_query, which abstracts the query_key thing" do
+  it "should call find_by_query, which abstracts the key thing" do
     PubmedQuery.should_receive(:find_by_query).with( @query )
     PubmedQuery.find_or_create_by_query(@query)
   end

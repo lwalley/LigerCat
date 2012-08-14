@@ -1,11 +1,27 @@
 require 'rest_client'
 
-class AsynchronousQuery < ActiveRecord::Base
-  #include ActionController::UrlFor
+# This is a base class for all the other types of Queries. 
+# You should never create a base Query, but it is sometimes helpful to find all Queries
+class Query < ActiveRecord::Base
   include Rails.application.routes.url_helpers
-
-  self.abstract_class = true
+  
+  # Callbacks
+  before_save :enforce_abstract_class
+  before_create :set_key
   after_commit :launch_worker, :on => :create
+  
+  # Associations  
+  has_many :mesh_frequencies, :dependent => :delete_all
+  has_many :mesh_keywords, :through => :mesh_frequencies
+  has_many :publication_dates, :dependent => :delete_all do
+    def to_histohash
+      Hash.new(0).tap do |histohash|
+        self.all.each{|pub_date| histohash[pub_date.year] = pub_date.publication_count }
+      end
+    end
+  end 
+  
+  attr_accessible :state, :query
 
   # Maps the state integer codes stored in the database to programmer-friendly
   # symbols. If you create or rename a new state, please for heaven's sake do 
@@ -43,6 +59,21 @@ class AsynchronousQuery < ActiveRecord::Base
 
       candidates.each{|c| c.enqueue_for_refresh }
     end
+    
+    def find_or_create_by_query(query)
+      find_by_query(query) || create(:query => query)
+    end
+
+    # The query string could possibly be very long. It's unfeasible to index such a long field,
+    # so we create a MD5 hash of the query, called key, and store it in an indexed field.
+    #
+    # When users type a query into the search box, we want to expeditiously see if that query exists
+    # in the database, so this method provides a seamless interface to do that, hiding the key
+    # thing from the PubmedQuery API.
+    def find_by_query(query)
+      find_by_key create_key(query)
+    end
+    
 
     # Command-patternt type interface called by a Resque worker.
     # This does the leg-work of finding the respective query AR object
@@ -61,6 +92,14 @@ class AsynchronousQuery < ActiveRecord::Base
       raise e # Resque handles this and puts it in the Failed Jobs list
     end
   end
+  
+  def enforce_abstract_class
+    raise "Query is an abstract class, you should not instantiate one." if self.class.name == 'Query'
+  end
+  
+  def set_key
+    raise "You must implement #set_key in your subclass"
+  end
 
   def done?
     [:cached, :queued_for_refresh].include? self.state
@@ -68,7 +107,7 @@ class AsynchronousQuery < ActiveRecord::Base
 
   def perform_query!
     # Implement this in each subclass
-    raise "Must Implement perform_query!"
+    raise "You must implement #perform_query! in your subclass"
   end
 
   # Called by after_commit :on => :create to put a newly created Query into the queue to be processed

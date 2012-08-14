@@ -12,9 +12,9 @@ describe "A BlastQuery" do
   
 
   describe 'A new BlastQuery' do
-    it "should generate a query_key before creating the object" do
+    it "should generate a key before creating the object" do
       bq = BlastQuery.create(:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg")
-      bq.query_key.should == "eef04a8cea94e1dd5b08bb3d482c7246"
+      bq.key.should == "eef04a8cea94e1dd5b08bb3d482c7246"
     end
   
     it "should create a new Sequence with the fasta data" do
@@ -41,7 +41,7 @@ describe "A BlastQuery" do
   end 
 
   def find_by_sequence(fasta_data)
-    find_by_query_key create_query_key(fasta_data)
+    find_by_key create_key(fasta_data)
   end
 
   describe 'BlastQuery.find_by_sequence' do
@@ -49,8 +49,8 @@ describe "A BlastQuery" do
       @fasta_data = "ATCTDNSDFNSDFSDN"
     end
 
-    it "should call find_by_query_key with the MD5'd fasta_data" do
-      BlastQuery.should_receive(:find_by_query_key).with( BlastQuery.create_query_key @fasta_data )
+    it "should call find_by_key with the MD5'd fasta_data" do
+      BlastQuery.should_receive(:find_by_key).with( BlastQuery.create_key @fasta_data )
       BlastQuery.find_by_sequence(@fasta_data)
     end
   end
@@ -95,13 +95,13 @@ describe "A BlastQuery" do
     end
   end
 
-  describe 'BlastQuery.create_query_key' do
+  describe 'BlastQuery.create_key' do
     before(:each) do
       @query = "    This is a happy litle query string. ATCG ATCG    "
     end
   
     it "should strip, downcase, and run the query through MD5" do
-      BlastQuery.create_query_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
+      BlastQuery.create_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
     end
   end
   

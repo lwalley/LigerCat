@@ -65,7 +65,7 @@ shared_examples_for "An Asynchronous Query" do
   end
 
   describe ".enqueue_refresh_candidates" do
-    # This is weird and ugly. Since AsynchronousQuery is an abstract class, this spec
+    # This is weird and ugly. Since Query is an abstract class, this spec
     # is a shared spec, which is included by pubmed_query_spec and blast_query_spec
     # using it_should_behave_like. Those specs define @query as an instance of their
     # respective class
@@ -82,7 +82,7 @@ shared_examples_for "An Asynchronous Query" do
 
   describe '#done' do
     it "should return true if state is :cached or :queued_for_update" do
-      AsynchronousQuery::STATES.each do |state_symbol, state_int|
+      Query::STATES.each do |state_symbol, state_int|
         @query.state = state_symbol
 
         case state_symbol
@@ -135,7 +135,7 @@ shared_examples_for "An Asynchronous Query" do
   describe '#state' do
     it "should return the symbol version of the state integer code stored in the database" do
 
-      AsynchronousQuery::STATES.each do |state_sym, state_int|
+      Query::STATES.each do |state_sym, state_int|
 
         @query.update_column(:state, state_int)
         @query.state.should == state_sym
@@ -146,7 +146,7 @@ shared_examples_for "An Asynchronous Query" do
 
   describe '#state=' do
     it "should accept a state symbol and assign the integer code" do
-      AsynchronousQuery::STATES.each do |state_sym, state_int|
+      Query::STATES.each do |state_sym, state_int|
 
         @query.state = state_sym
         @query.read_attribute(:state).should == state_int
@@ -175,7 +175,7 @@ shared_examples_for "An Asynchronous Query" do
     end
 
     it "should update the state attribute with the appropriate integer code" do
-      AsynchronousQuery::STATES.each do |state_sym, state_int|
+      Query::STATES.each do |state_sym, state_int|
         @query.update_state state_sym
         @query.read_attribute(:state).should == state_int
       end

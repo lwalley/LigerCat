@@ -1,23 +1,19 @@
-class PubmedQuery < Query
+require 'pubmed_search'
+
+class BinomialQuery < PubmedQuery
   # Validators
   validates_presence_of :query
-
-  class << self
-    def create_key(query)
-      Digest::MD5.hexdigest(query.strip.downcase)
-    end
-  end
 
   # full_species_name is a special case introduced by putting ligercat clouds in EoL. In normal use,
   # full_species_name will be nil, and we'll use the query to generate the query key. 
   #
   # See the comment above display_query for a discussion into this vagary.
-  def set_key
-    self.key = self.class.create_key(full_species_name || query)
+  def set_query_key
+    self.query_key = self.class.create_query_key(full_species_name || query)
   end
 
   def perform_query!(&block)
-    search = LigerEngine::SearchStrategies::PubmedSearchStrategy.new
+    search = LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.new
     process = LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor.new
     engine  = LigerEngine::Engine.new(search,process)
     engine.add_observer(self, :liger_engine_update)
@@ -39,16 +35,13 @@ class PubmedQuery < Query
     self.save
   end
 
+  # TODO Remove this from views, replace with @query.is_a? BinomialQuery, and remove this method
   # Are we an EoL species query, or a regular old query? 
   def eol?
-    false
+    true
   end
 
-  def slug
-    query[0,100].parameterize
-  end
-
-  # TODO Remove
+  # TODO remove from views and delete this method
   # This is the verbatim string that gets sent out to PubMed in the Search Strategy. We
   # need this accessor method, because the "Selected Terms" panel and the Publication
   # Histogram both need this information to perform their respective AJAX calls.
@@ -65,7 +58,7 @@ class PubmedQuery < Query
   # contains the binomial (or trinomial) plus authorship.
   # 
   # There can be multiple EoL taxa pages for the same species, due to different authorships.
-  # For that reason, we use the full species name with authorship to generate the key, to
+  # For that reason, we use the full species name with authorship to generate the query_key, to
   # avoid collisions in the case where the binomial is the same but the authorships are different.
   #
   # This alleviates some headaches, but introduces others. One headache that it introduces is the
