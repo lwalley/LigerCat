@@ -1,7 +1,4 @@
 class MeshKeyword < ActiveRecord::Base
-  has_many :journal_mesh_frequencies
-  has_many :journals, :through => :journal_mesh_frequencies
-  
   has_many :pubmed_mesh_frequencies
   has_many :pubmed_queries, :through => :pubmed_mesh_frequencies
   
