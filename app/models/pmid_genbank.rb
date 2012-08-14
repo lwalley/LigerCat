@@ -1,4 +1,4 @@
-# This class is used by EoLPubmedSearchStrategy to map gi numbers into PMIDS
+# This class is used by BinomialPubmedSearchStrategy to map gi numbers into PMIDS
 #
 # TODO: Put this into Redis!!
 class PmidGenbank < ActiveRecord::Base

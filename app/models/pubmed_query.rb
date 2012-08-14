@@ -50,7 +50,7 @@ class PubmedQuery < AsynchronousQuery
 
   def perform_query!(&block)
     search = if self.eol?
-               LigerEngine::SearchStrategies::EolPubmedSearchStrategy.new
+               LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.new
              else
                LigerEngine::SearchStrategies::PubmedSearchStrategy.new
              end
@@ -89,7 +89,7 @@ class PubmedQuery < AsynchronousQuery
   # Histogram both need this information to perform their respective AJAX calls.
   def actual_pubmed_query
     if self.eol?
-      LigerEngine::SearchStrategies::EolPubmedSearchStrategy::species_specific_query(query)
+      LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy::species_specific_query(query)
     else
       query
     end

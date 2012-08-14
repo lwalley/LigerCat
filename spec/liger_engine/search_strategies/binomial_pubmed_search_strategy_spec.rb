@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'liger_engine/search_strategies/search_strategy'
 
-describe LigerEngine::SearchStrategies::EolPubmedSearchStrategy do
+describe LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy do
   it_should_behave_like 'A Search Strategy'
   
   before(:each) do
-    @strategy = LigerEngine::SearchStrategies::EolPubmedSearchStrategy.new
+    @strategy = LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.new
     @query = 'Galaxias maculatus'
     
     FakeWeb.allow_net_connect = false

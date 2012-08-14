@@ -79,7 +79,7 @@ describe PubmedQuery, "#actual_pubmed_query" do
     normal_query = PubmedQuery.new(:query => "Mr. T")
     eol_query    = PubmedQuery.new(:query => "Mus musculus", :eol_taxa_id => 12345)
 
-    expected_eol_query = LigerEngine::SearchStrategies::EolPubmedSearchStrategy::species_specific_query(eol_query.query)
+    expected_eol_query = LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy::species_specific_query(eol_query.query)
 
     normal_query.actual_pubmed_query.should == normal_query.query
     eol_query.actual_pubmed_query.should_not == eol_query.query
@@ -120,7 +120,7 @@ describe PubmedQuery, '#perform_query!' do
     @query.eol_taxa_id = 155503
     @query.full_species_name = 'Castilia occidentalis Fassl 1912'
 
-    LigerEngine::SearchStrategies::EolPubmedSearchStrategy.should_receive(:new)
+    LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.should_receive(:new)
   end
 
   it "should instantiate a new LigerEngine and let it run" do

@@ -15,7 +15,7 @@ module LigerEngine
     #
     # Author:: Ryan Schenk (mailto:rschenk@mbl.edu)
 
-    class EolPubmedSearchStrategy < PubmedSearchStrategy
+    class BinomialPubmedSearchStrategy < PubmedSearchStrategy
       attr_accessor :genus
       attr_accessor :species
       
