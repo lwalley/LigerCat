@@ -1,5 +1,4 @@
 require 'rest_client'
-require 'jazz_hands'
 
 class AsynchronousQuery < ActiveRecord::Base
   #include ActionController::UrlFor
@@ -68,7 +67,7 @@ class AsynchronousQuery < ActiveRecord::Base
   end
 
   def perform_query!
-    # Implement this in each included class
+    # Implement this in each subclass
     raise "Must Implement perform_query!"
   end
 
