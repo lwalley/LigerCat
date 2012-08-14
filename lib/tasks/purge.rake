@@ -20,7 +20,7 @@ namespace :purge do
   end
   
   def clear_caches(dir)
-    FileUtils.rm_rf("#{RAILS_ROOT}/public/#{dir}")
+    FileUtils.rm_rf(Rails.root.join('public', dir))
     Rake::Task[ "tmp:cache:clear" ].execute
   end
 end
