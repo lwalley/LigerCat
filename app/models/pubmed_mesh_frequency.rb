@@ -2,7 +2,7 @@ class PubmedMeshFrequency < KeywordFrequency
   belongs_to :pubmed_query
   belongs_to :mesh_keyword
 
-  attr_accessible :mesh_keyword_id, :pubmed_query_id, :frequency
+  attr_accessible :pubmed_query_id
 
   def score
     @score ||= mesh_keyword.score
