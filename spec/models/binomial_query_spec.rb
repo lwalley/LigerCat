@@ -2,11 +2,10 @@ require 'spec_helper'
 require 'shared/asynchronous_query'
 
 
-describe "A PubmedQuery" do
-  #TODO fix fixture issues
+describe "A BinomialQuery" do
   fixtures :queries, :mesh_frequencies, :mesh_keywords
   before(:each) do
-    @query = PubmedQuery.new :query => "some_query"
+    @query = BinomialQuery.new :query => "some_query"
   end
   
   it_should_behave_like "An Asynchronous Query"
@@ -20,18 +19,18 @@ describe "A PubmedQuery" do
 
   describe "Fuck rspec x1000000" do
     it "should call launch_worker after create" do
-      @brand_new_query = PubmedQuery.new(:query => 'shiny new query')
+      @brand_new_query = BinomialQuery.new(:query => 'shiny new query')
       @brand_new_query.should_receive(:launch_worker)
       @brand_new_query.save!
     end
   end
   
-  it "should have pubmed_mesh_frequencies" do
-    queries(:biodiversity_informatics).mesh_frequencies.should_not be_blank
+  it "should have mesh_frequencies" do
+    queries(:binomial).mesh_frequencies.should_not be_blank
   end
 
   it "should have mesh_keywords" do
-    queries(:biodiversity_informatics).mesh_keywords.should_not be_blank
+    queries(:binomial).mesh_keywords.should_not be_blank
   end
   
   it "should set the query key before commit" do
@@ -41,52 +40,54 @@ describe "A PubmedQuery" do
   end
 end
 
-describe PubmedQuery, '.create_key' do
+describe BinomialQuery, '.create_key' do
   before(:each) do
-    @query = "    Biodiversity Informatics    "
+    @query = "    Mus musculus    "
   end
 
   it "should strip, downcase, and run the query through MD5" do
-    PubmedQuery.create_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
+    BinomialQuery.create_key(@query).should == Digest::MD5.hexdigest(@query.strip.downcase)
   end
 end
 
-describe PubmedQuery, '.find_by_query' do
+describe BinomialQuery, '.find_by_query' do
   before(:each) do
-    @query = "biodiversity informatics"
+    @query = "Mus musculus"
   end
 
   it "should call find_by_key with the MD5'd query" do
-    PubmedQuery.should_receive(:find_by_key).with( PubmedQuery.create_key @query )
-    PubmedQuery.find_by_query(@query)
+    BinomialQuery.should_receive(:find_by_key).with( BinomialQuery.create_key @query )
+    BinomialQuery.find_by_query(@query)
   end
 end
 
-describe PubmedQuery, '.find_or_create_by_query' do
+describe BinomialQuery, '.find_or_create_by_query' do
   before(:each) do
-    @query = "biodiversity informatics"
+    @query = "Mus musculus"
     Resque.stub!(:enqueue)
   end
 
   it "should call find_by_query, which abstracts the key thing" do
-    PubmedQuery.should_receive(:find_by_query).with( @query )
-    PubmedQuery.find_or_create_by_query(@query)
+    BinomialQuery.should_receive(:find_by_query).with( @query )
+    BinomialQuery.find_or_create_by_query(@query)
   end
 end
 
 
-describe PubmedQuery, "#actual_pubmed_query" do
-  it "should return the query verbatim" do
-    q = PubmedQuery.new(:query => "Mr. T")
+describe BinomialQuery, "#actual_pubmed_query" do
+  it "should run the query through BinomialSearchStrategy" do
+    q = BinomialQuery.new(:query => "Mus musculus")
 
-    q.actual_pubmed_query.should == q.query
+    expected_pubmed_query = LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy::species_specific_query(q.query)
+
+    q.actual_pubmed_query.should == expected_pubmed_query
   end
 end
 
 
-describe PubmedQuery, '#perform_query!' do
+describe BinomialQuery, '#perform_query!' do
   before(:each) do
-    @query = PubmedQuery.new(:query => 'biodiversity informatics')
+    @query = BinomialQuery.new(:query => 'Mus musculus')
     @query.stub!(:valid?).and_return(true)
     @query.stub!(:save)
   end
@@ -106,35 +107,31 @@ describe PubmedQuery, '#perform_query!' do
     @query.perform_query!
   end
 
-  it "should instantiate a Pubmed search strategy " do
-    LigerEngine::SearchStrategies::PubmedSearchStrategy.should_receive(:new)
+  it "should instantiate a Pubmed search strategy given a normal query" do
+    LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.should_receive(:new)
   end
-
 
   it "should instantiate a new LigerEngine and let it run" do
     mocked_liger_engine = mock("LigerEngine")
 
-    LigerEngine::Engine.should_receive(:new).with(an_instance_of(LigerEngine::SearchStrategies::PubmedSearchStrategy),
+    LigerEngine::Engine.should_receive(:new).with(an_instance_of(LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy),
                                                   an_instance_of(LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor)).and_return(mocked_liger_engine)
 
-    mocked_liger_engine.should_receive(:run).with('biodiversity informatics').and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
+    mocked_liger_engine.should_receive(:run).with('Mus musculus').and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
     mocked_liger_engine.should_receive(:count).and_return(17)
     mocked_liger_engine.stub!(:add_observer)
-
   end
 end
 
-describe PubmedQuery, '#slug' do
+
+describe BinomialQuery, '#slug' do
   before(:each) do
-    @query = PubmedQuery.new
+    @query = BinomialQuery.new
   end
 
   it "should replace special characters in a string so that it may be used as part of a pretty URL." do
-    @query.query = "George Clinton"
-    @query.slug.should == "george-clinton"
-
-    @query.query = "some query [tiab]"
-    @query.slug.should == 'some-query-tiab'
+    @query.query = "Mus musculus"
+    @query.slug.should == "mus-musculus"
   end
 
   it "should trunctate a really long string to 100 characters" do
@@ -143,9 +140,9 @@ describe PubmedQuery, '#slug' do
   end
 end
 
-describe PubmedQuery, "#cache_webhook_uri" do
+describe BinomialQuery, "#cache_webhook_uri" do
   before(:each) do
-    @query = PubmedQuery.new()
+    @query = BinomialQuery.new()
     @query.id = 1234
   end
   it "should generate a URI to the PubmedQueriesController#cache route" do

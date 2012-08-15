@@ -1,0 +1,55 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+biodiversity_informatics:
+  id: 11
+  type: 'PubmedQuery'
+  query: 'Biodiversity Informatics'
+  key: "9d299d6a1adb037baf4d8443ff2faf16"
+  state: 1
+  
+still_searching:
+  id: 12
+  type: 'PubmedQuery'
+  query: 'Medical Informatics'
+  key: "049b5f9389504f8a27d3920f6d50409c"
+  state: 0
+  
+long_query_still_searching:
+  id: 13
+  type: 'PubmedQuery'
+  query: <%= '(english[la] OR hasabstract)' * 10 %>
+  key: '8867c6e36bbfc7d96b64b3d7ead333bd'
+  state: 0
+  
+long_query:
+  id: 14
+  type: 'PubmedQuery'
+  query: <%= '("lewy bodies") OR ("inclusion bodies")' * 10 %>
+  key: 'ec7601f61d74a90a8e12453abaae1ae4'
+  state: 1
+
+binomial:
+  id: 15
+  type: 'BinomialQuery'
+  query: 'Castilia occidentalis'
+  key: "d3885aa2dd52986ad8be53296815565c"
+  state: 1
+
+
+app_query:
+  id: 21
+  type: 'BlastQuery'
+  key: "0633e67733a678a922ece7c96b9b2388"
+  state: 1
+
+amino_acid_query:
+  id: 22
+  type: 'BlastQuery'
+  key: "5e185a4e159afb7791151bea45481395"
+  state: 1
+  
+still_blasting:
+  id: 23
+  type: 'BlastQuery'
+  key: "d5e33b4d3a40a2d43895267c8a67512a"
+  state: 0

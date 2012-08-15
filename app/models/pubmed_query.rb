@@ -13,7 +13,7 @@ class PubmedQuery < Query
   #
   # See the comment above display_query for a discussion into this vagary.
   def set_key
-    self.key = self.class.create_key(full_species_name || query)
+    self.key = self.class.create_key(query)
   end
 
   def perform_query!(&block)
@@ -24,9 +24,9 @@ class PubmedQuery < Query
 
     results = engine.run(self.query)
 
-    self.pubmed_mesh_frequencies.clear
+    self.mesh_frequencies.clear
     results.tag_cloud.each do |mesh_frequency|
-      self.pubmed_mesh_frequencies.build(mesh_frequency)
+      self.mesh_frequencies.build(mesh_frequency)
     end
 
     self.publication_dates.clear
@@ -53,11 +53,7 @@ class PubmedQuery < Query
   # need this accessor method, because the "Selected Terms" panel and the Publication
   # Histogram both need this information to perform their respective AJAX calls.
   def actual_pubmed_query
-    if self.eol?
-      LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy::species_specific_query(query)
-    else
-      query
-    end
+    query
   end
 
   # When we're dealing with an EoL species, the "query" field and the "full species name"
