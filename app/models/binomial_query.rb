@@ -3,6 +3,10 @@ require 'pubmed_search'
 class BinomialQuery < PubmedQuery
   has_many :eol_taxon_concepts, :dependent => :destroy, :foreign_key => 'query_id'
   
+  # Sets the queue that Resque should use
+  def self.queue
+    :eol_taxa
+  end
   
   def search_strategy
     @search_strategy ||= LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy.new

@@ -12,15 +12,17 @@ class PubmedQueriesController < ApplicationController
   def search
     redirect_to(pubmed_queries_path) and return if params[:q].blank?
     
-    @query = PubmedQuery.find_or_create_by_query(params[:q])
+    @query = Query.where(:type => ['PubmedQuery', 'BinomialQuery']).find_or_create_by_query(params[:q], PubmedQuery)
+
     redirect_to slug_pubmed_query_path(@query, @query.slug)
   end
   
   # GET /articles/:id
   def show
-    @query = PubmedQuery.find(params[:id])
+    @query = Query.where(:type => ['PubmedQuery', 'BinomialQuery']).find(params[:id])
+    
     if @query.done?
-      @mesh_frequencies = @query.pubmed_mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
+      @mesh_frequencies = @query.mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
       respond_to do |format|
         format.html do
           @publication_histogram = @query.publication_dates.to_histohash # Keeps histogram out of the cloud iframe thingy. TODO refactor the views so this hack isn't needed

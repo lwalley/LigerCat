@@ -2,6 +2,9 @@
   MeSH Cloud for  
   %span.query= awesome_truncate h(@query.query), 200
 
+- if @query.is_a? BinomialQuery and !@query.eol_taxon_concepts.blank?
+  = link_to 'see this species in EoL', "http://eol.org/pages/#{@query.eol_taxon_concepts.first.id}", :class => 'eol_taxa', :target => '_blank'
+
 - unless @query.num_articles.blank?
   %div.num_articles== Generated from #{number_with_delimiter @query.num_articles} articles
 

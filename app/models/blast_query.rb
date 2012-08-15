@@ -15,10 +15,6 @@ class BlastQuery < Query
     def find_by_sequence(fasta_data)
       find_by_key create_key(fasta_data)
     end
-    
-    def create_key(query)
-      Digest::MD5.hexdigest(query.strip.downcase)
-    end
   end
   
   def set_key

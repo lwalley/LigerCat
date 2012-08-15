@@ -2,22 +2,16 @@ class PubmedQuery < Query
   # Validators
   validates_presence_of :query
 
-  class << self
-    def create_key(query)
-      Digest::MD5.hexdigest(query.strip.downcase)
-    end
-  end
-
-  def set_key
-    self.key = self.class.create_key(query)
-  end
-
   def search_strategy
     @search_strategy ||= LigerEngine::SearchStrategies::PubmedSearchStrategy.new
   end
 
   def slug
     query[0,100].parameterize
+  end
+  
+  def query
+    read_attribute(:query)
   end
 
   # This is the verbatim string that gets sent out to PubMed in the Search Strategy. We

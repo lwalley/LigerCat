@@ -21,7 +21,7 @@ class Query < ActiveRecord::Base
     end
   end 
   
-  attr_accessible :state, :query
+  attr_accessible :state, :query, :type
 
   # Maps the state integer codes stored in the database to programmer-friendly
   # symbols. If you create or rename a new state, please for heaven's sake do 
@@ -60,8 +60,8 @@ class Query < ActiveRecord::Base
       candidates.each{|c| c.enqueue_for_refresh }
     end
     
-    def find_or_create_by_query(query)
-      find_by_query(query) || create(:query => query)
+    def find_or_create_by_query(query, model_subclass)
+      find_by_query(query) || model_subclass.create(:query => query)
     end
 
     # The query string could possibly be very long. It's unfeasible to index such a long field,
@@ -72,6 +72,10 @@ class Query < ActiveRecord::Base
     # thing from the PubmedQuery API.
     def find_by_query(query)
       find_by_key create_key(query)
+    end
+    
+    def create_key(query)
+      Digest::MD5.hexdigest(query.strip.downcase)
     end
     
 
@@ -128,9 +132,14 @@ class Query < ActiveRecord::Base
     raise "Query is an abstract class, you should not instantiate one." if self.class.name == 'Query'
   end
   
-  def set_key
-    raise "You must implement #set_key in your subclass"
+  def query
+    raise "You must define #query in your subclass"
   end
+  
+  def set_key
+    self.key = self.class.create_key(query)
+  end
+  
   
   # This method should return a new instance of a LigerEngine::SearchStrategy
   def search_strategy

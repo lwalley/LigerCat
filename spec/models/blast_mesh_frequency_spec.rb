@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'shared/keyword_frequency'
 
 describe BlastMeshFrequency do
-  fixtures :blast_mesh_frequencies, :mesh_keywords, :blast_queries
+  fixtures :mesh_frequencies, :mesh_keywords, :blast_queries
 
   it_should_behave_like 'A KeywordFrequency'
 

@@ -4,7 +4,7 @@ class EolController < ApplicationController
   # GET /eol/:id
   def show
     if @query = PubmedQuery.find_by_eol_taxa_id(params[:id])
-      @mesh_frequencies = @query.pubmed_mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
+      @mesh_frequencies = @query.mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
       respond_to do |format|
         format.html  do
           # TODO: this is a bit of a hack, to prevent the histograms from showing in eol clouds we need to rethink this later

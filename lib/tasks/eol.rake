@@ -47,6 +47,7 @@ namespace :eol do
     rank_index     = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonRank'       }[:index]
     genus_index    = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/genus'           }[:index]
     species_index  = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/specificEpithet' }[:index]
+    status_index   = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonomicStatus' }[:index]
     
     # Erase the existing EOL mapping
     EolTaxonConcept.delete_all
@@ -58,15 +59,17 @@ namespace :eol do
         rank     = d[rank_index]
         genus    = d[genus_index]
         species  = d[species_index]
+        status   = d[status_index]
         
-        if rank == 'species'
+        if rank == 'species' and status == 'accepted'
           canonical_name = "#{genus} #{species}"
-          query = BinomialQuery.find_or_create_by_query(cannonical_name)
-          query.eol_taxon_concept.create(:id => taxon_id)
+          query = BinomialQuery.find_or_create_by_query(canonical_name)
+          query.eol_taxon_concepts.build(:id => taxon_id)
           query.save!
         end      
       end
     end
     
+    File.delete(archive_filename)
   end
 end

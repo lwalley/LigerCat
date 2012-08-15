@@ -39,7 +39,7 @@ describe BlastQueriesController do
     end
 
     describe 'GIVEN a gene sequence that exists in the database' do
-      fixtures :blast_queries, :sequences, :blast_mesh_frequencies    
+      fixtures :blast_queries, :sequences, :mesh_frequencies    
   
       before(:each) do
         @sequence = sequences(:an_amino_acid)
@@ -61,7 +61,7 @@ describe BlastQueriesController do
 
   describe 'GET /blast_queries/:id' do  
     describe' GIVEN an :id that exists in the database and is DONE Blasting' do
-      fixtures :blast_queries, :sequences, :blast_mesh_frequencies, :mesh_keywords  
+      fixtures :blast_queries, :sequences, :mesh_frequencies, :mesh_keywords  
 
       before(:each) do
         @blast_query  = blast_queries(:amino_acid_query)
@@ -77,7 +77,7 @@ describe BlastQueriesController do
     end
   
     describe' GIVEN an :id that exists in the database and is not finished Blasting' do
-      fixtures :blast_queries, :sequences, :blast_mesh_frequencies, :mesh_keywords  
+      fixtures :blast_queries, :sequences, :mesh_frequencies, :mesh_keywords  
 
       before(:each) do
         @blast_query  = blast_queries(:still_blasting)
