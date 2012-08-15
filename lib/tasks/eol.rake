@@ -38,8 +38,35 @@ namespace :eol do
       raise e
     end
     
+    
     dwc = DarwinCore.new(archive_filename)
-    binding.pry
+    
+    fields = dwc.core.fields
+    
+    taxon_id_index = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonID'         }[:index]
+    rank_index     = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonRank'       }[:index]
+    genus_index    = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/genus'           }[:index]
+    species_index  = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/specificEpithet' }[:index]
+    
+    # Erase the existing EOL mapping
+    EolTaxonConcept.delete_all
+    
+    # read content using a block with getting back results in sets 100 rows each
+    dwc.core.read(10) do |data, errors|
+      data.each do |d|
+        taxon_id = d[taxon_id_index]
+        rank     = d[rank_index]
+        genus    = d[genus_index]
+        species  = d[species_index]
+        
+        if rank == 'species'
+          canonical_name = "#{genus} #{species}"
+          query = BinomialQuery.find_or_create_by_query(cannonical_name)
+          query.eol_taxon_concept.create(:id => taxon_id)
+          query.save!
+        end      
+      end
+    end
     
   end
 end
