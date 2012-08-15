@@ -26,28 +26,13 @@ class BlastQuery < Query
     build_sequence(:fasta_data => fasta_data)
   end
   
-  # Uniform interface for all Query's
-  # TODO refactor this into Query
-  def perform_query!
+  def search_strategy
     sequence_type = sequence.amino_acid? ? :amino_acid : :nucleotide 
-    search  = LigerEngine::SearchStrategies::GenbankSearchStrategy.new(sequence_type) 
-    process = LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor.new
-    engine  = LigerEngine::Engine.new(search,process)
-    engine.add_observer(self, :liger_engine_update)
-    
-    results = engine.run(sequence.fasta_data)
-
-    self.mesh_frequencies.clear
-    results.tag_cloud.each do |mesh_frequency|
-      self.mesh_frequencies.build(mesh_frequency)
-    end
-    
-    self.publication_dates.clear
-    results.histogram.each do |year, publication_count|
-      self.publication_dates.build(:year => year, :publication_count => publication_count)
-    end
-    
-    self.save
+    LigerEngine::SearchStrategies::GenbankSearchStrategy.new(sequence_type) 
+  end
+  
+  def query
+    self.sequence.fasta_data
   end
   
   def humanized_state

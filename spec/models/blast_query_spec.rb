@@ -67,7 +67,7 @@ describe "A BlastQuery" do
     # We're going to create a mocked LigerEngine here to prevent it from running.
     # Danger danger!
     before(:each) do
-      @mocked_liger_engine = mock("LigerEngine", :add_observer => nil )
+      @mocked_liger_engine = mock("LigerEngine", :add_observer => nil, :count => 69 )
       @mocked_liger_engine.stub!(:run).and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
     
       LigerEngine::Engine.stub!(:new).and_return(@mocked_liger_engine)
@@ -88,8 +88,10 @@ describe "A BlastQuery" do
     end
   
     it "should create a LigerEngine with a Genbank search and a composite processor and let it run" do
+      @mocked_liger_engine = mock("LigerEngine", :add_observer => nil, :count => 69)
+      
       LigerEngine::Engine.should_receive(:new).with(an_instance_of(LigerEngine::SearchStrategies::GenbankSearchStrategy),
-                                                    an_instance_of(LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor) ).and_return(@mocked_liger_engine = mock("LigerEngine", :add_observer => nil))
+                                                    an_instance_of(LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor) ).and_return(@mocked_liger_engine)
 
       @mocked_liger_engine.should_receive(:run).with( @query.sequence.fasta_data ).and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
     end

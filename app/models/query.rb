@@ -93,6 +93,37 @@ class Query < ActiveRecord::Base
     end
   end
   
+  # This method is called by #perform. It is responsible for instantiating a new 
+  # LigerEngine, taking the results and building mesh_frequencies and publication_dates.
+  #
+  # Subclasses must define a method called #search_strategy that returns a new instance
+  # of their desired search strategy for the Engine.
+  #
+  # Subclasses must define a method called #query that will return the input sent to the
+  # search strategy
+  def perform_query!
+    search  = self.search_strategy
+    process = LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor.new
+    engine  = LigerEngine::Engine.new(search,process)
+    engine.add_observer(self, :liger_engine_update)
+
+    results = engine.run(self.query)
+
+    self.mesh_frequencies.clear
+    results.tag_cloud.each do |mesh_frequency|
+      self.mesh_frequencies.build(mesh_frequency)
+    end
+
+    self.publication_dates.clear
+    results.histogram.each do |year, publication_count|
+      self.publication_dates.build(:year => year, :publication_count => publication_count)
+    end
+
+    self.num_articles = engine.count
+
+    self.save
+  end
+
   def enforce_abstract_class
     raise "Query is an abstract class, you should not instantiate one." if self.class.name == 'Query'
   end
@@ -100,14 +131,14 @@ class Query < ActiveRecord::Base
   def set_key
     raise "You must implement #set_key in your subclass"
   end
+  
+  # This method should return a new instance of a LigerEngine::SearchStrategy
+  def search_strategy
+    raise "You must implement #search_strategy in your subclass"
+  end
 
   def done?
     [:cached, :queued_for_refresh].include? self.state
-  end
-
-  def perform_query!
-    # Implement this in each subclass
-    raise "You must implement #perform_query! in your subclass"
   end
 
   # Called by after_commit :on => :create to put a newly created Query into the queue to be processed

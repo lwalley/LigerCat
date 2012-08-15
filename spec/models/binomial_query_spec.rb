@@ -17,12 +17,10 @@ describe "A BinomialQuery" do
     @query.should be_valid
   end
 
-  describe "Fuck rspec x1000000" do
-    it "should call launch_worker after create" do
-      @brand_new_query = BinomialQuery.new(:query => 'shiny new query')
-      @brand_new_query.should_receive(:launch_worker)
-      @brand_new_query.save!
-    end
+  it "should call launch_worker after create" do
+    @brand_new_query = BinomialQuery.new(:query => 'shiny new query')
+    @brand_new_query.should_receive(:launch_worker)
+    @brand_new_query.save!
   end
   
   it "should have mesh_frequencies" do

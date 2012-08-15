@@ -3,7 +3,6 @@ require 'shared/asynchronous_query'
 
 
 describe "A PubmedQuery" do
-  #TODO fix fixture issues
   fixtures :queries, :mesh_frequencies, :mesh_keywords
   before(:each) do
     @query = PubmedQuery.new :query => "some_query"
@@ -18,12 +17,10 @@ describe "A PubmedQuery" do
     @query.should be_valid
   end
 
-  describe "Fuck rspec x1000000" do
-    it "should call launch_worker after create" do
-      @brand_new_query = PubmedQuery.new(:query => 'shiny new query')
-      @brand_new_query.should_receive(:launch_worker)
-      @brand_new_query.save!
-    end
+  it "should call launch_worker after create" do
+    @brand_new_query = PubmedQuery.new(:query => 'shiny new query')
+    @brand_new_query.should_receive(:launch_worker)
+    @brand_new_query.save!
   end
   
   it "should have pubmed_mesh_frequencies" do
