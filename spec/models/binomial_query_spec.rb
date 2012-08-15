@@ -3,7 +3,7 @@ require 'shared/asynchronous_query'
 
 
 describe "A BinomialQuery" do
-  fixtures :queries, :mesh_frequencies, :mesh_keywords
+  fixtures :queries, :mesh_frequencies, :mesh_keywords, :eol_taxon_concepts
   before(:each) do
     @query = BinomialQuery.new :query => "some_query"
   end
@@ -15,6 +15,10 @@ describe "A BinomialQuery" do
     @query.should_not be_valid
     @query.query = 'not blank'
     @query.should be_valid
+  end
+  
+  it "can have one or more eol taxon concepts" do
+    queries(:binomial).eol_taxon_concepts.should include(eol_taxon_concepts(:a_taxon_concept))
   end
 
   it "should call launch_worker after create" do

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120627211225) do
+ActiveRecord::Schema.define(:version => 20120815153445) do
+
+  create_table "eol_taxon_concepts", :force => true do |t|
+    t.integer  "query_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "eol_taxon_concepts", ["query_id"], :name => "index_eol_taxon_concepts_on_query_id"
 
   create_table "gi_numbers_pmids", :force => true do |t|
     t.integer "gi_number"
