@@ -57,7 +57,6 @@ Ligercat::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
 
   resource  :pubmed_count, :only => [:show]
-  resources :eol, :only => :show
   resources :pubmed_queries, :path => 'articles', :only => [:index, :show] do
     collection do
       get 'search'
@@ -75,7 +74,8 @@ Ligercat::Application.routes.draw do
       delete 'cache'
     end
   end
-
+  
+  match '/eol/:taxon_concept_id' => 'pubmed_queries#eol'
   match '/articles/:id/:slug' => 'pubmed_queries#show', :as => :slug_pubmed_query
   match '/about' => 'static#about', :as => :about
 

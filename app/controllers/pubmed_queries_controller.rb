@@ -19,7 +19,7 @@ class PubmedQueriesController < ApplicationController
   
   # GET /articles/:id
   def show
-    @query = Query.where(:type => ['PubmedQuery', 'BinomialQuery']).find(params[:id])
+    @query ||= Query.where(:type => ['PubmedQuery', 'BinomialQuery']).find(params[:id])
     
     if @query.done?
       @mesh_frequencies = @query.mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
@@ -32,6 +32,20 @@ class PubmedQueriesController < ApplicationController
       end
     else
       redirect_to status_pubmed_query_path(@query)
+    end
+  end
+  
+  # GET /eol/:taxon_concept_id
+  def eol
+    begin
+      @query = EolTaxonConcept.includes(:query).find(params[:taxon_concept_id]).query
+      show
+    rescue ActiveRecord::RecordNotFound => e
+      # 404 rendering. We want a really clean 404 for the eol clouds
+      respond_to do |format|
+        format.html  { render :file => "#{Rails.root}/public/404.html", :status => 404 }
+        format.cloud { render :text => "", :status => 404 }
+      end
     end
   end
   
