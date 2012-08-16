@@ -76,6 +76,8 @@ namespace :eol do
     File.delete(archive_filename)
   end
   
+  
+  # TODO Figure out how we're going to do any symlinking with Capistrano, so that this file can survive between deployments
   desc "Writes a list of all EoL taxa that we've got tag clouds for"
   task :write_list => [:environment] do
     filename = Rails.root.join('public', 'eol_ids_with_articles.txt')

@@ -27,3 +27,7 @@
 every '0,30 17-23,0-9 * * *' do
   rake "enqueue_oldest_cached_queries"
 end
+
+every :week do
+  rake "eol:write_list"
+end
