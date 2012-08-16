@@ -35,6 +35,30 @@ binomial:
   key: "d3885aa2dd52986ad8be53296815565c"
   state: 1
 
+sciurus_aberti:
+  id: 31
+  type: BinomialQuery
+  state: 1
+  key: be206368f6075b3158fc3d1415b3c59a
+  query: Sciurus aberti
+  num_articles: 10
+
+setaria_geniculata:
+  id: 32
+  type: BinomialQuery
+  state: 1
+  key: f067a78c50fdf4c34620dba764212c0f
+  query: Setaria geniculata
+  num_articles: 0
+
+ursus_maritimus:
+  id: 33
+  type: BinomialQuery
+  state: 1
+  key: 57448e2db2068553af774dd9e40a7bd1
+  query: Ursus maritimus
+  num_articles: 200
+
 
 app_query:
   id: 21

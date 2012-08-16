@@ -11,4 +11,15 @@ describe EolTaxonConcept do
   it "should have a BinomialQuery" do
     eol_taxon_concepts(:a_taxon_concept).query.should be_a BinomialQuery
   end
+  
+  describe ":with_articles scope" do
+    it "should find all the Taxon Concepts who have a tag cloud" do
+      concepts = EolTaxonConcept.with_articles
+      
+      concepts.should include( eol_taxon_concepts(:ursus_maritimus) )
+      concepts.should include( eol_taxon_concepts(:sciurus_aberti) ) 
+      
+      concepts.should_not include( eol_taxon_concepts(:setaria_geniculata) )     
+    end
+  end
 end

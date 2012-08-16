@@ -2,7 +2,10 @@ require 'fileutils'
 require 'downloader'
 require 'progressbar'
 require 'dwc-archive'
-require 'jazz_hands'
+require 'zlib'
+require 'digest/md5'
+
+require 'jazz_hands' # For debugging only
 
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
@@ -71,5 +74,28 @@ namespace :eol do
     end
     
     File.delete(archive_filename)
+  end
+  
+  desc "Writes a list of all EoL taxa that we've got tag clouds for"
+  task :write_list => [:environment] do
+    filename = Rails.root.join('public', 'eol_ids_with_articles.txt')
+    
+    File.open( filename, 'w' ) do |f|    
+      taxon_concepts = EolTaxonConcept.with_articles
+      pbar = ProgressBar.new("Writing", taxon_concepts.length)
+      taxon_concepts.each do |taxon_concept|
+        pbar.inc
+        f.puts taxon_concept.id
+      end
+      pbar.finish
+    end
+    
+    puts "Checksumming..."
+    File.open(filename.to_s.gsub(filename.extname, '.md5'), 'w') do |f|
+      f.write Digest::MD5.file( filename )
+    end
+    
+    puts "Compressing..."
+    `gzip -9f #{filename}`
   end
 end

@@ -19,3 +19,6 @@
 /config/deploy.rb
 /config/redis.yml
 /config/private.yml
+
+# Ignore EoL lists
+/public/eol_ids*
