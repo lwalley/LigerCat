@@ -74,6 +74,9 @@ namespace :eol do
     end
     
     File.delete(archive_filename)
+    
+    # Reload the EoL list given the newest data
+    Rake::Task['eol:write_list'].invoke
   end
   
   
