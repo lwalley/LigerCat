@@ -86,9 +86,8 @@ namespace :eol do
     filename = Rails.root.join('public', 'eol_ids_with_articles.txt')
     
     File.open( filename, 'w' ) do |f|    
-      taxon_concepts = EolTaxonConcept.with_articles
-      pbar = ProgressBar.new("Writing", taxon_concepts.length)
-      taxon_concepts.each do |taxon_concept|
+      pbar = ProgressBar.new("Writing", EolTaxonConcept.with_articles.count)
+      EolTaxonConcept.with_articles.find_each do |taxon_concept|
         pbar.inc
         f.puts taxon_concept.id
       end
