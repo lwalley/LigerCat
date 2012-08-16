@@ -8,7 +8,7 @@ class Query < ActiveRecord::Base
   # Callbacks
   before_save :enforce_abstract_class
   before_create :set_key
-  after_commit :launch_worker, :on => :create
+  after_commit :enqueue, :on => :create
   
   # Associations  
   has_many :mesh_frequencies, :dependent => :delete_all
@@ -37,6 +37,9 @@ class Query < ActiveRecord::Base
     :processing_tag_cloud => 7,
     :processing_histogram => 8
   }
+  
+  scope :failed, where(:state => STATES[:error])
+  
 
   class << self
     # Sets the queue that Resque should use
@@ -79,7 +82,7 @@ class Query < ActiveRecord::Base
     end
     
 
-    # Command-patternt type interface called by a Resque worker.
+    # Command-pattern type interface called by a Resque worker.
     # This does the leg-work of finding the respective query AR object
     # and calls the perform_query method.
     # Subclasses will need to implement the perform_query! method to their liking
@@ -151,7 +154,7 @@ class Query < ActiveRecord::Base
   end
 
   # Called by after_commit :on => :create to put a newly created Query into the queue to be processed
-  def launch_worker
+  def enqueue
     Resque.enqueue(self.class, self.id)
     update_state(:queued)
   end
