@@ -6,7 +6,7 @@ session_secret: 'Generate this using rake secret'
 exception_recipients:
   - recipient1@example.edu
   - recipient2@example.edu
-	
+
 feedback_recipients:
   - recipient1@example.edu
   - recipient2@example.edu
