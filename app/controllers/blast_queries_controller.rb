@@ -1,6 +1,7 @@
 class BlastQueriesController < ApplicationController
   caches_action :index
-	
+	layout 'with_sidebar'
+  
   # GET /genes
   def index
     render :layout => 'home'

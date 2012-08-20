@@ -6,7 +6,7 @@
 /* @group Basic Global Styles */
 
 body {
-	background: #f7f7ff url(<%= image_path 'content-bg.gif' %>) repeat-x scroll left 6em;
+	background: #f7f7ff url(<%= image_path 'content-bg.gif' %>) repeat-x scroll left 6em !important;
 }
 
 .container {
@@ -876,21 +876,21 @@ ul.toolbar.disabled li.explore_selected a span {
 	border-top-style: solid;
 }
 
-#footer.pubmed_queries {
+body.pubmed_queries #footer {
 	background-image: url(<%= image_path 'articles_home_bg.gif' %>);
 	border-top-color: #A7D77C;
 }
 
-#footer.pubmed_queries h2 {
+body.pubmed_queries #footer h2 {
 	color: #557e31;
 }
 
-#footer.journals {
+body.journals #footer {
 		background-image: url(<%= image_path 'journals_home_bg.gif' %>);
 		border-top-color: #99D9EB;
 }
 
-#footer.blast_queries {
+body.blast_queries #footer {
 		background-image: url(<%= image_path 'genes_home_bg.gif' %>);
 		border-top-color: #FFE170;
 }

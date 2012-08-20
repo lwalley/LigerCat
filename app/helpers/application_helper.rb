@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
-module ApplicationHelper
-  
+module ApplicationHelper  
   def context    
     context ||=    case controller_name
                     when "pubmed_queries", "eol", "static" then "pubmed_queries"
@@ -262,10 +261,5 @@ module ApplicationHelper
     link_to(image_tag(img_src, img_html_options), url, :class=>"img_link external_link", :target=>'_blank')
   end
   
-  def insert_big_footer
-    content_for :footer do
-      render(:partial=>'shared/big_footer', :locals => {:footer_class => context})
-    end
-  end
 end
 

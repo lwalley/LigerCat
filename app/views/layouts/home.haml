@@ -1,45 +1,18 @@
-!!! 1.1
-%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en" }
-  %head
-    %meta{ 'http-equiv' => 'Content-Type', :content => "application/xhtml+xml; charset=utf-8" }
-    %title= title
-    = javascript_include_tag 'application'
-    = stylesheet_link_tag 'application'
-    = csrf_meta_tags
+- content_for :content do
+  #intro_copy.container
+    .search_pubmed_articles.col-3
+      %h2 Search PubMed Articles
+      %p Search <a href="http://www.ncbi.nlm.nih.gov/pubmed/" class="external_link" title="PubMed Homepage">PubMed</a> using words or even a DNA/protein sequence to create a <span class="highlight">tag cloud</span> showing an overview of important concepts and trends. LigerCat aggregates multiple articles in PubMed, combining the associated <abbr title="Medical Subject Headings">MeSH</abbr> descriptors into a cloud, weighted by frequency.
+    .visualize_mesh_descriptors.col-3
+      %h2 Visualize MeSH Descriptors
+      %p Medical Subject Headings (<a href="http://www.nlm.nih.gov/mesh/meshhome.html" class="external_link" title="MeSH Homepage">MeSH</a>) is a <span class="highlight">controlled vocabulary</span> created and maintained by the National Library of Medicine and applied to categorize and index journal articles in biomedical science.
+    .search_from_tag_clouds.col-3.last
+      %h2 Search from Tag Clouds
+      %p Simply click on one or more MeSH descriptors in a tag cloud to <span class="highlight">instantly search PubMed</span> for those terms instantly. Selecting more than one term finds articles tagged with all selected MeSH descriptors.
+  #contextualized_copy
+    .container= content_for?(:home_content) ? yield(:home_content) : yield 
 
-    :javascript
-      window.addEvent('domready', init);
-      function init() {
-        #{searchbox_hint_javascript}
-        #{yield :domready}
-      }
+- content_for :footer do
+  = render 'shared/brought_to_you_by'
 
-  %body{ :id => body_id, :class=>'home' }
-    #header_and_tabs
-      #header.container
-        #logo_and_tagline
-          %a.home{ :href => context_home_url, :title => 'Return to Home Page' }
-            %span.logo LigerCat
-            %span.tagline Literature and Genomics Resource Catalogue
-        %ul.navigation
-          = nav_tab 'pubmed_queries', pubmed_queries_url
-          = nav_tab 'blast_queries',    blast_queries_url
-
-    .search_panel{ :class => context }= render :partial => "#{context}/search_form", :locals => {:height => '12' }
-
-    #intro_copy.container
-      .search_pubmed_articles.col-3
-        %h2 Search PubMed Articles
-        %p Search <a href="http://www.ncbi.nlm.nih.gov/pubmed/" class="external_link" title="PubMed Homepage">PubMed</a> using words or even a DNA/protein sequence to create a <span class="highlight">tag cloud</span> showing an overview of important concepts and trends. LigerCat aggregates multiple articles in PubMed, combining the associated <abbr title="Medical Subject Headings">MeSH</abbr> descriptors into a cloud, weighted by frequency.
-      .visualize_mesh_descriptors.col-3
-        %h2 Visualize MeSH Descriptors
-        %p Medical Subject Headings (<a href="http://www.nlm.nih.gov/mesh/meshhome.html" class="external_link" title="MeSH Homepage">MeSH</a>) is a <span class="highlight">controlled vocabulary</span> created and maintained by the National Library of Medicine and applied to categorize and index journal articles in biomedical science.
-      .search_from_tag_clouds.col-3.last
-        %h2 Search from Tag Clouds
-        %p Simply click on one or more MeSH descriptors in a tag cloud to <span class="highlight">instantly search PubMed</span> for those terms instantly. Selecting more than one term finds articles tagged with all selected MeSH descriptors.
-    #contextualized_copy
-      .container= yield :layout
-    = render :partial => 'shared/brought_to_you_by'
-
-    =google_analytics
-
+= render :template => 'layouts/application'

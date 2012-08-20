@@ -1,6 +1,9 @@
 class PubmedQueriesController < ApplicationController
   helper_method  :query
   caches_page :index
+  
+  layout 'with_sidebar'
+  
     
   # GET /articles
   def index
@@ -83,9 +86,6 @@ class PubmedQueriesController < ApplicationController
   
   
   private
-  def set_context
-    @context = 'pubmed_queries' # 'articles'
-  end
   
   def query
     @query.query rescue nil

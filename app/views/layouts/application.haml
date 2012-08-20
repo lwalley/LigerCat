@@ -1,7 +1,7 @@
-!!! 1.1
-%html{ :xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => "en" }
+!!! 5
+%html
   %head
-    %meta{ 'http-equiv' => 'Content-Type', :content => "application/xhtml+xml; charset=utf-8" }
+    %meta{ 'charset' => 'UTF-8' }
     %title=h title
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'application'
@@ -11,36 +11,27 @@
       = stylesheet_link_tag 'ie6'
     = csrf_meta_tags
     
-    
     :javascript
       window.addEvent('domready', init);
       function init() {
-        #{searchbox_hint_javascript}
         #{yield :domready}
       }
     
-  %body{ :id => body_id}
-    #header_and_tabs
+  %body{ :id => body_id, :class => context }
+    %header#header_and_tabs
       #header.container
         #logo_and_tagline
           %a.home{ :href => context_home_url, :title => 'Return to Home Page' }
             %span.logo LigerCat
             %span.tagline Literature and Genomics Resource Catalogue
-        %ul.navigation
-          = nav_tab 'pubmed_queries', pubmed_queries_url
-          = nav_tab 'blast_queries',    blast_queries_url
+        %nav
+          %ul.navigation
+            = nav_tab 'pubmed_queries', pubmed_queries_url
+            = nav_tab 'blast_queries',    blast_queries_url
 
     .search_panel{ :class => context }= render :partial => "#{context}/search_form", :locals => {:height => '12' }
-
-    #content.container
-      #sidebar
-        %ul.sidebar_tabs.tabnav
-          %li.tab.help= link_to 'Help', '#help'
-          =yield :sidebar_tabs
-        #sidebar_panels
-          #help.sidebar_panel=yield :help
-          =yield :sidebar_panels
-
-      #main_content= yield :layout
-    =yield :footer
+    = content_for?(:content) ? yield(:content) : yield
+    
+    = content_for?(:footer) ? yield(:footer) : render('shared/big_footer')
+    
     =google_analytics

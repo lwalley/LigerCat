@@ -13,7 +13,6 @@ class StaticController < ApplicationController
     end
   end
 
-
   private
 
   def send_feedback

@@ -1,0 +1,12 @@
+-content_for :content do 
+  #content.container
+    #sidebar
+      %ul.sidebar_tabs.tabnav
+        %li.tab.help= link_to 'Help', '#help'
+        =yield :sidebar_tabs
+      #sidebar_panels
+        #help.sidebar_panel=yield :help
+        =yield :sidebar_panels
+
+    #main_content= yield :layout
+= render :template => 'layouts/application'
