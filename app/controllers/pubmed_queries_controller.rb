@@ -19,7 +19,7 @@ class PubmedQueriesController < ApplicationController
   
   # GET /articles/:id
   def show
-    @query ||= Query.where(:type => ['PubmedQuery', 'BinomialQuery']).find(params[:id])
+    @query ||= PubmedQuery.find(params[:id])
     
     if @query.done?
       @mesh_frequencies = @query.mesh_frequencies.order('mesh_keywords.name ASC').includes(:mesh_keyword)
