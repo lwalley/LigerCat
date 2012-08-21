@@ -95,16 +95,16 @@ shared_examples_for "An Asynchronous Query" do
     end
   end
 
-  describe '#launch_worker' do
+  describe '#enqueue' do
     it "should enqueueueue with Resque" do
       Resque.should_receive(:enqueue).with(@query.class, @query.id)
-      @query.launch_worker
+      @query.enqueue
     end
 
     it "should update state to queued" do
       @query.update_column(:state, nil)  #sanity check
       @query.state.should_not == :queued #sanity check
-      @query.launch_worker
+      @query.enqueue
       @query.state.should == :queued
     end
   end
