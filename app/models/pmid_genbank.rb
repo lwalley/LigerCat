@@ -5,6 +5,8 @@ class PmidGenbank < ActiveRecord::Base
   self.table_name = 'gi_numbers_pmids'
   self.record_timestamps = false
   
+  attr_accessible :gi_number, :pmid
+  
 	class << self
 		def find_all_by_gi_number(gi_number)
 			super(gi_number, :select => 'pmid')

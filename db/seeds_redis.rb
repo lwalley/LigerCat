@@ -18,7 +18,7 @@ puts "\ndate_published"
 redis = RedisFactory.gimme('date_published')
 redis.info # attempt to connect to redis before doing anything else
 
-url = SEED_BASE_URL + 'date_published.csv.gz'
+url = Ligercat::Application.config.seed_base_url + 'date_published.csv.gz'
 
 begin
   downloader = FileDownloader.new(url, File.join(Rails.root, 'tmp', 'seed_downloads'))
