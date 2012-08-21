@@ -16,6 +16,7 @@ Rake::Task['mesh:seed'].invoke
 connection = ActiveRecord::Base.connection
 url_base   = Ligercat::Application.config.seed_base_url
 dir        = File.join(Rails.root, 'tmp', 'seed_downloads')
+batch_size = 10000
 
 model = PmidGenbank
 puts "",
@@ -65,7 +66,16 @@ File.open(filename_with_path) do |f|
       seeding_progress = ProgressBar.new("Seeding", count)
       
       header = csv.shift
+      
+      inserts = []
+      
+      columns = header.clone
+      columns += %w(created_at updated_at) if model.record_timestamps
+      column_names = columns.map{|k| "`#{k}`" }.join(', ')
+      
+      i = 0
       csv.each do |row|
+        i += 1
         seeding_progress.inc
                     
         attributes = {}      
@@ -78,8 +88,16 @@ File.open(filename_with_path) do |f|
           end
         end
         
-        model.create(attributes)
+                
+        inserts << "(#{attributes.values.join(',')})"
+        
+        if i % batch_size == 0        
+          connection.execute %(INSERT INTO `#{model.table_name}` (#{column_names}) VALUES #{inserts.join(", ")})
+          inserts = []
+        end
       end
+      
+      connection.execute %(INSERT INTO `#{model.table_name}` (#{column_names}) VALUES #{inserts.join(", ")})
       
       seeding_progress.finish
         
