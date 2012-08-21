@@ -3,12 +3,15 @@ require 'digest/md5'
 
 class BlastQuery < Query
   
-  has_one :sequence, :dependent => :destroy, :foreign_key => 'query_id'
+  has_one :sequence, :dependent => :delete, :foreign_key => 'query_id'
   
   attr_accessor :fasta_data
+  
   attr_accessible :fasta_data
   
   validates_presence_of :fasta_data
+  
+  after_create :make_sequence
   
     
   class << self
@@ -17,9 +20,8 @@ class BlastQuery < Query
     end
   end
   
-  def set_key
-    self.key = self.class.create_key(fasta_data)
-    build_sequence(:fasta_data => fasta_data)
+  def make_sequence
+    create_sequence(:fasta_data => fasta_data)
   end
   
   def search_strategy
@@ -28,7 +30,7 @@ class BlastQuery < Query
   end
   
   def query
-    self.sequence.fasta_data
+    fasta_data || self.sequence.fasta_data
   end
   
   def humanized_state

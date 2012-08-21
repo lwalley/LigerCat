@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'shared/asynchronous_query'
 require 'blast'
 
-describe "A BlastQuery" do
+describe BlastQuery do
   it_should_behave_like "An Asynchronous Query"
   
   before(:each) do
@@ -22,6 +22,11 @@ describe "A BlastQuery" do
       bq = BlastQuery.create(:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg")
     
       bq.sequence.should == mocked_sequence
+    end
+    
+    it "should enqueue itself" do
+      Resque.should_receive(:enqueue).with(BlastQuery, kind_of(Numeric))
+      bq = BlastQuery.create(:fasta_data => ">gi|2138274|gb|U76735.1|SCU76735\natcgatcg")
     end
   end
 
@@ -94,6 +99,21 @@ describe "A BlastQuery" do
                                                     an_instance_of(LigerEngine::ProcessingStrategies::TagCloudAndHistogramProcessor) ).and_return(@mocked_liger_engine)
 
       @mocked_liger_engine.should_receive(:run).with( @query.sequence.fasta_data ).and_return(OpenStruct.new(:tag_cloud => [], :histogram => []))
+    end
+  end
+  
+  describe '#query' do
+    it "should return fasta_data if available" do
+      q = BlastQuery.new(:fasta_data => ">\nATCG")
+      
+      q.query.should == ">\nATCG"
+    end
+    
+    it "should return sequence.fasta_data if the accessor is not available" do
+      q = BlastQuery.new
+      q.sequence = Sequence.new( fasta_data: ">\nGCTA" )
+      
+      q.query.should == ">\nGCTA"
     end
   end
 
