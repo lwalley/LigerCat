@@ -103,7 +103,7 @@ module BlastQueriesHelper
     fields[:job_title] = awesome_truncate(sequence.fasta_data, 40)
     
     # I couldn't figure out how to make form_tag work here. I'm not sure why. Probably because I'm stupid.
-    returning '<form action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="post" target="_blank"><fieldset>' do |html|
+    '<form action="http://blast.ncbi.nlm.nih.gov/Blast.cgi" method="post" target="_blank"><fieldset>'.tap do |html|
       fields.each{|k,v| html << hidden_field_tag(k.to_s.upcase, v) }
       html << submit_tag("Blast this Sequence")
       html << '</fieldset></form>'

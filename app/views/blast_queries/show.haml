@@ -15,7 +15,7 @@
 
 -content_for :sidebar_panels do
   #blast_panel.sidebar_panel
-    = blast_form(@query.sequence)
+    = blast_form(@query.sequence).html_safe
   #selected_terms_panel.sidebar_panel.selections_panel
     = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a')"
     
@@ -23,3 +23,4 @@
   ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel');
   ==keyword_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(2);});
   
+
