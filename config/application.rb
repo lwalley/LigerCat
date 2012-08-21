@@ -63,7 +63,7 @@ module Ligercat
     
     config.secret_stuff = YAML.load_file(Rails.root.join('config', 'private.yml'))
     
-    config.seed_base_url = 'http://ligercat.org/seeds/' # TODO Investigate seeding with this url
+    config.seed_base_url = 'http://localhost/~rschenk/ligerseed/' # TODO Investigate seeding with this url
     
     config.middleware.use ExceptionNotifier,
         :email_prefix => "[LigerCat] ",
