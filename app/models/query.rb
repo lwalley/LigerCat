@@ -128,7 +128,7 @@ class Query < ActiveRecord::Base
 
     self.num_articles = engine.count
 
-    self.save
+    self.save!
   end
 
   def enforce_abstract_class
