@@ -9,7 +9,7 @@
   %div.num_articles== Generated from #{number_with_delimiter @query.num_articles} articles
 
 
-%ol.keyword_cloud= mesh_keyword_cloud @mesh_frequencies
+%ol.keyword_cloud= keyword_cloud @mesh_frequencies
 
 - unless @publication_histogram.blank?
   %h2.publication_history Publication History

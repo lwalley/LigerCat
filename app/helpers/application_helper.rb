@@ -1,16 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper  
   def context    
-    context ||=    case controller_name
-                    when "pubmed_queries", "eol", "static" then "pubmed_queries"
-                    when "journal_queries", "journals"     then "journals"
-                    else  controller_name
-                    end
+    @context ||= case controller_name
+                 when "static" then "pubmed_queries"
+                 else  controller_name
+                 end
   end
   
   def title
     # query is a helper method defined in the articles and eol controllers
-    query.blank? ? 'LigerCat' : awesome_truncate(query) + ' - LigerCat' rescue 'LigerCat'
+    query ? awesome_truncate(query) + ' - LigerCat' : 'LigerCat' rescue 'LigerCat'
   end
   
   def body_id
@@ -19,15 +18,16 @@ module ApplicationHelper
   
 	# Used when clicking on the logo to return the user
 	# home, based on their current context
-	def context_home_url 
+	def home_url 
 		self.send "#{context}_url" rescue root_url
 	end
+  
+  
 	#
 	# Navigation tabs and contents
 	#
 	def nav_tab(name, url)
     active_class = (context == name) ? ' active' : ''
-
     
     html =  "<li class='#{name + active_class}'>"
     html << link_to_unless(context == name, name.titleize, url){|text| "<span class='active'>#{text}</span>".html_safe }
@@ -35,38 +35,8 @@ module ApplicationHelper
     
     html.html_safe
 	end
-	
-	# This adds the "hint" text to the search fields.
-	def searchbox_hint_javascript
-	  case context
-	  when 'journals' then "TextBoxHint.add('journals_q', 'Enter One or More Terms to Search NLM Journals');"
-    when 'articles' then "TextBoxHint.add('articles_q', 'Enter One or More Terms to Search PubMed');"
-    when 'genes'    then "TextBoxHint.add('genes_q',    '> Paste in one FASTA-formatted sequence to BLAST');"
-    end
-	end
-
-  def articles_text_field_tag(query_string)
-		contextualized_text_field_tag(query_string, 'articles')
-	end
-	
-	def journals_text_field_tag(query_string)
-		contextualized_text_field_tag(query_string, 'journals')
-	end
-	
-	def contextualized_text_field_tag(query_string, context)
-		contents = query_string if context == context
-		text_field_tag :q, contents, {:class => 'text searchbox', :id => "#{context}_q"}
-	end
-	
-	def genes_text_area_tag(query_string, html_options={})
-    text_area_content = query_string || ''
-    html_options = {:id => 'genes_q', :rows => '1', :cols => '12', :class => ''}.merge(html_options)
-    html_options[:class] << 'textarea searchbox'
-    text_area_tag(:q, text_area_content, html_options)
-  end
   
-  # type should be :mesh or :text and is used to define the javascript selection function
-  def keyword_cloud(keywords, type, options={})
+  def keyword_cloud(keywords, options={})
     options = {:classes => %w(not-popular somewhat-popular popular quite-popular very-popular), :partial => 'shared/keyword', :no_keywords_partial => 'shared/no_keywords'}.merge(options)
     
     classes = options[:classes]
@@ -100,67 +70,18 @@ module ApplicationHelper
                              
         css_class = classes[class_rank]
         if t.frequency > 0
-          keyword_list << render(:partial => options[:partial], :locals => {:name => t.name, :frequency => t.frequency, :css_class => css_class, :type => type}) unless class_rank < 1 && type == :text
+          keyword_list << render(:partial => options[:partial], :locals => {:name => t.name, :frequency => t.frequency, :css_class => css_class})
         end
       end
-      keyword_list << render(:partial => options[:no_keywords_partial], :locals => {:type => type}) if keyword_list.blank?
+      keyword_list << render(:partial => options[:no_keywords_partial]) if keyword_list.blank?
     end
   end
   
-	def eol_mesh_keyword_cloud(keywords, options={})
-    options = {:partial => 'eol/keyword', :no_keywords_partial => 'eol/no_keywords'}.merge(options)
-    mesh_keyword_cloud(keywords, options)
-	end
 	
 	def embedded_mesh_keyword_cloud(keywords, options={})
-    options = {:partial => 'articles/embedded_keyword', :no_keywords_partial => 'articles/no_keywords'}.merge(options)
-    mesh_keyword_cloud(keywords, options)
+    options = {:partial => 'pubmed_queries/embedded_keyword', :no_keywords_partial => 'pubmed_queries/no_keywords'}.merge(options)
+    keyword_cloud(keywords, options)
 	end
-
-  def mesh_keyword_cloud(keywords, options={})
-    keyword_cloud(keywords, :mesh, options)
-  end
-  
-  def text_keyword_cloud(keywords, options={})
-    keyword_cloud(keywords, :text, options)
-  end
-  
-  def pagination_results(paginator)
-    p_total = paginator.total_entries
-    p_start = paginator.offset + 1
-    p_end   = ((paginator.offset + paginator.per_page) > p_total) ? p_total : paginator.offset + paginator.per_page
-    "<span class='page_start'>#{p_start}</span>&ndash;<span class='page_end'>#{p_end}</span> of <span class='results_total'>#{p_total}</span>"
-  end
-  
-  def little_spinner(options={})
-    options = {:text => 'Loading...', :show_text => true, :display => 'none'}.merge(options)
-    loading = (options[:show_text]) ? options[:text] : ''
-    "<span class=\"little_spinner\" style=\"display:#{options[:display]}\">#{loading}</span>".html_safe
-  end
-  
-  def token_tag_with_id
-    unless protect_against_forgery?
-      ''
-    else
-      tag(:input, :type => "hidden", :id=> 'authenticity_token', :name => request_forgery_protection_token.to_s, :value => form_authenticity_token)
-    end
-  end
-  
-  def journal_dom_id(j)
-    "journal_#{journal_id(j)}"
-  end
-  
-  def checkbox_dom_id(journal)
-    "checkbox_#{journal_id(journal)}"
-  end
-  
-  def selection_dom_id(journal)
-    "selection_#{journal_id(journal)}"
-  end
-  
-  def journal_id(j)
-    j.nlm_id
-  end
   
   # Helper for making XHTML/CSS bar graphs
   # http://applestooranges.com/blog/post/css-for-bar-graphs/?id=55

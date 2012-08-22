@@ -1,5 +1,5 @@
 = form_tag(blast_queries_path, {:method => 'post', :class => 'search_form container', :onsubmit => 'return FastaValidator.validate(this);'}) do
   %fieldset
-    - query_string = @query.sequence.fasta_data rescue nil
-    = genes_text_area_tag(query_string, :style => "height:#{height||'1.5'}em" )
+    - query_string = @query.sequence.fasta_data rescue ''
+    = text_area_tag(:q, query_string, { id: 'blast_queries_q', class: 'textarea searchbox', placeholder: '> Paste in a FASTA-formatted sequence', rows: '1', cols: '12'})
     = submit_tag 'Search', :name => nil

@@ -87,6 +87,7 @@ class PubmedQueriesController < ApplicationController
   
   private
   
+  # query is a helper method that is used to put the query up in the <title>
   def query
     @query.query rescue nil
   end

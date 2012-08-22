@@ -2,7 +2,7 @@
 %html
   %head
     %meta{ 'charset' => 'UTF-8' }
-    %title=h title
+    %title= title
     = javascript_include_tag 'application'
     = stylesheet_link_tag 'application'
     /[if IE 7]
@@ -21,7 +21,7 @@
     %header#header_and_tabs
       #header.container
         #logo_and_tagline
-          %a.home{ :href => context_home_url, :title => 'Return to Home Page' }
+          %a.home{ :href => home_url, :title => 'Return to Home Page' }
             %span.logo LigerCat
             %span.tagline Literature and Genomics Resource Catalogue
         %nav
@@ -29,7 +29,7 @@
             = nav_tab 'pubmed_queries', pubmed_queries_url
             = nav_tab 'blast_queries',    blast_queries_url
 
-    .search_panel{ :class => context }= render :partial => "#{context}/search_form", :locals => {:height => '12' }
+    .search_panel{ :class => context }= render :partial => "#{context}/search_form"
     = content_for?(:content) ? yield(:content) : yield
     
     = content_for?(:footer) ? yield(:footer) : render('shared/big_footer')

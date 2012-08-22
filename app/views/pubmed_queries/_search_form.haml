@@ -1,5 +1,5 @@
 = form_tag(search_pubmed_queries_path, {:method => 'get', :class=>'search_form container'}) do
   %fieldset
-    - query_string = @query.query rescue nil
-    = articles_text_field_tag(query_string)
+    - query_string = @query.query rescue ''
+    = text_field_tag :q, query_string, {class: 'text searchbox', id: "pubmed_queries_q", placeholder: 'Enter one or more terms to search PubMed'}
     = submit_tag 'Search', :name => nil

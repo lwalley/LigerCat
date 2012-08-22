@@ -1,3 +1,3 @@
 %li{ :class => css_class }
-  = link_to h(name).gsub(/\s/, '&emsp;'), pubmed_query_url(@query), :title => h(frequency), :target=>'_blank'
+  = link_to h(name).gsub(/\s/, '&emsp;').html_safe, pubmed_query_url(@query), :title => h(frequency), :target=>'_blank'
   %span="(#{h(frequency)})"
