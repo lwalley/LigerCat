@@ -6,6 +6,14 @@ require 'downloader'
 
 include ActionView::Helpers::NumberHelper
 
+
+
+def bulk_insert(connection, table_name, column_names, values)
+  connection.execute %(INSERT INTO `#{table_name}` (#{column_names}) VALUES #{values.join(", ")})
+end
+
+
+
 # Seed MeSH Table from local indexes
 puts ""
 Rake::Task['mesh:seed'].invoke
@@ -89,15 +97,15 @@ File.open(filename_with_path) do |f|
         end
         
                 
-        inserts << "(#{attributes.values.join(',')})"
+        inserts << "(#{attributes.values.join(',')})" # TODO conditionally quote strings if necesasry. Right now we're only seeding integers
         
         if i % batch_size == 0        
-          connection.execute %(INSERT INTO `#{model.table_name}` (#{column_names}) VALUES #{inserts.join(", ")})
+          bulk_insert(connection, model.table_name, column_names, inserts)
           inserts = []
         end
       end
       
-      connection.execute %(INSERT INTO `#{model.table_name}` (#{column_names}) VALUES #{inserts.join(", ")})
+      bulk_insert(connection, model.table_name, column_names, inserts) unless inserts.empty?
       
       seeding_progress.finish
         
