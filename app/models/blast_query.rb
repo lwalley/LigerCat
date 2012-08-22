@@ -9,7 +9,7 @@ class BlastQuery < Query
   
   attr_accessible :fasta_data
   
-  validates_presence_of :fasta_data
+  validates_presence_of :fasta_data, :on => :create
   
   after_create :make_sequence
   
