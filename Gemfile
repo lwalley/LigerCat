@@ -21,7 +21,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
+gem 'underscore-rails'
 
 gem 'haml-rails'
 gem 'chronic'

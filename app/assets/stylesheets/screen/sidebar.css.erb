@@ -1,0 +1,84 @@
+/* Styling for the tabs in the sidebar happens in tabs.css */
+
+
+#sidebar {
+	margin-top: 3em;
+	position: relative;
+	width: 330px;
+	float: right;
+}
+
+#sidebar .ui-tabs-panel {
+	padding: 5px;
+	width: 318px;
+	background-color: #EDEDFF;
+	border: 1px solid #b9b9f5;
+	border-top: none;
+}
+
+#sidebar .ui-tabs-panel.ui-tabs-hide {
+	display: none;
+}
+
+.selected_journals_toolbar li.remove_all a {
+	padding-left: 14px;
+	background: url(<%= image_path 'trash.gif' %>) no-repeat scroll 3px center;
+}
+
+
+/* TODO: restyle this according to new magical mystery way */
+
+.selected_journals_toolbar li.explore_selected a {
+	padding-left: 15px;
+	background: url(<%= image_path 'magnifying-glass.gif' %>) no-repeat scroll 3px center;
+}
+
+.selections_panel ol {
+	background-color: #fff;
+	margin: 0;
+	list-style-type: none;
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+
+.selections_panel ol li {
+   white-space:nowrap;
+   text-overflow:ellipsis;
+   overflow:hidden;
+   display:block;
+}
+
+.selections_panel ol li img { cursor: pointer }
+
+.pubmed_count {
+	border: none;
+	color: #fff;
+	padding: 0.5em 3px;
+	background: #6f6f6f;
+}
+
+.pubmed_count .external_link {
+	background-image: url(<%= image_path 'external_link_light.gif' %>);
+}
+
+.pubmed_count a {
+	color: #fff;
+}
+
+.pubmed_count a:visited {
+	color: #ccc;
+	border-bottom: 1px dotted #ccc;
+}
+
+.pubmed_count a:focus, .pubmed_count a:hover {
+	color: #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.pubmed_count.loading, .pubmed_count .loading {
+	background-image: url(<%= image_path 'loading.gif' %>);
+	background-repeat: no-repeat;
+	background-position: 3px center;
+	padding-left: 22px;
+	
+}

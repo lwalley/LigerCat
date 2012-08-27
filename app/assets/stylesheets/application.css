@@ -11,5 +11,6 @@
  *= require ./screen/reset
  *= require ./screen/typography
  *= require ./screen/tabs
+ *= require ./screen/sidebar
  *= require ./screen/application
  */

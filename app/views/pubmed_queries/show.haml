@@ -22,16 +22,23 @@
   = render :partial => 'help/keyword_cloud'
 
 -content_for :sidebar_tabs do
-  %li.tab.selected_terms= link_to 'Selected Terms', '#selected_terms'
-  %li.tab.share= link_to 'Share', '#share'
+  %li= link_to 'Selected Terms', '#selected_terms_panel'
+  %li= link_to 'Share', '#share'
 
 -content_for :sidebar_panels do
-  #selected_terms_panel.sidebar_panel.selections_panel
-    = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a', {optional_scope:'#{@query.actual_pubmed_query}'})"
-  #share_panel.sidebar_panel
+  #selected_terms_panel.selections_panel
+    %ul#selected_terms_toolbar.toolbar
+      %li.remove_all 
+        %a{href:'#'}
+          %span Remove All
+      %li.go_to_pubmed
+        %a{:href=>'http://www.ncbi.nlm.nih.gov', :target => '_blank'} 
+          %span Go to Pubmed
+    #selected_terms_pubmed_count.pubmed_count
+    %ol#selected_terms
+  #share
     = render :partial => 'embed'
-	
-	
--content_for :domready do
-  ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel');
-  ==keyword_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(1);});
+
+- content_for :domready do 
+  == Ligercat.PubmedQueryBuilder.config.scope = "#{escape_javascript @query.actual_pubmed_query}";
+  == Ligercat.PubmedCount.config.baseURL = "#{pubmed_count_url}"

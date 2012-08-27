@@ -12,7 +12,7 @@ class PubmedCountsController < ApplicationController
        response = Net::HTTP.start(url.host, url.port) do |http|
          http.get(url.request_uri)
        end
-       response.body[/<Count>(.*)<\/Count>/] 
+       response.body[/<Count>(.*?)<\/Count>/] 
        count = $1
        render :text => count, :status => :ok
     end

@@ -70,7 +70,7 @@ module ApplicationHelper
                              
         css_class = classes[class_rank]
         if t.frequency > 0
-          keyword_list << render(:partial => options[:partial], :locals => {:name => t.name, :frequency => t.frequency, :css_class => css_class})
+          keyword_list << render(:partial => options[:partial], :locals => {:id => t.mesh_keyword.id, :name => t.name, :frequency => t.frequency, :css_class => css_class})
         end
       end
       keyword_list << render(:partial => options[:no_keywords_partial]) if keyword_list.blank?

@@ -10,12 +10,11 @@
     /[if IE 6]
       = stylesheet_link_tag 'ie6'
     = csrf_meta_tags
-    
+	
     :javascript
-      window.addEvent('domready', init);
-      function init() {
+      $(function() {
         #{yield :domready}
-      }
+      });
     
   %body{ :id => body_id, :class => context }
     %header#header_and_tabs

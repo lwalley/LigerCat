@@ -10,13 +10,13 @@
   = render :partial => 'help/keyword_cloud'
 
 -content_for :sidebar_tabs do
-  %li.tab.blast= link_to 'Blast', '#blast_panel'
-  %li.tab.selected_terms= link_to 'Selected Terms', '#selected_terms_panel'
+  %li= link_to 'Blast', '#blast_panel'
+  %li= link_to 'Selected Terms', '#selected_terms_panel'
 
 -content_for :sidebar_panels do
-  #blast_panel.sidebar_panel
+  #blast_panel
     = blast_form(@query.sequence).html_safe
-  #selected_terms_panel.sidebar_panel.selections_panel
+  #selected_terms_panel
     = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a')"
     
 -content_for :domready do
