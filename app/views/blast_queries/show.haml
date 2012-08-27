@@ -16,11 +16,4 @@
 -content_for :sidebar_panels do
   #blast_panel
     = blast_form(@query.sequence).html_safe
-  #selected_terms_panel
-    = javascript_tag "keyword_selections = new Ligercat.MeshSelectionPanel('selected_terms', '.keyword_cloud li a')"
-    
--content_for :domready do
-  ==sidebar_tabs = new Tabs('.sidebar_tabs', '.sidebar_panel');
-  ==keyword_selections.addEvent('beforeAdd', function(){sidebar_tabs.showTab(2);});
-  
-
+  = render 'shared/selected_terms_panel'

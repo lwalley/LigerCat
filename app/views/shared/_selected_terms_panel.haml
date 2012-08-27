@@ -1,0 +1,13 @@
+#selected_terms_panel.selections_panel
+  %ul#selected_terms_toolbar.toolbar
+    %li.remove_all 
+      %a{href:'#'}
+        %span Remove All
+    %li.go_to_pubmed
+      %a{:href=>'http://www.ncbi.nlm.nih.gov', :target => '_blank'} 
+        %span Go to Pubmed
+  #selected_terms_pubmed_count.pubmed_count
+  %ol#selected_terms
+
+- content_for :domready do 
+  == Ligercat.PubmedCount.config.baseURL = "#{pubmed_count_url}"

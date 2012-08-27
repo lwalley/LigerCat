@@ -13,6 +13,12 @@ $(function(){
 			Ligercat.Toolbar.init($withSidebar);
 			Ligercat.PubmedCount.init($withSidebar);
 		}
-	})($('.with_sidebar'))
+	})($('.with_sidebar'));
+	
+	(function($status){
+		if($status.length > 0){
+			Ligercat.Status.init($status);
+		}
+	})($('.with_sidebar #status'));
 	
 });

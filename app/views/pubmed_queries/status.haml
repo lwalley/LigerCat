@@ -16,9 +16,5 @@
     %span.url= status_pubmed_query_url @query
     %span.help Copy this url to come back later
 
-:javascript
-  status_request = new Request({url:"#{status_pubmed_query_url(@query.id)}.js", method:'get', onSuccess:function(responseText){ if(responseText.match(/done/)) { window.location.replace(unescape(window.location.pathname)); } else { $('status').set('text', responseText);}}});
-  status_request.send.periodical(5000, status_request);
-
 -content_for :help do
   = render :partial => 'help/pubmed_query_status'
