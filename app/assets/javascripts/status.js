@@ -15,7 +15,6 @@ Ligercat.Status = {
 					location.reload(true); // Refresh the page, hit the server to get redirected to final url
 				} else {
 					var oldText = $element.text();
-					
 					$element.text(responseText)
 					
 					if(oldText != responseText) $element.effect("highlight", {}, 1500);
