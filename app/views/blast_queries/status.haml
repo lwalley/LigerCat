@@ -1,13 +1,13 @@
 %h1
-  Blasting
-  = image_tag 'loading_dark.gif', :alt => 'Loading...', :class => 'loading_spinner'
-
+  Blasting Sequence
+  
 %div[@query]
-  %p.status 
-    Status:
-    %span#status= @status.titleize
-  %p <span class="ligercat">LigerCat</span> is using <a href="http://www.ncbi.nlm.nih.gov/BLAST/" class="external_link" target="_blank">BLAST</a> to find sequences that are very similar to yours.
-  %p After finding similar sequences, <span class="ligercat">LigerCat</span> will map them to <a href="http://www.ncbi.nlm.nih.gov/pubmed/" class="external_link" target="_blank">PubMed</a> articles that mention those sequences. It will then extract the <abbr title="Medical Subject Headings">MeSH</abbr> descriptors for every article, and weight them by frequency and relevance. Depending on the number of results returned by your query, this can take several minutes, and in some cases upwards of an hour. 
+  %ol.states#status
+    -state_li('Wait in line', 'We will start working on your query as soon as resources become available.', :queued, @query.state)
+    -state_li('Blasting', 'LigerCat uses BLAST to find similar sequences to yours. Once the sequences are identified, LigerCat will map the genes into a set of PubMed articles that reference those genes.', :searching, @query.state)
+    -state_li('Build Tag Cloud', 'LigerCat extracts every MeSH term from every article and weights them by frequency. This can take a while.', :processing_tag_cloud, @query.state)
+    -state_li('Build Publication Timeline', 'LigerCat extracts the publication date from every article and builds a timeline from them. This can also take a while.', :processing_histogram, @query.state)
+
   %p You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
   %p Alternatively, you can can <span class="highlight">save this URL</span> and come back to it later:
   .current_url

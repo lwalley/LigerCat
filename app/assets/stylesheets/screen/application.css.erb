@@ -498,7 +498,7 @@ ol.search_results {
 
 
 /* @group Basic Tag Cloud Styling */
-.keyword_cloud { text-align: justify;}
+.keyword_cloud { text-align: left;}
 .keyword_cloud li   { display: inline;}
 .keyword_cloud li span { position: absolute; left: -999px; width: 990px; }
 .not-popular a      {font-size: 1.00em;}
@@ -894,5 +894,39 @@ body#static_about p cite {
 #contact_area .error {
     color: #BE1111;
 }
+
+/* @end */
+
+/* @group Status Page */
+
+
+
+.states {
+  color: #858585;
+}
+
+.states h3 {
+  color: inherit;
+  font-weight: normal;
+  margin-bottom: 0;
+}
+
+.states .current {
+  color: #222222;
+}
+
+.states .current h3,
+.states .done h3 {
+  padding-left: 18px;
+	background-repeat: no-repeat;
+	background-position: 0 2px;
+}
+.states .current h3 { background-image: url(<%= image_path 'loading_dark.gif' %>); }
+.states .done h3    { background-image: url(<%= image_path 'check.gif' %>); }
+
+.states .done{
+  color: #448906;
+}
+.states .done h3 { text-decoration: line-through; }
 
 /* @end */

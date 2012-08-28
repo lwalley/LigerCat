@@ -182,5 +182,14 @@ module ApplicationHelper
     link_to(image_tag(img_src, img_html_options), url, :class=>"img_link external_link", :target=>'_blank')
   end
   
+  def state_li(title, description, state, current_state)
+    options = { id: "state_#{Query::STATES[state]}" }
+    options[:class] = 'current' if state == current_state
+    haml_tag :li, options do 
+      haml_tag :h3, title
+      haml_tag :p, description
+    end
+  end
+  
 end
 

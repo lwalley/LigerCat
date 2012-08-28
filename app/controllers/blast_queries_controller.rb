@@ -32,26 +32,23 @@ class BlastQueriesController < ApplicationController
   
   # GET /genes/:id/status
   # This is technically another resource, so probably some Rails Nazi would
-  # tell me that it should be in another controller. But I just don't see the point.
+  # tell me that it should be in another controller. But I just don't see the point.  
   def status
     @query = BlastQuery.find(params[:id])
 
-    if @query.done?
-      if request.xhr?
-        render :text => 'done'
-      else
-        redirect_to blast_query_path(@query)
-      end
-    else
-      @status = @query.humanized_state
-
-      respond_to do |format|
-        format.html #status.haml
-        format.js   { render :text => @status.titleize }
-        format.json { render :json => {:status => @status}.to_json }
-        format.xml  { render :xml => "<status>#{@status}</status>" }
-      end
+    if @query.done? 
+      return redirect_to blast_query_path(@query) unless request.xhr?
     end
+    
+    @status = @query.humanized_state
+
+    respond_to do |format|
+      format.html #status.haml
+      format.js   { render :text => @status.titleize }
+      format.json { render :json => {:status => @status, code: @query.read_attribute(:state), done: @query.done?}.to_json }
+      format.xml  { render :xml => "<status>#{@status}</status>" }
+    end
+    
   end
   
   # DELETE /genes/:id/cache

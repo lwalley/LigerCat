@@ -3,23 +3,29 @@
 Ligercat.Status = {
 	config: {
 		interval: 2000,
-		url: document.location.href + ".js"
+		url: document.location.href + ".json"
 	},
 	
 	init: function($element) {
+    
+    $element.find('.current').prevAll().addClass('done');
+    
 		var i = setInterval(function() {
 			
-			$.get(Ligercat.Status.config.url, function(responseText){
+			$.get(Ligercat.Status.config.url, function(status){
 
-				if(responseText.match(/done/)) {
-					location.reload(true); // Refresh the page, hit the server to get redirected to final url
+				if(status.done) {
+          $element.find('li').removeClass('current').addClass('done');
+          
+				  // Refresh the page, hit the server to get redirected to final url
+          setTimeout(function(){ location.reload(true); }, 500);
 				} else {
-					var oldText = $element.text();
-					$element.text(responseText)
-					
-					if(oldText != responseText) $element.effect("highlight", {}, 1500);
+          var $currentState = $element.find("#state_" + status.code);
+          
+          $currentState.addClass('current');
+          $currentState.prevAll().removeClass('current').addClass('done');
 				}
-			}, 'html');
+			}, 'json');
 			
 		}, Ligercat.Status.config.interval);
 	

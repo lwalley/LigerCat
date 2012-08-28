@@ -58,22 +58,19 @@ class PubmedQueriesController < ApplicationController
   def status
     @query = PubmedQuery.find(params[:id])
 
-    if @query.done?
-      if request.xhr?
-        render :text => 'done'
-      else
-        redirect_to slug_pubmed_query_path(@query, @query.slug)
-      end
-    else
-      @status = @query.humanized_state
-
-      respond_to do |format|
-        format.html #status.haml
-        format.js   { render :text => @status.titleize }
-        format.json { render :json => {:status => @status}.to_json }
-        format.xml  { render :xml => "<status>#{@status}</status>" }
-      end
+    if @query.done? 
+      return redirect_to slug_pubmed_query_path(@query, @query.slug) unless request.xhr?
     end
+    
+    @status = @query.humanized_state
+
+    respond_to do |format|
+      format.html #status.haml
+      format.js   { render :text => @status.titleize }
+      format.json { render :json => {:status => @status, code: @query.read_attribute(:state), done: @query.done?}.to_json }
+      format.xml  { render :xml => "<status>#{@status}</status>" }
+    end
+    
   end
   
   # DELETE /articles/:id/cache
