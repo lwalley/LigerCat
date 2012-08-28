@@ -5,8 +5,6 @@ require 'dwc-archive'
 require 'zlib'
 require 'digest/md5'
 
-require 'jazz_hands' # For debugging only
-
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
   task :create_queries, [:url_to_archive_tar_gz] => [:environment] do |t, args|
