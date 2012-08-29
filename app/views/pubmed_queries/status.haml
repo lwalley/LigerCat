@@ -3,18 +3,20 @@
   %span.query= awesome_truncate h(@query.query), 200
  
 %div[@query]
-  %ol.states#status
-    -state_li('Wait in line', 'We will start working on your query as soon as resources become available.', :queued, @query.state)
-    -state_li('Search PubMed', 'LigerCat searches PubMed with your query and retrives all relevant articles.', :searching, @query.state)
-    -state_li('Build Tag Cloud', 'LigerCat extracts every MeSH term from every article and weights them by frequency. This can take a while.', :processing_tag_cloud, @query.state)
-    -state_li('Build Publication Timeline', 'LigerCat extracts the publication date from every article and builds a timeline from them. This can also take a while.', :processing_histogram, @query.state)
+  - if @query.error?
+    = render 'shared/query_error'
+  - else
+    %ol.states#status
+      -state_li('Wait in line', 'We will start working on your query as soon as resources become available.', :queued, @query.state)
+      -state_li('Search PubMed', 'LigerCat searches PubMed with your query and retrives all relevant articles.', :searching, @query.state)
+      -state_li('Build Tag Cloud', 'LigerCat extracts every MeSH term from every article and weights them by frequency. This can take a while.', :processing_tag_cloud, @query.state)
+      -state_li('Build Publication Timeline', 'LigerCat extracts the publication date from every article and builds a timeline from them. This can also take a while.', :processing_histogram, @query.state)
     
-    
-  %p LigerCat searches usually takes less than one minute, however they can take upwards of an hour depending on the number of articles found. You can leave your browser open to this page and it will automatically display the MeSH cloud when it's ready. 
-  %p Alternatively, you can can save this URL and come back to it later:
-  .current_url
-    %span.url= status_pubmed_query_url @query
-    %span.help Copy this url to come back later
+    %p LigerCat searches usually takes less than one minute, however they can take upwards of an hour depending on the number of articles found. You can leave your browser open to this page and it will automatically display the MeSH cloud when it's ready. 
+    %p Alternatively, you can can save this URL and come back to it later:
+    .current_url
+      %span.url= status_pubmed_query_url @query
+      %span.help Copy this url to come back later
 
 -content_for :help do
   = render :partial => 'help/pubmed_query_status'

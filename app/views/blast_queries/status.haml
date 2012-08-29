@@ -2,17 +2,20 @@
   Blasting Sequence
   
 %div[@query]
-  %ol.states#status
-    -state_li('Wait in line', 'We will start working on your query as soon as resources become available.', :queued, @query.state)
-    -state_li('Blasting', 'LigerCat uses BLAST to find similar sequences to yours. Once the sequences are identified, LigerCat will map the genes into a set of PubMed articles that reference those genes.', :searching, @query.state)
-    -state_li('Build Tag Cloud', 'LigerCat extracts every MeSH term from every article and weights them by frequency. This can take a while.', :processing_tag_cloud, @query.state)
-    -state_li('Build Publication Timeline', 'LigerCat extracts the publication date from every article and builds a timeline from them. This can also take a while.', :processing_histogram, @query.state)
+  - if @query.error?
+    = render 'shared/query_error'
+  - else
+    %ol.states#status
+      -state_li('Wait in line', 'We will start working on your query as soon as resources become available.', :queued, @query.state)
+      -state_li('Blasting', 'LigerCat uses BLAST to find similar sequences to yours. Once the sequences are identified, LigerCat will map the genes into a set of PubMed articles that reference those genes.', :searching, @query.state)
+      -state_li('Build Tag Cloud', 'LigerCat extracts every MeSH term from every article and weights them by frequency. This can take a while.', :processing_tag_cloud, @query.state)
+      -state_li('Build Publication Timeline', 'LigerCat extracts the publication date from every article and builds a timeline from them. This can also take a while.', :processing_histogram, @query.state)
 
-  %p You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
-  %p Alternatively, you can can <span class="highlight">save this URL</span> and come back to it later:
-  .current_url
-    %span.url= status_blast_query_url @query
-    %span.help Copy this url to come back later
+    %p You can leave your browser open to this page and it will automatically display the mesh cloud when it's ready. 
+    %p Alternatively, you can can <span class="highlight">save this URL</span> and come back to it later:
+    .current_url
+      %span.url= status_blast_query_url @query
+      %span.help Copy this url to come back later
   
 -content_for :help do
   = render :partial => 'help/blast_query_status'

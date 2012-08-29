@@ -45,7 +45,16 @@ class BlastQueriesController < ApplicationController
     respond_to do |format|
       format.html #status.haml
       format.js   { render :text => @status.titleize }
-      format.json { render :json => {:status => @status, code: @query.read_attribute(:state), done: @query.done?}.to_json }
+      format.json do
+        json = { code: @query.read_attribute(:state),
+                 done: @query.done?,
+                error: @query.error? }
+                
+        json[:template] = render_to_string(partial: 'shared/query_error') if @query.error?
+        
+        render :json => json.to_json
+      end 
+      
       format.xml  { render :xml => "<status>#{@status}</status>" }
     end
     

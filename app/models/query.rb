@@ -152,6 +152,10 @@ class Query < ActiveRecord::Base
   def done?
     [:cached, :queued_for_refresh].include? self.state
   end
+  
+  def error?
+    self.state == :error
+  end
 
   # Called by after_commit :on => :create to put a newly created Query into the queue to be processed
   def enqueue
