@@ -5,6 +5,8 @@ require 'dwc-archive'
 require 'zlib'
 require 'digest/md5'
 
+require 'jazz_hands' if Rails.env.development?
+
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
   task :create_queries, [:url_to_archive_tar_gz] => [:environment] do |t, args|
@@ -48,22 +50,21 @@ namespace :eol do
     rank_index     = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonRank'       }[:index]
     genus_index    = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/genus'           }[:index]
     species_index  = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/specificEpithet' }[:index]
-    status_index   = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonomicStatus' }[:index]
     
     # Erase the existing EOL mapping
     EolTaxonConcept.delete_all
     
     # read content using a block with getting back results in sets 100 rows each
-    dwc.core.read(10) do |data, errors|
+    dwc.core.read(100) do |data, errors|
       data.each do |d|
         taxon_id = d[taxon_id_index]
         rank     = d[rank_index]
         genus    = d[genus_index]
         species  = d[species_index]
-        status   = d[status_index]
+        # status   = d[status_index]
         
-        if rank == 'species' and status == 'accepted'
-          canonical_name = "#{genus} #{species}"
+        if rank == 'species' && !genus.blank? && !species.blank?
+          puts canonical_name = "#{genus} #{species}"
           query = BinomialQuery.find_or_create_by_query(canonical_name)
           query.eol_taxon_concepts.build(:id => taxon_id)
           query.save!
