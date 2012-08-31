@@ -1,5 +1,5 @@
 login: &login
-  adapter: mysql
+  adapter: mysql2
   username: user
   password: password
   host: mysql.example.com
