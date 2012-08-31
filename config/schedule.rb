@@ -29,5 +29,6 @@ every '0,30 17-23,0-9 * * *' do
 end
 
 every :week do
+  rake "eol:import_archive"
   rake "eol:write_list"
 end

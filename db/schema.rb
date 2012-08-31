@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815153445) do
+ActiveRecord::Schema.define(:version => 20120831143919) do
+
+  create_table "eol_imports", :force => true do |t|
+    t.string   "checksum"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "eol_taxon_concepts", :force => true do |t|
     t.integer  "query_id"

@@ -4,78 +4,90 @@ require 'progressbar'
 require 'dwc-archive'
 require 'zlib'
 require 'digest/md5'
+require 'open-uri'
 
 require 'jazz_hands' if Rails.env.development?
 
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
-  task :create_queries, [:url_to_archive_tar_gz] => [:environment] do |t, args|
+  task :import_archive => [:environment] do |t, args|
+              
     
-    abort "You must pass in the name of a file to load,\n"+
-          " Example: rake eol:create_queries[http://eol.org/archive.tar.gz]" unless args.url_to_archive_tar_gz
-          
-    
-    dir = File.join(Rails.root, 'tmp')
-    archive_filename = ''
-  
-    # Download GZipped seed file
-  
+    # Read the MD5 digest of the archive, to see if we need to do anything
     begin
-      downloader = FileDownloader.new(args.url_to_archive_tar_gz, dir)
-      archive_filename = downloader.path_to_file
+      md5 = URI.parse(Ligercat::Application.config.eol_archive_digest_url).read.strip
+    rescue Exception => e
+      abort "Could not load EoL Archive Digest from #{Ligercat::Application.config.eol_archive_digest_url} : #{e.message}"
+    end
+    
+    if last_import = EolImport.find_by_checksum(md5)
+      puts "Already imported #{last_import.checksum} on #{last_import.created_at}, skipping"
+    else
+      dir = File.join(Rails.root, 'tmp')
+      archive_filename = ''
+  
+      # Download GZipped seed file
+  
+      begin
+        downloader = FileDownloader.new(Ligercat::Application.config.eol_archive_file_url, dir)
+        archive_filename = downloader.path_to_file
       
   
-      if File.exists? archive_filename
-        puts "File #{archive_filename} exists locally, skipping download"
-      else
-        download_progress = ProgressBar.new("Downloading", 100)
+        if File.exists? archive_filename
+          puts "File #{archive_filename} exists locally, skipping download"
+        else
+          download_progress = ProgressBar.new("Downloading", 100)
     
-        downloader.download do |percent_complete|
-          download_progress.set(100 * percent_complete)  
+          downloader.download do |percent_complete|
+            download_progress.set(100 * percent_complete)  
+          end
+        
+          download_progress.finish
+        end
+      rescue Exception => e
+        File.delete archive_filename if File.exists? archive_filename
+        puts "Could not load EoL Archive  from #{Ligercat::Application.config.eol_archive_file_url} : #{e.message}"
+
+        raise e
+      end
+    
+      begin
+        dwc = DarwinCore.new(archive_filename)
+    
+        fields = dwc.core.fields
+    
+        taxon_id_index = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonID'         }[:index]
+        rank_index     = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonRank'       }[:index]
+        genus_index    = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/genus'           }[:index]
+        species_index  = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/specificEpithet' }[:index]
+    
+        # Erase the existing EOL mapping
+        EolTaxonConcept.delete_all
+    
+        # read content using a block with getting back results in sets 100 rows each
+        dwc.core.read(100) do |data, errors|
+          data.each do |d|
+            taxon_id = d[taxon_id_index]
+            rank     = d[rank_index]
+            genus    = d[genus_index]
+            species  = d[species_index]
+            # status   = d[status_index]
+        
+            if rank == 'species' && !genus.blank? && !species.blank?
+              puts canonical_name = "#{genus} #{species}"
+              query = BinomialQuery.find_or_create_by_query(canonical_name)
+              query.eol_taxon_concepts.build(:id => taxon_id)
+              query.save!
+            end      
+          end
         end
         
-        download_progress.finish
+        EolImport.create(:checksum => md5)
+      ensure
+        File.delete(archive_filename) if File.exists? archive_filename
       end
-    rescue Exception => e
-      File.delete archive_filename if File.exists? archive_filename
-      raise e
+
     end
-    
-    
-    dwc = DarwinCore.new(archive_filename)
-    
-    fields = dwc.core.fields
-    
-    taxon_id_index = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonID'         }[:index]
-    rank_index     = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonRank'       }[:index]
-    genus_index    = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/genus'           }[:index]
-    species_index  = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/specificEpithet' }[:index]
-    
-    # Erase the existing EOL mapping
-    EolTaxonConcept.delete_all
-    
-    # read content using a block with getting back results in sets 100 rows each
-    dwc.core.read(100) do |data, errors|
-      data.each do |d|
-        taxon_id = d[taxon_id_index]
-        rank     = d[rank_index]
-        genus    = d[genus_index]
-        species  = d[species_index]
-        # status   = d[status_index]
-        
-        if rank == 'species' && !genus.blank? && !species.blank?
-          puts canonical_name = "#{genus} #{species}"
-          query = BinomialQuery.find_or_create_by_query(canonical_name)
-          query.eol_taxon_concepts.build(:id => taxon_id)
-          query.save!
-        end      
-      end
-    end
-    
-    File.delete(archive_filename)
-    
-    # Reload the EoL list given the newest data
-    Rake::Task['eol:write_list'].invoke
   end
   
   

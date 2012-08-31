@@ -63,7 +63,10 @@ module Ligercat
     
     config.secret_stuff = YAML.load_file(Rails.root.join('config', 'private.yml'))
     
-    config.seed_base_url = 'http://ligercat.org/seeds/'
+    config.seed_base_url          = 'http://ligercat.org/seeds/'
+    config.eol_archive_file_url   = 'http://eol.org/eol_names_archive.tar.gz'
+    config.eol_archive_digest_url = 'http://eol.org/eol_names_archive.md5'
+
     
     config.middleware.use ExceptionNotifier,
         :email_prefix => "[LigerCat] ",
