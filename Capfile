@@ -4,7 +4,7 @@ load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 Dir['vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
 load 'config/deploy'
 
-after  'deploy:update_code', 'database_yml:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink'
+after  'deploy:update_code', 'database_yml:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink'
 
 
 namespace :blast_binary do
@@ -50,3 +50,22 @@ namespace :redis_yml do
     run "ln -nfs #{shared_path}/config/redis.yml #{release_path}/config/redis.yml"
   end
 end
+
+namespace :seeds do
+  desc "Make symlink for seeds directory"
+  task :symlink do
+    run "ln -nfs #{shared_path}/seeds/ #{release_path}/public/seeds/"
+  end
+end
+
+namespace :eol_clouds do
+  desc "Make symlink for EOL clouds files directory"
+  task :symlink do
+    run "ln -nfs #{shared_path}/eol_ids_with_articles.txt.gz #{release_path}/public/eol_ids_with_articles.txt.gz"
+    run "ln -nfs #{shared_path}/eol_ids_with_articles.md5 #{release_path}/public/eol_ids_with_articles.md5
+  end
+end
+
+
+
+
