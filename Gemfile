@@ -45,10 +45,11 @@ gem 'dwc-archive', '~> 0.9.2'
 # unicorn for production
 gem 'unicorn'
 
+#FUCK THIS
+  gem 'jazz_hands'
 group :development, :test do
   gem 'rspec-rails'
   gem 'fakeweb'
-  gem 'jazz_hands'
   gem 'test_after_commit'
   gem 'capistrano'
   gem 'rvm-capistrano'
