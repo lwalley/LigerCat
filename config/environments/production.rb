@@ -46,11 +46,11 @@ Ligercat::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( search.js pubmed_count.js selection_panel.js keyword_cloud.js	pubmed_query_builder.js	status.js ligercat.js selected_terms.js toolbar.js ie6.css ie7.css iframe.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-
+    config.action_mailer.delivery_method = :sendmail
   # Enable threaded mode
   # config.threadsafe!
 
