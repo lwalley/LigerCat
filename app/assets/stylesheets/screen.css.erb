@@ -521,6 +521,55 @@ ol.search_results {
 
 /* @group Timeline Histograms */
 
+.publicationTimelineGraph .bars .bg {
+  fill: transparent;
+}
+
+.publicationTimelineGraph .bar rect.data{
+  fill: #ccc;
+/*  stroke: white;
+  stroke-width: 1;*/
+  shape-rendering: crisp-edges;
+}
+
+.publicationTimelineGraph .bar rect.bg{
+  fill: transparent;
+/*  stroke: white;
+  stroke-width: 1;*/
+  shape-rendering: crisp-edges;
+}
+
+.publicationTimelineGraph .bar:hover rect.data {
+  fill: #1592ce;
+}
+.publicationTimelineGraph .bar:hover rect.bg {
+  fill: #f2f7f9;
+}
+
+.publicationTimelineGraph .hoverLabels text{
+  fill: #1592ce;
+}
+
+
+
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.axis path {
+  stroke: none;
+  fill: none;
+}
+
+.axis line {
+  stroke: #000;
+  stroke-opacity: .8;
+}
+
+
+
+
+
 h2.publication_history {
 	font-size: 1.8em;
 	padding-top: 1em;
