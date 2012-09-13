@@ -166,15 +166,13 @@ module ApplicationHelper
 
   # I made this a helper instead of using the numerous Google Analytics
   # plugins, because the ones I tried freaked out when I was using action caching
-  def google_analytics
-    tracking_code = 'UA-9666905-1'
-    environments  = ['production']
-    
-    if environments.include?(Rails.env)
-      String.new.html_safe.tap do |html|
-        html << "<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>"
-        html << "<script type='text/javascript'>try{var pageTracker = _gat._getTracker('#{tracking_code}'); pageTracker._trackPageview();} catch(err) {}</script>"
-      end
+  def google_analytics    
+    if Rails.env.production?
+      tracking_code = 'UA-9666905-1'
+      html = ''
+      html << "<script src='http://www.google-analytics.com/ga.js' type='text/javascript'></script>"
+      html << "<script type='text/javascript'>try{var pageTracker = _gat._getTracker('#{tracking_code}'); pageTracker._trackPageview();} catch(err) {}</script>"
+      html.html_safe
     end
   end
   
