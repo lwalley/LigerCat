@@ -10,12 +10,12 @@
     /[if IE 6]
       = stylesheet_link_tag 'ie6'
     = csrf_meta_tags
-	
+
     :javascript
       $(function() {
         #{yield :domready}
       });
-    
+
   %body{ :id => body_id, :class => context }
     %header#header_and_tabs
       #header.container
@@ -30,7 +30,7 @@
 
     .search_panel{ :class => context }= render :partial => "#{context}/search_form"
     = content_for?(:content) ? yield(:content) : yield
-    
+
     = content_for?(:footer) ? yield(:footer) : render('shared/big_footer')
-    
-    =google_analytics
+
+    = google_analytics

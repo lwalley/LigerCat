@@ -22,6 +22,7 @@ end
 
 gem 'jquery-rails'
 gem 'underscore-rails'
+gem "d3-rails"
 
 gem 'haml-rails'
 gem 'chronic'
@@ -45,8 +46,6 @@ gem 'dwc-archive', '~> 0.9.2'
 # unicorn for production
 gem 'unicorn'
 
-#FUCK THIS
-  gem 'jazz_hands'
 group :development, :test do
   gem 'rspec-rails'
   gem 'fakeweb'
@@ -54,6 +53,13 @@ group :development, :test do
   gem 'capistrano'
   gem 'rvm-capistrano'
   gem 'capistrano-unicorn'
+  
+  gem 'awesome_print'
+  gem 'pry'
+  gem 'pry-debugger'
+  gem 'pry-rails'
+  gem 'pry-stack_explorer'
+  
 end
 
 # To use ActiveModel has_secure_password
