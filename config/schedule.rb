@@ -24,11 +24,11 @@
 
 
 # Every half-hour between 5pm and 9am
-every '0,30 17-23,0-9 * * *' do
+every '0,30 17-23,0-9 * * *', :roles => [:app]  do
   rake "enqueue_oldest_cached_queries"
 end
 
-every :week do
+every :week, :roles => [:app]  do
   rake "eol:import_archive"
   rake "eol:write_list"
 end
