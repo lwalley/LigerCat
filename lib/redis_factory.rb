@@ -27,7 +27,20 @@ class RedisFactory
     
     def current_config(prefix)
       prefix = prefix.to_s
-      rails_env = Rails.env rescue ENV['RAILS_ENV']
+      
+      # In redis.yml you can specify different servers for the various environments. We use the
+      # current environment to select the configuration, ie: development, production, or test.
+      #
+      # When running from Rails, or a Rails rake task, then we get the environment from Rails.env
+      # and everybody is happy.
+      #
+      # However, we also execute this file from the resque-web Sinatra app, which does not have
+      # Rails.env defined. In that case, we first check the RAILS_ENV environmental variable, and
+      # finally we default to "development" to make it easier to run locally.
+      #
+      # Regarding using RAILS_ENV, that's a bit weird for a Sinatra app, but it keeps the
+      # commands consistent across all the various services in the deployment.
+      rails_env = Rails.env rescue ENV['RAILS_ENV'] || "development"
       
       config_key = if prefix.empty?
                     rails_env

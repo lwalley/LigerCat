@@ -142,7 +142,7 @@ For more information refer to the [Resque documentation](https://github.com/defu
 
 Resque provides a Web interface that you can use to monitor queues and jobs. From the LigerCat *`Rails.root`* start the Resque Web application:
 
-    $ resque-web ./config/initializers/resque.rb
+    $ RAILS_ENV=production resque-web ./config/initializers/resque.rb
 
 Open a Web browser and navigate to [http://0.0.0.0:5678/](http://0.0.0.0:5678)
 
