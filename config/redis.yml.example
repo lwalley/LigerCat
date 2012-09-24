@@ -52,7 +52,7 @@ date_published_test:
 
 date_published_production:
   <<: *prod_common
-  <<: *data_database
+  <<: *date_database
 
 
 # This Redis DB contains the Resque queues
