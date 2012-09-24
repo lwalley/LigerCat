@@ -141,7 +141,7 @@ Resque provides a Web interface that you can use to monitor queues and jobs. Fro
 
 Open a Web browser and navigate to [http://0.0.0.0:5678/](http://0.0.0.0:5678)
 
-LigerCat uses two queues one for new queries requested by Web users and one for updating existing cached searches. Launch a worker to listen to those two queues in priority order:
+LigerCat uses three queues: one for new queries requested by Web users, one for building clouds for species from the Encyclopedia of Life, and one for updating existing cached searches. Launch a worker to listen to those queues in priority order:
 
     $ QUEUE=new_queries,eol_taxa,refresh_cached_queries rake environment resque:work
 
@@ -161,7 +161,7 @@ We run LigerCat in production using NGinx and Unicorn, although there's nothing 
 
 ### Refreshing cached queries ###
 
-LigerCat's tag clouds and histrograms are cached when first built. Overtime NLM releases new data and so LigerCat's cached queries need to be refreshed. We make use of the [whenever Ruby gem](https://github.com/javan/whenever) to deploy a cron job that triggers the rebuilding of cached queries. NLM recommends using their services between the hours of 5pm and 9am Eastern, and we have scheduled the cron job to execute during those times, however the cron job is not aware of timezones so in order to comply with the NLM recommendations you should set your application server's timezone to Eastern or modify `Rails.root/config/schedule.rb` accordingly.
+LigerCat's tag clouds and histograms are cached when first built. Overtime NLM releases new data and so LigerCat's cached queries need to be refreshed. We make use of the [whenever Ruby gem](https://github.com/javan/whenever) to deploy a cron job that triggers the rebuilding of cached queries. NLM recommends using their services between the hours of 5pm and 9am Eastern, and we have scheduled the cron job to execute during those times, however the cron job is not aware of timezones so in order to comply with the NLM recommendations you should set your application server's timezone to Eastern or modify `Rails.root/config/schedule.rb` accordingly.
 
 ### Keeping lookup data up to date ###
 
