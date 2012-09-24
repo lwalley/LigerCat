@@ -12,6 +12,12 @@ prod_common: &prod_common
     - 'prodhost1:6379'
     - 'prodhost2:6379'
 
+# As of this writing, Resque does not play nice with Redis::Distributed,
+# so you will need to run it from only a single host
+prod_resque: &prod_resque
+  host: 'prodhost1'
+  port: 6379
+
 # Shared database configuration to keep things DRY below
 mesh_database: &mesh_database
   database: 0
@@ -59,5 +65,5 @@ resque_test:
   <<: *resque_database
 
 resque_production:
-  <<: *prod_common
+  <<: *prod_resque
   <<: *resque_database
