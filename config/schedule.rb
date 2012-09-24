@@ -28,7 +28,8 @@ every '0,30 17-23,0-9 * * *', :roles => [:app]  do
   rake "enqueue_oldest_cached_queries"
 end
 
-every :week, :roles => [:app]  do
-  rake "eol:import_archive"
-  rake "eol:write_list"
-end
+# TODO Uncomment when ready to test EOL names integration with Patrick
+# every :week, :roles => [:app]  do
+#   rake "eol:import_archive"
+#   rake "eol:write_list"
+# end
