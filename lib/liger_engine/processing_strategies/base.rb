@@ -74,8 +74,13 @@ module LigerEngine
         log "Looking up #{id_list.length} IDs in local caches"
         # Loop through each ID from the list sent by the Search Strategy
         id_list.each do |id|
-          unless each_id(id)
-            nonlocal_ids << id
+          begin
+            unless each_id(id)
+              nonlocal_ids << id
+            end
+          rescue Exception => e
+            log "ERROR: Encountered an error in each_id for ID #{id}:\n#{e.message}\n\n" << e.backtrace.join("\n")
+            raise e
           end
         end
         
@@ -84,7 +89,12 @@ module LigerEngine
         # Retrieve unannotated IDS and add those to the histogram.
         unless nonlocal_ids.empty?
           LigerEngine::PubmedFetcher.fetch(nonlocal_ids) do |medline_citation|
-            each_nonlocal(medline_citation)
+            begin
+              each_nonlocal(medline_citation)
+            rescue Exception => e
+              log "ERROR: Encountered an error in each_nonlocal for the medline citation:\n #{medline_citation}"
+              raise e
+            end
           end
         end
             
