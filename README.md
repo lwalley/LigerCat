@@ -9,9 +9,9 @@ This README is intended primarily for developers who want to get LigerCat up and
 The installation instructions assume you are familiar with and using [Ruby Version Manager](https://rvm.io/) and [Bundler](http://gembundler.com/) with `.rvmrc` and gemsets. If you are new to RVM read [RVM Basics](https://rvm.io/rvm/basics) to get you started.
 
 ### Conventions ###
-*`Rails.root`* -- When you install the LigerCat Rails application into a directory on your machine e.g. *`/Users/username/dev/LigerCat`* we will refer to that application root directory as *`Rails.root`*.
+`Rails.root` -- When you install the LigerCat Rails application into a directory on your machine e.g. `/Users/username/dev/LigerCat` we will refer to that application root directory as `Rails.root`.
 
-Assume all command-line commands should be executed from *`Rails.root`* unless we indicate otherwise. Command-line commands are prefixed with `$` and indicated with a code block e.g.:
+Assume all command-line commands should be executed from `Rails.root` unless we indicate otherwise. Command-line commands are prefixed with `$` and indicated with a code block e.g.:
 
     $ some command
 
@@ -135,19 +135,19 @@ Redis is required by both Resque and by the LigerCat application. Start your Red
 
 For more information refer to the [Resque documentation](https://github.com/defunkt/resque)
 
-Resque provides a Web interface that you can use to monitor queues and jobs. From the LigerCat *`Rails.root`* start the Resque Web application:
+Resque provides a Web interface that you can use to monitor queues and jobs. From the LigerCat `Rails.root` start the Resque Web application:
 
-    $ RAILS_ENV=production resque-web ./config/initializers/resque.rb
+    $ resque-web ./config/initializers/resque.rb
 
 Open a Web browser and navigate to [http://0.0.0.0:5678/](http://0.0.0.0:5678)
 
 LigerCat uses two queues one for new queries requested by Web users and one for updating existing cached searches. Launch a worker to listen to those two queues in priority order:
 
-    $ QUEUE=new_queries,refresh_cached_queries rake environment resque:work
+    $ QUEUE=new_queries,eol_taxa,refresh_cached_queries rake environment resque:work
 
 ### Start the Web server ###
 
-From LigerCat *`Rails.root`* start the Web server:
+From LigerCat `Rails.root` start the Web server:
 
     $ rails s
 
@@ -169,7 +169,7 @@ LigerCat tag cloud terms consist of the [National Library of Medicine's (NLM)](h
 
 For performance reasons LigerCat stores these MeSH terms, their IDs and their scores locally (see `Rails.root/lib/mesh_keyword_lookup.rb` and `Rails.root/lib/mesh_score_lookup.rb`). NLM updates the MeSH vocabulary once a year, and consequently this locally stored lookup data needs to be updated. LigerCat can detect when this is necesary, and will attempt to send an email notification to `feedback_recipients` when it encounters a new MeSH term. You can configure `feedback_recipients` email addresses in `Rails.root/config/private.yml`.
 
-We have included rake tasks to update the lookup data, first simply download the most recent version of the [`MH_freq_count`](http://mbr.nlm.nih.gov/Download/2012/FreqCounts/MH_freq_count.gz) raw data file from [MBR files](http://mbr.nlm.nih.gov/Download/index.shtml), then run:
+We have included rake tasks to update the lookup data, first simply download the most recent version of the raw data file from [MBR files](http://mbr.nlm.nih.gov/Download/index.shtml), then run:
 
     $ rake mesh:create_indexes[path_to_mh_freq_count]
 
