@@ -5,16 +5,19 @@
   %fieldset.message
     %legend Email Form
     %label{:for=>"email_sender"} E-mail Address:
-    .error= @errors[:sender] if @errors[:sender]
+    - if @errors[:sender]
+      .error= @errors[:sender]
     %input.textbox{:type=>"text", :name=>"email_sender", :id=>'email_sender', :value=>@sender, :class=>(@errors[:sender] ? 'error' : '') }
   
     %label{:for=>"email_message"} Message:
-    .error= @errors[:message] if @errors[:message]
+    - if @errors[:message]
+      .error= @errors[:message]
     %textarea{:type=>"text", :name=>"email_message", :id => 'email_message', :class=>(@errors[:message] ? 'error' : '')}= @message
       
   %fieldset.recaptcha
     %label{:for=>"recaptcha_response_field"} Please enter the two words below:
-    .error= @errors[:recaptcha] if @errors[:recaptcha]
+    - if @errors[:recaptcha]
+      .error= @errors[:recaptcha]
     = recaptcha_tags :display => {:theme => 'clean'}
 
   %fieldset.buttons
