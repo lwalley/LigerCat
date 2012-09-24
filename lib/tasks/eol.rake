@@ -6,8 +6,6 @@ require 'zlib'
 require 'digest/md5'
 require 'open-uri'
 
-require 'jazz_hands' if Rails.env.development?
-
 namespace :eol do 
   desc "Downloads a DwC-Archive of EoL taxa to update the EoL PubmedQueries with newest taxa"
   task :import_archive => [:environment] do |t, args|

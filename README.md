@@ -38,13 +38,13 @@ Or READ/WRITE:
 
 ### Install Ruby and create gemset ###
 
-LigerCat's `.rvmrc` file, located in *`Rails.root`*, instructs RVM which version of Ruby and which gemset to use. When you change directory into *`Rails.root`* for the first time, RVM will switch to the correct version of Ruby and will create the `ligercat` gemset and output a statement such as *`Using /Users/username/.rvm/gems/ruby-1.9.3-p194 with gemset ligercat`*
+LigerCat's `.rvmrc` file, located in `Rails.root`, instructs RVM which version of Ruby and which gemset to use. When you change directory into `Rails.root` for the first time, RVM will switch to the correct version of Ruby and will create the `ligercat` gemset and output a statement such as `Using /Users/username/.rvm/gems/ruby-1.9.3-p194 with gemset ligercat`.
 
 If you do not have the required version of Ruby, RVM usually shows a warning with instructions on how to install it e.g.:
 
     $ rvm install ruby-1.9.3
 
-After installing the required Ruby version reload (exit and re-enter i.e. `$ cd .`) the *`Rails.root`* directory to trigger RVM to use the new version of Ruby and to create the `ligercat` gemset.
+After installing the required Ruby version reload (exit and re-enter i.e. `$ cd .`) the `Rails.root` directory to trigger RVM to use the new version of Ruby and to create the `ligercat` gemset.
 
     $ cd .
 
@@ -89,7 +89,7 @@ LigerCat relies on environment settings, such as email addresses and private key
 
     $ cp config/private.yml.example config/private.yml
 
-### Configure Blast+ ###
+### Configure Blast+ (not necessary on Mac OS X) ###
 
 LigerCat uses [Blast+](http://www.ncbi.nlm.nih.gov/books/NBK1762/) `blastn` and `tblastn` binaries to perform remote BLAST queries. The binary files for Mac OS X and Linux systems are included in `Rails.root/lib/blast_bin/`.
 
