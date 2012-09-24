@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20120831143919) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "eol_imports", ["checksum"], :name => "index_eol_imports_on_checksum"
+
   create_table "eol_taxon_concepts", :force => true do |t|
     t.integer  "query_id"
     t.datetime "created_at", :null => false
