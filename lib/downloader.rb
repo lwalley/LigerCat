@@ -53,6 +53,8 @@ class Downloader
   # Recursively follows redirects and handles HTTPS,
   # and returns url, http when done
   def initialize_with_redirects(url, limit=5)
+    raise "Exceeded redirect limit" unless limit > 0
+    
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
     if uri.instance_of? URI::HTTPS
