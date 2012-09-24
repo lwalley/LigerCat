@@ -46,9 +46,27 @@ class Downloader
   attr_accessor :url, :browser, :content_length
   
   def initialize(url)
-    @url = URI.parse(url)
-    @browser = Net::HTTP.new(@url.host, @url.port)
+    @url, @browser = initialize_with_redirects(url)
     @content = ""
+  end
+  
+  # Recursively follows redirects and handles HTTPS 
+  # while setting @url and @browser along the way
+  def initialize_with_redirects(url, limit=5)
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.instance_of? URI::HTTPS
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    end
+    
+    response = http.request_head(uri.path)
+    if response.kind_of?(Net::HTTPRedirection)
+      redirect_url = response['location']
+      return initialize_with_redirects(redirect_url, limit - 1) # Recurse 
+    else
+      return [uri, http]
+    end
   end
   
   def download(start = 0, stop = content_length, length = CHUNK_SIZE, &block)
