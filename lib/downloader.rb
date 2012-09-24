@@ -50,8 +50,8 @@ class Downloader
     @content = ""
   end
   
-  # Recursively follows redirects and handles HTTPS 
-  # while setting @url and @browser along the way
+  # Recursively follows redirects and handles HTTPS,
+  # and returns url, http when done
   def initialize_with_redirects(url, limit=5)
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, uri.port)
