@@ -119,11 +119,6 @@ WARNING: The last table to seed, `gi_numbers_pmids`, can take several hours to p
 
     $ rake db:seed
 
-### (Optionally) pre-populate Redis with seed data ###
-The data in Redis will be built over time as the application is used, however to improve performance in a production environment you may wish to pre-populate Redis. When running LigerCat in development mode, we suggest you skip this step. The following rake task will download the seed file and load the data into your environment's Redis store. You will need to be connected to the Internet when performing this task and your Redis server needs to be running. WARNING: Redis requires a significant amount of memory to store LigerCat data, do not attempt to seed Redis unless you are sure you have sufficient memory to do so. #TODO: estimate the memory required for the seed data.
-
-    $ rake redis:seed
-
 ## Running LigerCat in development mode ##
 
 LigerCat requires a Web server, Redis and a Resque worker to be running.
