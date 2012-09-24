@@ -64,8 +64,8 @@ module Ligercat
     config.secret_stuff = YAML.load_file(Rails.root.join('config', 'private.yml'))
     
     config.seed_base_url          = 'http://github.com/downloads/mbl-cli/LigerCat/'
-    config.eol_archive_file_url   = 'http://eol.org/eol_names_archive.tar.gz'
-    config.eol_archive_digest_url = 'http://eol.org/eol_names_archive.md5'
+    config.eol_archive_file_url   = 'http://content60.eol.org/downloads/eol_names_archive.tar.gz'
+    config.eol_archive_digest_url = 'http://content60.eol.org/downloads/eol_names_archive.md5'
 
     
     config.middleware.use ExceptionNotifier,
