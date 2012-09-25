@@ -92,6 +92,16 @@ namespace :eol_clouds do
 end
 
 
+#for rvm installs, we need to ask rvm to trust the rvmrc
+
+namespace :rvm do
+  task :trust_rvmrc do
+    run \"rvm rvmrc trust \#\{release_path\}\"
+  end
+end
+
+after "deploy", "rvm:trust_rvmrc"
+
 after  'deploy:update_code', 'database_yml:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink'
 
 
