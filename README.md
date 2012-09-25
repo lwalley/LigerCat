@@ -157,7 +157,7 @@ Open a Web browser and navigate to [http://0.0.0.0:3000](http://0.0.0.0:3000)
 
 Redis is an in-memory database and since LigerCat stores about 40 million keys, 20 million of which contain sets of multiple values, it requires a significant amount of memory to run in a production environment. #TODO: estimate how much memory is needed. It may be advantageous to shard the Redis database across multiple hosts, as suggested in the production section of `Rails.root/config/redis.yml.example`. The LigerCat MySQL database will require a minimum of 2GB of hard disk space.
 
-We run LigerCat in production using NGinx and Unicorn, although there's nothing stopping you from using Passenger, Mongrel or Thin behind an Apache or Nginx proxy. Our production environment settings and deployments are managed with [Capistrano](https://github.com/capistrano/capistrano) and we have provided a sample Capfile `Rails.root/Capfile`.
+We run LigerCat in production using NGinx and Unicorn, although there's nothing stopping you from using Passenger, Mongrel or Thin behind an Apache or Nginx proxy. Our production environment settings and deployments are managed with [Capistrano](https://github.com/capistrano/capistrano) and we have provided a sample Capfile `Rails.root/Capfile`, a sample `Rails.root/config/deploy.rb.example`.
 
 ### Refreshing cached queries ###
 
