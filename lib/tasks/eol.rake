@@ -52,6 +52,7 @@ namespace :eol do
       begin
         dwc = DarwinCore.new(archive_filename)
     
+    
         fields = dwc.core.fields
     
         taxon_id_index = fields.find{|f| f[:term] == 'http://rs.tdwg.org/dwc/terms/taxonID'         }[:index]
@@ -62,9 +63,12 @@ namespace :eol do
         # Erase the existing EOL mapping
         EolTaxonConcept.delete_all
     
+        import_progress = ProgressBar.new("Importing", dwc.core.size)
         # read content using a block with getting back results in sets 100 rows each
         dwc.core.read(100) do |data, errors|
           data.each do |d|
+            import_progress.inc
+            
             taxon_id = d[taxon_id_index]
             rank     = d[rank_index]
             genus    = d[genus_index]
@@ -72,19 +76,19 @@ namespace :eol do
             # status   = d[status_index]
         
             if rank == 'species' && !genus.blank? && !species.blank?
-              puts canonical_name = "#{genus} #{species}"
+              # puts canonical_name = "#{genus} #{species}"
               query = BinomialQuery.find_or_create_by_query(canonical_name)
               query.eol_taxon_concepts.build(:id => taxon_id)
               query.save!
             end      
           end
         end
+        import_progress.finish
         
         EolImport.create(:checksum => md5)
       ensure
         File.delete(archive_filename) if File.exists? archive_filename
       end
-
     end
   end
   
