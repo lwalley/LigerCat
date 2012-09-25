@@ -41,7 +41,7 @@ gem "recaptcha", :require => "recaptcha/rails"
 gem 'progressbar'
 gem 'fastercsv'
 gem 'rails-csv-fixtures'
-gem 'dwc-archive', '~> 0.9.2'
+gem 'dwc-archive', '~> 0.9.3'
 
 # unicorn for production
 gem 'unicorn'
