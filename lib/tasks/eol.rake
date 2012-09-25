@@ -76,7 +76,7 @@ namespace :eol do
             # status   = d[status_index]
         
             if rank == 'species' && !genus.blank? && !species.blank?
-              # puts canonical_name = "#{genus} #{species}"
+              canonical_name = "#{genus} #{species}"
               query = BinomialQuery.find_or_create_by_query(canonical_name)
               query.eol_taxon_concepts.build(:id => taxon_id)
               query.save!
