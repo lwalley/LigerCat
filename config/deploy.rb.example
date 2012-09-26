@@ -53,10 +53,18 @@ namespace :database_yml do
   end
 end
 
+# Temporary task to persist old caches, required until all BinomialQuery jobs have been processed. 
 namespace :eol_cache do
   desc "Make symlink for eol cache directory"
   task :symlink do
     run "ln -nfs #{shared_path}/cache/eol #{release_path}/public/eol"
+  end
+end
+# Temporary task to persist old stylesheets for eol caches, required until all BinomialQuery jobs have been processed. 
+namespace :eol_cache_stylesheets do
+  desc "Make symlink for stylesheets directory"
+  task :symlink do
+    run "ln -nfs #{shared_path}/cache/stylesheets #{release_path}/public/stylesheets"
   end
 end
 
@@ -98,9 +106,7 @@ namespace :eol_clouds do
   end
 end
 
-
-#for rvm installs, we need to ask rvm to trust the rvmrc
-
+# for rvm installs, we need to ask rvm to trust the rvmrc
 namespace :rvm do
   task :trust_rvmrc do
     run "rvm rvmrc trust #{release_path}"
