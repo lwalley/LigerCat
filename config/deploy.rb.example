@@ -106,6 +106,19 @@ namespace :eol_clouds do
   end
 end
 
+namespace :resque, :roles => [:worker_bee], :on_no_matching_servers => :continue do
+  desc "stop,start or restart resque worker process"
+  task :start do
+    sudo "/usr/sbin/service logercat-worker start"
+  end
+  task :stop do
+    sudo "/usr/sbin/service logercat-worker stop"
+  end
+  task :restart do
+    sudo "/usr/sbin/service logercat-worker restart"
+  end
+end
+
 # for rvm installs, we need to ask rvm to trust the rvmrc
 namespace :rvm do
   task :trust_rvmrc do
@@ -115,7 +128,7 @@ end
 
 after "deploy", "rvm:trust_rvmrc"
 
-after  'deploy:update_code', 'database_yml:symlink','eol_cache:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink'
+after  'deploy:update_code', 'database_yml:symlink','eol_cache:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink', 'resque:restart'
 
 
 role :app, "meow"
