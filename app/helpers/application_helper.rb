@@ -16,6 +16,10 @@ module ApplicationHelper
     @body_id || "#{controller.controller_name}_#{action_name}"
   end
   
+  def body_class
+    @body_class || "#{context} #{action_name}"
+  end
+  
 	# Used when clicking on the logo to return the user
 	# home, based on their current context
 	def home_url 
