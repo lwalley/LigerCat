@@ -106,18 +106,19 @@ namespace :eol_clouds do
   end
 end
 
-namespace :resque, :roles => [:worker_bee], :on_no_matching_servers => :continue do
+namespace :resque do
   desc "stop,start or restart resque worker process"
-  task :start do
+  task :start, :roles => [:worker_bee], :on_no_matching_servers => :continue do
     sudo "/usr/sbin/service logercat-worker start"
   end
-  task :stop do
+  task :stop, :roles => [:worker_bee], :on_no_matching_servers => :continue do
     sudo "/usr/sbin/service logercat-worker stop"
   end
-  task :restart do
+  task :restart, :roles => [:worker_bee], :on_no_matching_servers => :continue do
     sudo "/usr/sbin/service logercat-worker restart"
-  end
+  end 
 end
+
 
 # for rvm installs, we need to ask rvm to trust the rvmrc
 namespace :rvm do
