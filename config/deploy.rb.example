@@ -10,6 +10,7 @@ set :repository,  "https://github.com/mbl-cli/LigerCat.git"
 
 ssh_options[:username] = 'meow'
 set :use_sudo, false
+default_run_options[:pty] = true
 
 set :deploy_via, :remote_cache
 set :deploy_to, "/var/www/#{application}"
@@ -109,13 +110,13 @@ end
 namespace :resque do
   desc "stop,start or restart resque worker process"
   task :start, :roles => [:worker_bee], :on_no_matching_servers => :continue do
-    sudo "/usr/sbin/service logercat-worker start"
+    sudo "/usr/sbin/service ligercat-worker start"
   end
   task :stop, :roles => [:worker_bee], :on_no_matching_servers => :continue do
-    sudo "/usr/sbin/service logercat-worker stop"
+    sudo "/usr/sbin/service ligercat-worker stop"
   end
   task :restart, :roles => [:worker_bee], :on_no_matching_servers => :continue do
-    sudo "/usr/sbin/service logercat-worker restart"
+    sudo "/usr/sbin/service ligercat-worker restart"
   end 
 end
 
