@@ -28,7 +28,7 @@ Ligercat.Toolbar = {
     
     Ligercat.SelectedTerms.on('change', function(e, terms){
       var pubmedQuery = Ligercat.PubmedQueryBuilder.build(terms),
-          pubmedLink = Ligercat.Toolbar.config.baseURL + encodeURI(pubmedQuery);
+          pubmedLink = Ligercat.Toolbar.config.baseURL + encodeURIComponent(pubmedQuery);
         
       Ligercat.Toolbar.enable();
       
