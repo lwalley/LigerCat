@@ -86,6 +86,15 @@ class PubmedQueriesController < ApplicationController
     query = PubmedQuery.find(params[:id])
     expire_page :action => :show
     expire_page :action => :show, :slug => query.slug
+    expire_page :action => :show, :format => 'cloud'
+    
+    if query.is_a? BinomialQuery
+      query.eol_taxon_concepts.each do |taxon_concept|
+        expire_page :action => :eol, :taxon_concept_id => taxon_concept.id
+        expire_page :action => :eol, :taxon_concept_id => taxon_concept.id, :format => 'cloud'
+      end
+    end
+    
     render :nothing => true, :status => :no_content
   end
   

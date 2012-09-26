@@ -19,7 +19,6 @@ class BinomialQuery < PubmedQuery
     LigerEngine::SearchStrategies::BinomialPubmedSearchStrategy::species_specific_query(query)
   end
   
-  # TODO make this expire both the /articles and /eol cache
   def cache_webhook_uri
     url_for(:controller => 'pubmed_queries',
             :action     => :cache,
