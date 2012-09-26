@@ -22,6 +22,9 @@ class PubmedQueriesController < ApplicationController
   
   # GET /articles/:id
   def show
+    # This works for both PubmedQueries and BinomialQueries, because the BinomialQuery is a subclass of PubmedQuery.
+    # However, in development mode only, this sometimes doesn't work, because of the way Rails loads and reloads classes.
+    # See config/initializers/preload_sti_models.rb for a discussion about this.
     @query ||= PubmedQuery.find(params[:id])
     
     if @query.done?
