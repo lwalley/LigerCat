@@ -53,6 +53,13 @@ namespace :database_yml do
   end
 end
 
+namespace :eol_cache do
+  desc "Make symlink for eol cache directory"
+  task :symlink do
+    run "ln -nfs #{shared_path}/cache/eol #{release_path}/public/eol"
+  end
+end
+
 namespace :unicorn do
   desc "Symlink unicorn config"
   task :symlink, :roles => :web do
@@ -102,7 +109,7 @@ end
 
 after "deploy", "rvm:trust_rvmrc"
 
-after  'deploy:update_code', 'database_yml:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink'
+after  'deploy:update_code', 'database_yml:symlink','eol_cache:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink'
 
 
 role :app, "meow"
