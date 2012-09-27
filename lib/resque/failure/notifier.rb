@@ -33,7 +33,7 @@ module Resque
           "\n==============================\n"+
           error.inspect +
           "\n==============================\n"+
-          error.backtrace +
+          error.backtrace.join("\n") rescue error.backtrace.to_s +
           "\n==============================\n")
       end
       
