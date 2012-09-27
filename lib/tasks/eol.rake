@@ -78,9 +78,14 @@ namespace :eol do
             if rank == 'species' && !genus.blank? && !species.blank?
               canonical_name = "#{genus} #{species}"
               query = BinomialQuery.find_or_create_by_query(canonical_name, BinomialQuery)
-              query.eol_taxon_concepts.build(:id => taxon_id)
-              query.save!
-            end      
+              # Temporary fix for EOL Archive file having duplicate entries
+              begin
+                query.eol_taxon_concepts.build(:id => taxon_id)
+                query.save!
+              rescue ActiveRecord::RecordNotUnique => msg
+                puts msg
+              end
+            end
           end
         end
         import_progress.finish
