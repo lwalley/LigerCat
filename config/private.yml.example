@@ -18,3 +18,10 @@ recaptcha_private_key: 'ditto'
 
 eutils_tool: 'ligercat_example'
 eutils_email: 'you@example.edu'
+
+smtp_address: "email.example.edu"
+smtp_port: 25
+smtp_domain: "example.edu"
+smtp_username: "example_user"
+smtp_password: "example_password"
+smtp_authentication: "plain"

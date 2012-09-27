@@ -50,7 +50,15 @@ Ligercat::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-    config.action_mailer.delivery_method = :sendmail
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address:              Ligercat::Application.config.secret_stuff['smtp_address']),
+      port:                 Ligercat::Application.config.secret_stuff['smtp_port']),
+      domain:               Ligercat::Application.config.secret_stuff['smtp_domain']),
+      user_name:            Ligercat::Application.config.secret_stuff['smtp_username']),
+      password:             Ligercat::Application.config.secret_stuff['smtp_password']),
+      authentication:       Ligercat::Application.config.secret_stuff['smtp_authentication']),
+      enable_starttls_auto: true  }
   # Enable threaded mode
   # config.threadsafe!
 
