@@ -26,19 +26,31 @@ module Resque
             body text
           end
         end
-      rescue
-        puts "Error sending mail: " + $!
+      rescue => error
+        Rails.logger.error("Irony of Ironies! Exception raised sending Resque failure notification:" +
+          "\n==============================\n"+
+          error.message + 
+          "\n==============================\n"+
+          error.inspect +
+          "\n==============================\n"+
+          error.backtrace +
+          "\n==============================\n")
       end
       
       def detailed
         <<-EOF
 #{worker} failed processing #{queue}:
+
 Payload:
-#{payload.inspect.split("\n").map { |l| "  " + l }.join("\n")}
+#{payload.inspect}
+
 Exception:
-  #{exception}
-#{exception.backtrace.map { |l| "  " + l }.join("\n")}
-        EOF
+#{exception.message}
+===
+#{exception.inspect}
+==
+#{exception.backtrace.join("\n") rescue exception.backtrace }
+EOF
       end
     end
   end
