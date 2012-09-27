@@ -26,13 +26,26 @@
 # Every five minutes between 9pm and 5am on weeknights
 # As per NLM's usage guidelines:
 # http://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
-every '*/5 21-23,0-4 * * 1-5', :roles => [:app]  do
-  rake "enqueue_oldest_cached_queries[10]"
+
+# TODO  uncomment this when EOL crankage is finished
+# every '*/5 21-23,0-4 * * 1-5', :roles => [:app]  do
+#   rake "enqueue_oldest_cached_queries[10]"
+# end
+
+# TODO delete this when EOL crankage is finished
+every '*/1 21-23,0-4 * * 1-5', :roles => [:app]  do
+  rake "enqueue_oldest_cached_queries[100]"
 end
 
 # Every 30 minutes on weekends
-every '0,30 * * * 0,6', :roles => [:app]  do
-  rake "enqueue_oldest_cached_queries[50]"
+# TODO  uncomment this when EOL is cranked
+# every '0,30 * * * 0,6', :roles => [:app]  do
+#   rake "enqueue_oldest_cached_queries[50]"
+# end
+
+# TODO delete when EOL crankage is finished
+every '*/1 * * * 0,6', :roles => [:app]  do
+  rake "enqueue_oldest_cached_queries[100]"
 end
 
 # TODO Uncomment when ready to test EOL names integration with Patrick

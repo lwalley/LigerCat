@@ -52,7 +52,11 @@ class Query < ActiveRecord::Base
     end
     
     def find_refresh_candidates(limit=1000)
-      self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+      #self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
+      
+      # This is only a TEMPORARY crankstation for going through EOL queries for the first time. Once you're done, remove this and uncomment the line above
+      
+      self.where("type=? state=? AND updated_at<?", 'BinomialQuery', STATES[:queued], 1.week.ago).order('updated_at ASC').limit(limit).all
     end
 
     def enqueue_refresh_candidates(limit = 1000)
