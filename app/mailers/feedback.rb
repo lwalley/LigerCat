@@ -1,6 +1,6 @@
 class Feedback < ActionMailer::Base
   default :to => Ligercat::Application.config.secret_stuff['feedback_recipients']
-  
+  default :from => Ligercat::Application.config.secret_stuff['no_reply_address']
   
    def contact(sender, message)
      @message = message
@@ -13,7 +13,13 @@ class Feedback < ActionMailer::Base
      @term = term
      @pmid = pmid
      
-     mail(:subject => 'LigerCat May Need to Update MeSH Terms',
-          :from    => Ligercat::Application.config.secret_stuff['no_reply_address'])
+     mail(:subject => 'LigerCat May Need to Update MeSH Terms')
+   end
+   
+   def resque_failure(worker, queue, payload, exception)
+     @worker, @queue, @payload, @exception = worker, queue, payload, exception
+     
+     mail(subject: "[Resque Failure] #{queue}: #{exception}",
+          to:      Ligercat::Application.config.secret_stuff['exception_recipients'])
    end
 end

@@ -11,11 +11,6 @@ Resque.redis = RedisFactory.gimme('resque')
 if Module.const_defined? :Rails
   require 'resque/failure/notifier'
 
-  Resque::Failure::Notifier.configure do |config|
-    config.sender     = Ligercat::Application.config.secret_stuff['no_reply_address']
-    config.recipients = Ligercat::Application.config.secret_stuff['exception_recipients']
-  end
-
   Resque::Failure::Multiple.classes = [Resque::Failure::Redis, Resque::Failure::Notifier]
   Resque::Failure.backend = Resque::Failure::Multiple
 end

@@ -1,0 +1,16 @@
+Ligercat worker "<%= raw @worker %>" failed processing <%= raw @queue %>:
+
+Payload:
+<%= raw @payload.inspect %>
+
+Exception:
+
+<%= raw @exception.message %>
+
+==========================
+
+<%= raw @exception.inspect %>
+
+==========================
+
+<%= raw( @exception.backtrace.join("\n") ) rescue  raw(@exception.backtrace)%>
