@@ -5,6 +5,14 @@
 %p In addition to providing a visual overview of a set of PubMed articles, LigerCat can <span class="highlight">search PubMed in realtime</span>. Simply click on one or more MeSH descriptors in a tag cloud to search PubMed for those terms instantly.
 %p LigerCat's indeces of current MeSH descriptors and their overall occurrence in Medline are provided by the <a href="http://mbr.nlm.nih.gov/Download/index.shtml" class="external_link">Medline Baseline Repository</a>
 
+%h2#release_notes New in the latest release
+%p September saw the release of the latest version of LigerCat. It has been completely rebuilt with a brand new, extremely robust and fault-tolerant processing engine. 
+%p LigerCat's new engine includes finer grained process tracking. Now, when you perform a query, the status page illustrates the build progress of the cloud and histogram with step by step user feedback.
+%p We improved the weighting algorithms used to determine the font sizes in LigerCat's tag clouds. Clouds now have more variability, and more important terms show up larger, while terms that are common across all of PubMed are downweighted proportionally.
+%p We have preprocessed over 1.6 million species names provided by the <a href="http://eol.org">Encyclopedia of Life</a>, generating LigerCat clouds with taxonomically-aware PubMed queries. There is now a tighter, self-sustaining integration with the Encyclopedia of Life that links queries for species names in LigerCat to their respective page in EoL, and vice-versa.
+%p Ligercat is now easier to install at your own institution. We have reduced the number of components in the system to simplify the hosting requirements, and written extensive documentation for hosting LigerCat on your own servers. Clouds and histograms are now self-updating and we have introduced simple one line commands for seeding and re-seeding MeSH frequency data direct from the <a class="external_link" href="http://mbr.nlm.nih.gov/">Medline/PubMed Baseline Repository</a>.
+%p We have temporarily disabled the Journals search because the database and web service used to power this feature was deprecated by NCBI. Please #{link_to "contact us", "#contact_area"} if you are interested in seeing this feature return.
+
 %h2#citation Cite
 %p
   Please cite this resource as show below. The full text for this article is available at <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2815376/" class="external_link">PubMed Central</a>.
