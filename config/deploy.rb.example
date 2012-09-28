@@ -23,8 +23,7 @@ set :whenever_command, "bundle exec whenever"
 set :whenever_roles, ["app"]
 require 'whenever/capistrano'
 
-#precompile assets on web servers
-
+# precompile assets on web servers
 namespace :assets do
   desc "Precompile assets"
   task :precompile, :roles => [:web] do
@@ -128,9 +127,20 @@ namespace :rvm do
   end
 end
 
+namespace :shiz do
+  desc "Update application version number"
+  task :set_version do
+    set :tag, variables[:tag] ? variables[:tag] : 'unknown'
+    puts '#' * 80
+    puts "v.#{tag}"
+    puts '#' * 80
+    run "perl -i.bak -pe 's/(config.app_version\\s*?=\\s*?'\\'').*?('\\'')/$1v.#{tag}$2/'  #{release_path}/config/application.rb"
+  end
+end
+
 after "deploy", "rvm:trust_rvmrc"
 
-after  'deploy:update_code', 'database_yml:symlink','eol_cache:symlink','eol_cache_stylesheets:symlink','unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink', 'resque:restart'
+after 'deploy:update_code', 'database_yml:symlink', 'eol_cache:symlink', 'eol_cache_stylesheets:symlink', 'unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink', 'resque:restart', 'shiz:set_version'
 
 
 role :app, "meow"
