@@ -21,7 +21,7 @@
       #header.container
         #logo_and_tagline
           %a.home{ :href => home_url, :title => 'Return to Home Page' }
-            %span.logo LigerCat
+            %span.logo{'data-version' => Ligercat::Application.config.app_version} LigerCat
             %span.tagline Literature and Genomics Resource Catalogue
         %nav
           %ul.navigation

@@ -59,7 +59,7 @@ module Ligercat
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     
-    
+    config.app_version = 'x'
     
     config.secret_stuff = YAML.load_file(Rails.root.join('config', 'private.yml'))
     
