@@ -52,9 +52,6 @@ class Query < ActiveRecord::Base
     end
     
     def find_refresh_candidates(limit=1000)
-      # This is for quickly plowing through all PubmedQueries that were ported from original LigerCat's database. Delete this line when you're finished with that temporary job.
-      return self.where(type:'PubmedQuery', num_articles:nil).limit(limit)
-      
       # This is the legit one
       #self.where("state=? AND updated_at<?", STATES[:cached], 1.week.ago).order('updated_at ASC').limit(limit).all
       
