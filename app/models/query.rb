@@ -97,7 +97,7 @@ class Query < ActiveRecord::Base
       query.update_state(:cached)
 
       RestClient.delete(cache_webhook) rescue nil
-      query.log_liger_engine("Received webhook: #{cache_webhook.inspect}")
+      query.log_liger_engine("Hit webhook: #{cache_webhook.inspect}")
     rescue Exception => e
       query.update_state(:error) unless query.blank?
       raise e # Resque handles this and puts it in the Failed Jobs list
