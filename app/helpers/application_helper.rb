@@ -83,7 +83,7 @@ module ApplicationHelper
   
 	
 	def embedded_mesh_keyword_cloud(keywords, options={})
-    options = {:partial => 'pubmed_queries/embedded_keyword', :no_keywords_partial => 'pubmed_queries/no_keywords'}.merge(options)
+    options = {:partial => 'pubmed_queries/embedded_keyword', :no_keywords_partial => 'shared/no_keywords'}.merge(options)
     keyword_cloud(keywords, options)
 	end
   
