@@ -27,29 +27,22 @@
 # As per NLM's usage guidelines:
 # http://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
 
-# TODO  uncomment this when EOL crankage is finished
-# every '*/5 21-23,0-4 * * 1-5', :roles => [:app]  do
-#   rake "enqueue_oldest_cached_queries[10]"
-# end
-
-# TODO delete this when EOL crankage is finished
-every '*/1 21-23,0-4 * * 1-5', :roles => [:app]  do
-  rake "enqueue_oldest_cached_queries[100]"
+# Load up queue with old queries on weekdays between 9PM - 5AM
+every '*/5 21-23,0-4 * * 1-5', :roles => [:app]  do
+   rake "enqueue_oldest_cached_queries[10]"
 end
 
-# Every 30 minutes on weekends
-# TODO  uncomment this when EOL is cranked
-# every '0,30 * * * 0,6', :roles => [:app]  do
-#   rake "enqueue_oldest_cached_queries[50]"
-# end
-
-# TODO delete when EOL crankage is finished
-every '*/1 * * * 0,6', :roles => [:app]  do
-  rake "enqueue_oldest_cached_queries[100]"
+# Load up queue with old queries on weekends
+every '0,30 * * * 0,6', :roles => [:app]  do
+   rake "enqueue_oldest_cached_queries[50]"
 end
 
-# TODO Uncomment when ready to test EOL names integration with Patrick
-# every :week, :roles => [:app]  do
-#   rake "eol:import_archive"
-#   rake "eol:write_list"
-# end
+# Build the list of EOL IDs that have articles (clouds)
+every :week, :roles => [:app]  do
+   rake "eol:write_list"
+end
+
+# Import new EOL IDs
+every :week, :roles => [:app]  do
+   rake "eol:import_archive"
+end
