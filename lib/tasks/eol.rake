@@ -98,10 +98,9 @@ namespace :eol do
   end
   
   
-  # TODO Figure out how we're going to do any symlinking with Capistrano, so that this file can survive between deployments
   desc "Writes a list of all EoL taxa that we've got tag clouds for"
   task :write_list => [:environment] do
-    filename = Rails.root.join('public', 'eol_ids_with_articles.txt')
+    filename = Rails.root.join('public', 'eol_ids_with_clouds.txt')
     
     File.open( filename, 'w' ) do |f|    
       pbar = ProgressBar.new("Writing", EolTaxonConcept.with_articles.count)
