@@ -118,7 +118,7 @@ end
 
 after "deploy", "rvm:trust_rvmrc"
 
-after 'deploy:update_code', 'database_yml:symlink', 'eol_cache:symlink', 'eol_cache_stylesheets:symlink', 'unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'eol_list:symlink', 'seeds:symlink', 'eol_clouds:symlink', 'resque:restart', 'shiz:set_version'
+after 'deploy:update_code', 'database_yml:symlink', 'unicorn:symlink', 'private_yml:symlink', 'redis_yml:symlink', 'blast_binary:symlink', 'seeds:symlink', 'eol_clouds:symlink', 'resque:restart', 'shiz:set_version'
 
 
 role :app, "meow"
