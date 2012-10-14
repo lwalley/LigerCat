@@ -39,32 +39,10 @@ namespace :blast_binary do
   end
 end
 
-namespace :eol_list do
-  desc "Make symlink to the list of EoL species"
-  task :symlink, :roles => :app do
-    run "ln -nfs #{shared_path}/public/eol_ids_with_clouds.txt.gz #{release_path}/public/eol_ids_with_clouds.txt.gz"
-  end
-end
-
 namespace :database_yml do
   desc "Make symlink for database.yml"
   task :symlink do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  end
-end
-
-# Temporary task to persist old caches, required until all BinomialQuery jobs have been processed. 
-namespace :eol_cache do
-  desc "Make symlink for eol cache directory"
-  task :symlink do
-    run "ln -nfs #{shared_path}/cache/eol #{release_path}/public/eol"
-  end
-end
-# Temporary task to persist old stylesheets for eol caches, required until all BinomialQuery jobs have been processed. 
-namespace :eol_cache_stylesheets do
-  desc "Make symlink for stylesheets directory"
-  task :symlink do
-    run "ln -nfs #{shared_path}/cache/stylesheets #{release_path}/public/stylesheets"
   end
 end
 
@@ -101,8 +79,8 @@ end
 namespace :eol_clouds do
   desc "Make symlink for EOL clouds files directory"
   task :symlink do
-    run "ln -nfs #{shared_path}/eol_ids_with_articles.txt.gz #{release_path}/public/eol_ids_with_articles.txt.gz"
-    run "ln -nfs #{shared_path}/eol_ids_with_articles.md5 #{release_path}/public/eol_ids_with_articles.md5"
+    run "ln -nfs #{shared_path}/public/eol_ids_with_clouds.txt.gz #{release_path}/public/eol_ids_with_clouds.txt.gz"
+    run "ln -nfs #{shared_path}/public/eol_ids_with_clouds.md5 #{release_path}/public/eol_ids_with_clouds.md5"
   end
 end
 
