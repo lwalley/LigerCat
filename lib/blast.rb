@@ -36,20 +36,22 @@ class Blast
   def parse_tab(results)
     @results = {}
     
-    results.each_line do |line|
-      next if line[0,1] == '#' # Skip comment lines
-      
-      sgi, sacc, evalue = line.strip.split("\t")
+    unless results.nil?
+      results.each_line do |line|
+        next if line[0,1] == '#' # Skip comment lines
 
-      gi_number  = sgi.to_i
-      acc_number = sacc
-      e_value    = evalue.to_f
-      
-      unless @results.has_key?(gi_number) && @results[gi_number][:e_value] < e_value
-        @results[gi_number] = {:gi_number => gi_number, :accession_number => acc_number, :e_value => e_value}
+        sgi, sacc, evalue = line.strip.split("\t")
+
+        gi_number  = sgi.to_i
+        acc_number = sacc
+        e_value    = evalue.to_f
+
+        unless @results.has_key?(gi_number) && @results[gi_number][:e_value] < e_value
+          @results[gi_number] = {:gi_number => gi_number, :accession_number => acc_number, :e_value => e_value}
+        end
       end
     end
-    
+
     return @results.values
   end
 end
