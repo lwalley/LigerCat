@@ -65,9 +65,7 @@ module LigerEngine
           # in a different search, the MeSH id list will then be complete, and it will be added to Redis 
           if i = mesh_ids.index(nil)
             term = mesh_terms[i] # TODO: this only pulls out the first unknown MESH term. It'd be better to pull all of them out if possible
-            # Temporarily commenting out update message, because MLB
-            # haven't yet provided the freq count file for 2013 
-            # Feedback.update_mesh(term, pmid).deliver
+            Feedback.update_mesh(term, pmid).deliver
           else 
             
             # Cache the PMIDs that we've retrieved into Redis
