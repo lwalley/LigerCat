@@ -101,7 +101,19 @@ class PubmedQueriesController < ApplicationController
     render :nothing => true, :status => :no_content
   end
   
-  
+  # GET /articles/:string
+  def legacy_redirect
+    # This works for both PubmedQueries and BinomialQueries, because the BinomialQuery is a subclass of PubmedQuery.
+    # However, in development mode only, this sometimes doesn't work, because of the way Rails loads and reloads classes.
+    # See config/initializers/preload_sti_models.rb for a discussion about this.
+    query = PubmedQuery.find_by_query(params[:string].gsub('_', ' '))
+    if query.nil?
+      raise ActiveRecord::RecordNotFound and return
+    end
+    redirect_to slug_pubmed_query_path(query, query.slug), :status => :moved_permanently
+
+  end
+
   private
   
   # query is a helper method that is used to put the query up in the <title>

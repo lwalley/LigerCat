@@ -57,6 +57,9 @@ Ligercat::Application.routes.draw do
   # match ':controller(/:action(/:id))(.:format)'
 
   resource  :pubmed_count, :only => [:show]
+
+  # Redirect legacy requests for /articles/:query_string
+  match '/articles/:string' => 'pubmed_queries#legacy_redirect', :via => :get, :constraints => { :string => %r|[^/]*?[^/0-9][^/]*| }
   resources :pubmed_queries, :path => 'articles', :only => [:index, :show] do
     collection do
       get 'search'
