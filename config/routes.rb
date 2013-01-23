@@ -58,18 +58,19 @@ Ligercat::Application.routes.draw do
 
   resource  :pubmed_count, :only => [:show]
 
-  # Redirect legacy requests for /articles/:query_string
-  match '/articles/:string' => 'pubmed_queries#legacy_redirect', :via => :get, :constraints => { :string => %r|[^/]*?[^/0-9][^/]*| }
   resources :pubmed_queries, :path => 'articles', :only => [:index, :show] do
     collection do
       get 'search'
     end
 
-    member do 
+    member do
       get 'status'
       delete 'cache'
     end
   end
+  # Redirect legacy requests for /articles/:query_string
+  # Make sure this route comes after any named articles routes e.g. articles/search or articles/status
+  match '/articles/:string' => 'pubmed_queries#legacy_redirect', :via => :get, :constraints => { :string => %r|[^/]*?[^/0-9][^/]*| }
 
   resources :blast_queries, :path => 'genes', :only => [:index, :create, :show] do
     member do 
